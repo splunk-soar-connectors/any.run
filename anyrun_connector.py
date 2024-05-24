@@ -16,7 +16,7 @@ from phantom.action_result import ActionResult
 
 # Usage of the consts file is recommended
 from anyrun import Configuration, TI, Sandbox, ThreatIntelligence, APIError
-from anyrun_consts import * # pylint: disable=wildcard-import
+from anyrun_consts import *  # pylint: disable=wildcard-import
 
 
 class AnyRunConnector(BaseConnector):
@@ -43,7 +43,7 @@ class AnyRunConnector(BaseConnector):
                     error_msg = exception.args[1]
                 elif len(exception.args) == 1:
                     error_msg = exception.args[0]
-        except Exception: # pylint: disable=broad-except
+        except Exception:  # pylint: disable=broad-except
             pass
 
         try:
@@ -66,7 +66,7 @@ class AnyRunConnector(BaseConnector):
                         f"Please provide a valid integer value in the {key}"
                     ), None
                 parameter = int(parameter)
-            except: # pylint: disable=bare-except
+            except:  # pylint: disable=bare-except
                 return action_result.set_status(
                     phantom.APP_ERROR,
                     f"Please provide a valid integer value in the {key}"
@@ -140,7 +140,7 @@ class AnyRunConnector(BaseConnector):
             error_message = self._get_error_message_from_exception(exc)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             self.save_progress(ANYRUN_ERROR_TEST_CONNECTIVITY.format(error_message))
             return action_result.set_status(
@@ -169,7 +169,7 @@ class AnyRunConnector(BaseConnector):
                 tasks += self._anyrun_threat_intelligence.get_url_reputation(url)
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_URL_REPUTATION, error_message)
         finally:
@@ -181,9 +181,9 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             levels = {
-                0:"No threats detected",
-                1:"Suspicious activity",
-                2:"Malicious activity"
+                0: "No threats detected",
+                1: "Suspicious activity",
+                2: "Malicious activity"
             }
             for task in tasks:
                 if "uuid" not in task:
@@ -199,7 +199,7 @@ class AnyRunConnector(BaseConnector):
             action_result.update_summary({
                 'total_objects': len(tasks)
             })
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_URL_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -228,7 +228,7 @@ class AnyRunConnector(BaseConnector):
                 tasks += self._anyrun_threat_intelligence.get_file_reputation(file_hash)
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_FILE_REPUTATION, error_message)
         finally:
@@ -240,9 +240,9 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             levels = {
-                0:"No threats detected",
-                1:"Suspicious activity",
-                2:"Malicious activity"
+                0: "No threats detected",
+                1: "Suspicious activity",
+                2: "Malicious activity"
             }
             for task in tasks:
                 if "uuid" not in task:
@@ -258,7 +258,7 @@ class AnyRunConnector(BaseConnector):
             action_result.update_summary({
                 'total_objects': len(tasks)
             })
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_FILE_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -282,10 +282,10 @@ class AnyRunConnector(BaseConnector):
         self.save_progress(f"Requesting a list of reports for a submission related to domain: {domain}.")
         try:
             error_message = None
-            tasks = self._anyrun_threat_intelligence.get_intelligence(domain)["source_tasks"]
+            tasks = self._anyrun_threat_intelligence.get_intelligence(data)["source_tasks"]
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, error_message)
         finally:
@@ -297,9 +297,9 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             levels = {
-                0:"No threats detected",
-                1:"Suspicious activity",
-                2:"Malicious activity"
+                0: "No threats detected",
+                1: "Suspicious activity",
+                2: "Malicious activity"
             }
             for task in tasks:
                 task.update({"verdict": levels[task["ThreatLevel"]]})
@@ -307,7 +307,7 @@ class AnyRunConnector(BaseConnector):
             action_result.update_summary({
                 'total_objects': len(tasks)
             })
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -331,10 +331,10 @@ class AnyRunConnector(BaseConnector):
         self.save_progress(f"Requesting a list of reports for a submission related to IP: {ip}.")
         try:
             error_message = None
-            tasks = self._anyrun_threat_intelligence.get_intelligence(ip)["source_tasks"]
+            tasks = self._anyrun_threat_intelligence.get_intelligence(data)["source_tasks"]
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IP_REPUTATION, error_message)
         finally:
@@ -346,9 +346,9 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             levels = {
-                0:"No threats detected",
-                1:"Suspicious activity",
-                2:"Malicious activity"
+                0: "No threats detected",
+                1: "Suspicious activity",
+                2: "Malicious activity"
             }
             for task in tasks:
                 task.update({"verdict": levels[task["ThreatLevel"]]})
@@ -356,7 +356,7 @@ class AnyRunConnector(BaseConnector):
             action_result.update_summary({
                 'total_objects': len(tasks)
             })
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_IP_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -381,7 +381,7 @@ class AnyRunConnector(BaseConnector):
             report = self._anyrun_sandbox.get_analysis_report(taskid)
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, error_message)
         finally:
@@ -393,7 +393,7 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             action_result.add_data(report)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, error_message)
             self.save_progress(error_message)
@@ -418,7 +418,7 @@ class AnyRunConnector(BaseConnector):
             iocs = self._anyrun_sandbox.get_analysis_iocs(taskid)
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, error_message)
         finally:
@@ -434,7 +434,7 @@ class AnyRunConnector(BaseConnector):
                 "total_objects": len(iocs),
                 "max_reputation": max(item["reputation"] for item in iocs)
             })
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, error_message)
             self.save_progress(error_message)
@@ -463,7 +463,7 @@ class AnyRunConnector(BaseConnector):
             response = self._anyrun_sandbox.submit_url(obj_url, obj_type, data)
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
         finally:
@@ -476,7 +476,7 @@ class AnyRunConnector(BaseConnector):
         try:
             response.update({"permanentUrl": f"https://app.any.run/tasks/{response['taskid']}"})
             action_result.add_data(response)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
             self.save_progress(error_message)
@@ -508,7 +508,7 @@ class AnyRunConnector(BaseConnector):
                     ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("vault meta info", vault_id),
                     error_message
                 ))
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             return action_result.set_status(phantom.APP_ERROR, "{}. {}".format(
                 ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("vault meta info", vault_id),
@@ -531,7 +531,7 @@ class AnyRunConnector(BaseConnector):
                     phantom.APP_ERROR,
                     ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id)
                 )
-        except: # pylint: disable=bare-except
+        except:  # pylint: disable=bare-except
             return action_result.set_status(
                 phantom.APP_ERROR,
                 ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id)
@@ -544,7 +544,7 @@ class AnyRunConnector(BaseConnector):
             response = self._anyrun_sandbox.submit_file(file_path, data)
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
         finally:
@@ -557,7 +557,7 @@ class AnyRunConnector(BaseConnector):
         try:
             response.update({"permanentUrl": f"https://app.any.run/tasks/{response['taskid']}"})
             action_result.add_data(response)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
             self.save_progress(error_message)
@@ -592,7 +592,7 @@ class AnyRunConnector(BaseConnector):
             response = self._anyrun_threat_intelligence.get_intelligence(data)
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
         finally:
@@ -703,7 +703,7 @@ class AnyRunConnector(BaseConnector):
                 }
             })
             action_result.update_summary(summary)
-        except Exception as exc: # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
             self.save_progress(error_message)
@@ -718,7 +718,6 @@ class AnyRunConnector(BaseConnector):
         action_id = self.get_action_identifier()
 
         self.debug_print("action_id", self.get_action_identifier())
-
 
         if action_id == ACTION_ID_ANYRUN_GET_URL_REPUTATION:
             ret_val = self._handle_get_url_reputation(param)
