@@ -13,7 +13,7 @@
     "license": "Copyright (c) ANYRUN FZCO, 2024",
     "app_version": "1.0.0",
     "utctime_updated": "2024-03-01T10:28:44.583548Z",
-    "package_name": "phantom_anyrun",
+    "package_name": "phantom_any.run",
     "main_module": "anyrun_connector.py",
     "min_phantom_version": "6.2.0.355",
     "app_wizard_version": "1.0.0",
@@ -50,8 +50,7 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using supplied configuration",
-            "verbose": "",
+            "description": "Validate the asset configuration for connectivity using supplied configuration.",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -59,14 +58,14 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN SBTI Get URL Reputation",
+            "action": "url reputation",
             "identifier": "get_url_reputation",
-            "description": "Get reports of a specific URL analysis",
+            "description": "Get reports of a specific URL analysis.",
             "verbose": "This action requests a list of already completed reports of a URL analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.",
             "type": "generic",
             "read_only": true,
             "parameters": {
-                "URL": {
+                "url": {
                     "description": "URL (Size range: 2-256)",
                     "data_type": "string",
                     "required": true,
@@ -96,7 +95,7 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.URL",
+                    "data_path": "action_result.parameter.url",
                     "data_type": "string",
                     "contains": [
                         "url"
@@ -231,14 +230,14 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN SBTI Get File Reputation",
+            "action": "file reputation",
             "identifier": "get_file_reputation",
-            "description": "Get reports of a specific file analysis by that file's hash",
+            "description": "Get reports of a specific file analysis by that file's hash.",
             "verbose": "This action requests a list of already completed reports of a file analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.",
             "type": "generic",
             "read_only": true,
             "parameters": {
-                "Hash": {
+                "hash": {
                     "description": "File hash ('MD5', 'SHA1', 'SHA256') (Size range: 2-256)",
                     "data_type": "string",
                     "required": true,
@@ -271,7 +270,7 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.Hash",
+                    "data_path": "action_result.parameter.hash",
                     "data_type": "string",
                     "contains": [
                         "hash",
@@ -409,14 +408,14 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN TI Get Domain Reputation",
+            "action": "domain reputation",
             "identifier": "get_domain_reputation",
-            "description": "Get reports of analyses, that involve specific domain",
+            "description": "Get reports of analyses, that involve specific domain.",
             "verbose": "This action requests a list of already completed reports of analyses, where requested domain was involved. This action requires <b>ANY.RUN TI License</b>.",
             "type": "generic",
             "read_only": true,
             "parameters": {
-                "DomainName": {
+                "domainname": {
                     "description": "Domain name (Size range: 2-256)",
                     "data_type": "string",
                     "required": true,
@@ -434,7 +433,7 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.DomainName",
+                    "data_path": "action_result.parameter.domainname",
                     "data_type": "string",
                     "contains": [
                         "domain"
@@ -565,14 +564,14 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN TI Get IP Reputation",
+            "action": "ip reputation",
             "identifier": "get_ip_reputation",
-            "description": "Get reports of analyses, that involve specific IP",
+            "description": "Get reports of analyses, that involve specific IP.",
             "verbose": "This action requests a list of already completed reports of analyses, where requested IP was involved. This action requires <b>ANY.RUN TI License</b>.",
             "type": "generic",
             "read_only": true,
             "parameters": {
-                "IP": {
+                "ip": {
                     "description": "IP (Size range: 2-256)",
                     "data_type": "string",
                     "required": true,
@@ -590,7 +589,7 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.IP",
+                    "data_path": "action_result.parameter.ip",
                     "data_type": "string",
                     "contains": [
                         "ip"
@@ -721,14 +720,14 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN SB Get Report",
+            "action": "get report",
             "identifier": "get_report",
-            "description": "Get report for a submission",
+            "description": "Get report for a submission.",
             "verbose": "This action requires a submission <b>TaskID</b>.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
-                "TaskID": {
+                "taskid": {
                     "description": "ANY.RUN task UUID",
                     "data_type": "string",
                     "required": true,
@@ -746,7 +745,7 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.TaskID",
+                    "data_path": "action_result.parameter.taskid",
                     "data_type": "string",
                     "contains": [
                         "anyrun task id"
@@ -901,14 +900,14 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN SB Get IoCs",
+            "action": "get iocs",
             "identifier": "get_ioc",
-            "description": "Get list of IoCs for a submission",
+            "description": "Get list of IoCs for a submission.",
             "verbose": "This action requires a submission <b>TaskID</b>.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
-                "TaskID": {
+                "taskid": {
                     "description": "ANY.RUN task UUID",
                     "data_type": "string",
                     "required": true,
@@ -927,7 +926,7 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.TaskID",
+                    "data_path": "action_result.parameter.taskid",
                     "data_type": "string",
                     "contains": [
                         "anyrun task id"
@@ -1006,9 +1005,9 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN SB Detonate URL",
+            "action": "detonate url",
             "identifier": "detonate_url",
-            "description": "Detonate a URL",
+            "description": "Detonate a URL.",
             "verbose": "This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
@@ -1620,10 +1619,6 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.obj_ext_elevateprompt",
-                    "data_type": "boolean"
-                },
-                {
                     "data_path": "action_result.parameter.obj_ext_extension",
                     "data_type": "boolean"
                 },
@@ -1687,9 +1682,9 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN SB Detonate File",
+            "action": "detonate file",
             "identifier": "detonate_file",
-            "description": "Detonate a file",
+            "description": "Detonate a file.",
             "verbose": "This action requires a <b>vauld ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
@@ -2331,14 +2326,14 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "ANYRUN TI Get Intelligence",
+            "action": "get intelligence",
             "identifier": "get_intelligence",
-            "description": "Threat Intelligence IoC Lookup",
+            "description": "Threat Intelligence IoC Lookup.",
             "verbose": "Perform investigative actions by using the ANY.RUN Threat Intelligence Portal API method. This action requires <b>ANY.RUN TI License</b>. For more information about available parameters refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
             "parameters": {
-                "Sha256": {
+                "sha256": {
                     "description": "Sha256 (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2354,7 +2349,7 @@
                     "id": 1,
                     "param_name": "Sha256"
                 },
-                "Sha1": {
+                "sha1": {
                     "description": "Sha1 (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2370,7 +2365,7 @@
                     "id": 2,
                     "param_name": "Sha1"
                 },
-                "MD5": {
+                "md5": {
                     "description": "MD5 (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2386,7 +2381,7 @@
                     "id": 3,
                     "param_name": "MD5"
                 },
-                "ThreatName": {
+                "threatname": {
                     "description": "Name of threat (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2399,7 +2394,7 @@
                     "id": 4,
                     "param_name": "ThreatName"
                 },
-                "ThreatLevel": {
+                "threatlevel": {
                     "description": "Threat level (Default: <empty>)",
                     "data_type": "string",
                     "required": false,
@@ -2416,7 +2411,7 @@
                     "id": 5,
                     "param_name": "ThreatLevel"
                 },
-                "TaskType": {
+                "tasktype": {
                     "description": "Task run type (Default: <empty>)",
                     "data_type": "string",
                     "required": false,
@@ -2432,7 +2427,7 @@
                     "id": 6,
                     "param_name": "TaskType"
                 },
-                "SubmissionCountry": {
+                "submissioncountry": {
                     "description": "Submission country (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2445,7 +2440,7 @@
                     "id": 7,
                     "param_name": "SubmissionCountry"
                 },
-                "OS": {
+                "os": {
                     "description": "Operation system (Default: <empty> - not used)",
                     "data_type": "string",
                     "required": false,
@@ -2463,7 +2458,7 @@
                     "id": 8,
                     "param_name": "OS"
                 },
-                "OSSoftwareSet": {
+                "ossoftwareset": {
                     "description": "Operation system software (Default: <empty> - not used)",
                     "data_type": "string",
                     "required": false,
@@ -2480,7 +2475,7 @@
                     "id": 9,
                     "param_name": "OSSoftwareSet"
                 },
-                "OSBitVersion": {
+                "osbitversion": {
                     "description": "Operation system bitness (Default: <empty> - not used)",
                     "data_type": "numeric",
                     "required": false,
@@ -2496,7 +2491,7 @@
                     "id": 10,
                     "param_name": "OSBitVersion"
                 },
-                "RegistryKey": {
+                "registrykey": {
                     "description": "Registry key (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2509,7 +2504,7 @@
                     "id": 11,
                     "param_name": "RegistryKey"
                 },
-                "RegistryName": {
+                "registryname": {
                     "description": "Registry name (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2522,7 +2517,7 @@
                     "id": 12,
                     "param_name": "RegistryName"
                 },
-                "RegistryValue": {
+                "registryvalue": {
                     "description": "Registry value (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2535,7 +2530,7 @@
                     "id": 13,
                     "param_name": "RegistryValue"
                 },
-                "ModuleImagePath": {
+                "moduleimagepath": {
                     "description": "Module image path (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2550,7 +2545,7 @@
                     "id": 14,
                     "param_name": "ModuleImagePath"
                 },
-                "RuleThreatLevel": {
+                "rulethreatlevel": {
                     "description": "Rule threat level (Default: <empty> - not used)",
                     "data_type": "string",
                     "required": false,
@@ -2567,7 +2562,7 @@
                     "id": 15,
                     "param_name": "RuleThreatLevel"
                 },
-                "RuleName": {
+                "rulename": {
                     "description": "Rule name (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2580,7 +2575,7 @@
                     "id": 16,
                     "param_name": "RuleName"
                 },
-                "MITRE": {
+                "mitre": {
                     "description": "MITRE (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2593,7 +2588,7 @@
                     "id": 17,
                     "param_name": "MITRE"
                 },
-                "ImagePath": {
+                "imagepath": {
                     "description": "Process image path (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2608,7 +2603,7 @@
                     "id": 18,
                     "param_name": "ImagePath"
                 },
-                "CommandLine": {
+                "commandline": {
                     "description": "Command line (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2623,7 +2618,7 @@
                     "id": 19,
                     "param_name": "CommandLine"
                 },
-                "InjectedFlag": {
+                "injectedflag": {
                     "description": "Injected flag (Default: <empty> - not used)",
                     "data_type": "string",
                     "required": false,
@@ -2639,7 +2634,7 @@
                     "id": 20,
                     "param_name": "InjectedFlag"
                 },
-                "DestinationIp": {
+                "destinationip": {
                     "description": "Destination ip (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2654,7 +2649,7 @@
                     "id": 21,
                     "param_name": "DestinationIp"
                 },
-                "DestinationPort": {
+                "destinationport": {
                     "description": "Destination port (Default: <empty> - not used) (Size range: 1-65535)",
                     "data_type": "numeric",
                     "required": false,
@@ -2669,7 +2664,7 @@
                     "id": 22,
                     "param_name": "DestinationPort"
                 },
-                "DestinationIPASN": {
+                "destinationipasn": {
                     "description": "Destination IPASN (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2682,7 +2677,7 @@
                     "id": 23,
                     "param_name": "DestinationIPASN"
                 },
-                "DestinationIPGeo": {
+                "destinationipgeo": {
                     "description": "Destination IP Geo (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2695,7 +2690,7 @@
                     "id": 24,
                     "param_name": "DestinationIPGeo"
                 },
-                "DomainName": {
+                "domainname": {
                     "description": "Domain name (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2710,7 +2705,7 @@
                     "id": 25,
                     "param_name": "DomainName"
                 },
-                "FileName": {
+                "filename": {
                     "description": "File name (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2725,7 +2720,7 @@
                     "id": 26,
                     "param_name": "FileName"
                 },
-                "SuricataClass": {
+                "suricataclass": {
                     "description": "Suricata class (Default: <empty> - not used)",
                     "data_type": "string",
                     "required": false,
@@ -2749,7 +2744,7 @@
                     "id": 27,
                     "param_name": "SuricataClass"
                 },
-                "SuricataMessage": {
+                "suricatamessage": {
                     "description": "Suricata message (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2762,7 +2757,7 @@
                     "id": 28,
                     "param_name": "SuricataMessage"
                 },
-                "SuricataThreatLevel": {
+                "suricatathreatlevel": {
                     "description": "Suricata threat level (Default: <empty> - not used)",
                     "data_type": "string",
                     "required": false,
@@ -2779,7 +2774,7 @@
                     "id": 29,
                     "param_name": "SuricataThreatLevel"
                 },
-                "SuricataID": {
+                "suricataid": {
                     "description": "Suricata ID (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2792,7 +2787,7 @@
                     "id": 30,
                     "param_name": "SuricataID"
                 },
-                "URL": {
+                "url": {
                     "description": "URL (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2807,7 +2802,7 @@
                     "id": 31,
                     "param_name": "URL"
                 },
-                "HTTPRequestContentType": {
+                "httprequestcontenttype": {
                     "description": "HTTP request content type (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2820,7 +2815,7 @@
                     "id": 32,
                     "param_name": "HTTPRequestContentType"
                 },
-                "HTTPResponseContentType": {
+                "httpresponsecontenttype": {
                     "description": "HTTP response content type (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2833,7 +2828,7 @@
                     "id": 33,
                     "param_name": "HTTPResponseContentType"
                 },
-                "HTTPRequestFileType": {
+                "httprequestfiletype": {
                     "description": "HTTP request file type (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -2846,7 +2841,7 @@
                     "id": 34,
                     "param_name": "HTTPRequestFileType"
                 },
-                "HTTPResponseFileType": {
+                "httpresponsefiletype": {
                     "description": "HTTP response file type (Size range: 2-256)",
                     "data_type": "string",
                     "required": false,
@@ -3024,6 +3019,14 @@
                 },
                 {
                     "data_path": "action_result.parameter.httpresponsecontenttype",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.httprequestfiletype",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.httpresponsefiletype",
                     "data_type": "string"
                 },
                 {

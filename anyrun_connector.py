@@ -157,7 +157,7 @@ class AnyRunConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        url = param["URL"]
+        url = param["url"]
         search_in_public_tasks = param["search_in_public_tasks"]
 
         # Making an API call
@@ -216,7 +216,7 @@ class AnyRunConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        file_hash = param["Hash"]
+        file_hash = param["hash"]
         search_in_public_tasks = param["search_in_public_tasks"]
 
         # Making an API call
@@ -275,7 +275,7 @@ class AnyRunConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        domain = param["DomainName"]
+        domain = param["domainname"]
         data = TI(DomainName=domain)
 
         # Making an API call
@@ -324,7 +324,7 @@ class AnyRunConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ip = param["IP"]
+        ip = param["ip"]
         data = TI(DestinationIp=ip)
 
         # Making an API call
@@ -374,7 +374,7 @@ class AnyRunConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # Making an API call
-        taskid = param['TaskID']
+        taskid = param['taskid']
         self.save_progress(f"Requesting report for submission: {taskid}")
         try:
             error_message = None
@@ -411,7 +411,7 @@ class AnyRunConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # Making an API call
-        taskid = param['TaskID']
+        taskid = param['taskid']
         self.save_progress(f"Requesting IoC report for submission: {taskid}.")
         try:
             error_message = None
