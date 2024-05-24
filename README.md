@@ -10,16 +10,33 @@ Minimum Product Version: 6.2.0.355
 
 This app enables you to detonate files and URLs, and perform investigative actions, using the ANY.RUN interactive online malware sandbox service, thereby giving you automated analysis and advanced threat detection through an agentless sandbox.
 
-# Splunk> Phantom
+## Authentication
 
-Welcome to the open-source repository for Splunk> Phantom's any.run App.
+This connector requires an API key to authenticate with the ANY.RUN services. You can generate the key at your [ANY.RUN Profile](https://app.any.run/profile).  
+Official API documentation can be found [here](https://any.run/api-documentation/).
 
-Please have a look at our [Contributing Guide](https://github.com/Splunk-SOAR-Apps/.github/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing, raising issues, or learning more about open-source Phantom apps.
+## License requirements
 
-## Legal and License
+This connector is intended for customers with a 'Hunter' or 'Enterprise' subscription plans mainly, since some features provided by the connector are available with the mentioned plans only. Additionally actions provided with the connector have prefixes like:
 
-This Phantom App is licensed under the Apache 2.0 license. Please see our [Contributing Guide](https://github.com/Splunk-SOAR-Apps/.github/blob/main/.github/CONTRIBUTING.md#legal-notice) for further details.
+	- ANYRUN SB - indicates that action requires at least sandbox core features;
+	- ANYRUN TI - indicates that action requires threat intelligence features;
+	- ANYRUN SBTI - indicates that action requires at least sandbox core features, but some options require threat intelligence features;
 
+Information about subscription plans and features available with them can be found [here](https://app.any.run/plans/).
+
+## Dependencies
+
+This connector comes with some additional python 3 libraries, that it depends on, including:
+
+	- aiosignal-1.3.1 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
+	- async_timeout-4.0.3 (Apache License 2.0, Copyright 2016-2020 aio-libs collaboration)
+	- attrs-23.2.0 (MIT License, Copyright (c) 2015 Hynek Schlawack and the attrs contributors)
+	- multidict-6.0.5 (Apache License 2.0, Copyright 2016 Andrew Svetlov and aio-libs contributors)
+	- yarl-1.9.4 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
+	- frozenlist-1.4.1 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
+	- aiohttp-3.9.3 (Apache License 2.0, Copyright aio-libs contributors)
+	- anyrun_py-0.1.0
 
 ### Configuration Variables
 The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a ANY.RUN asset in SOAR.
@@ -31,19 +48,19 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **anyrun_timeout** |  required  | numeric | Number of seconds to wait for a request to timeout
 
 ### Supported Actions  
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration  
-[ANYRUN SBTI Get URL Reputation](#action-anyrun-sbti-get-url-reputation) - Get reports of a specific URL analysis  
-[ANYRUN SBTI Get File Reputation](#action-anyrun-sbti-get-file-reputation) - Get reports of a specific file analysis by that file's hash  
-[ANYRUN TI Get Domain Reputation](#action-anyrun-ti-get-domain-reputation) - Get reports of analyses, that involve specific domain  
-[ANYRUN TI Get IP Reputation](#action-anyrun-ti-get-ip-reputation) - Get reports of analyses, that involve specific IP  
-[ANYRUN SB Get Report](#action-anyrun-sb-get-report) - Get report for a submission  
-[ANYRUN SB Get IoCs](#action-anyrun-sb-get-iocs) - Get list of IoCs for a submission  
-[ANYRUN SB Detonate URL](#action-anyrun-sb-detonate-url) - Detonate a URL  
-[ANYRUN SB Detonate File](#action-anyrun-sb-detonate-file) - Detonate a file  
-[ANYRUN TI Get Intelligence](#action-anyrun-ti-get-intelligence) - Threat Intelligence IoC Lookup  
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration.  
+[url reputation](#action-url-reputation) - Get reports of a specific URL analysis.  
+[file reputation](#action-file-reputation) - Get reports of a specific file analysis by that file's hash.  
+[domain reputation](#action-domain-reputation) - Get reports of analyses, that involve specific domain.  
+[ip reputation](#action-ip-reputation) - Get reports of analyses, that involve specific IP.  
+[get report](#action-get-report) - Get report for a submission.  
+[get iocs](#action-get-iocs) - Get list of IoCs for a submission.  
+[detonate url](#action-detonate-url) - Detonate a URL.  
+[detonate file](#action-detonate-file) - Detonate a file.  
+[get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup.  
 
 ## action: 'test connectivity'
-Validate the asset configuration for connectivity using supplied configuration
+Validate the asset configuration for connectivity using supplied configuration.
 
 Type: **test**  
 Read only: **True**
@@ -54,8 +71,8 @@ No parameters are required for this action
 #### Action Output
 No Output  
 
-## action: 'ANYRUN SBTI Get URL Reputation'
-Get reports of a specific URL analysis
+## action: 'url reputation'
+Get reports of a specific URL analysis.
 
 Type: **generic**  
 Read only: **True**
@@ -65,13 +82,13 @@ This action requests a list of already completed reports of a URL analysis. Opti
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**URL** |  required  | URL (Size range: 2-256) | string |  `url` 
+**url** |  required  | URL (Size range: 2-256) | string |  `url` 
 **search_in_public_tasks** |  optional  | Option for searching in public tasks (requires TI license) | boolean | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.URL | string |  `url`  |  
+action_result.parameter.url | string |  `url`  |  
 action_result.parameter.search_in_public_tasks | boolean |  |  
 action_result.data.\*.tasks.\*.uuid | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
 action_result.data.\*.tasks.\*.mainObject.name | string |  |  
@@ -89,8 +106,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN SBTI Get File Reputation'
-Get reports of a specific file analysis by that file's hash
+## action: 'file reputation'
+Get reports of a specific file analysis by that file's hash.
 
 Type: **generic**  
 Read only: **True**
@@ -100,13 +117,13 @@ This action requests a list of already completed reports of a file analysis. Opt
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**Hash** |  required  | File hash ('MD5', 'SHA1', 'SHA256') (Size range: 2-256) | string |  `hash`  `md5`  `sha1`  `sha256` 
+**hash** |  required  | File hash ('MD5', 'SHA1', 'SHA256') (Size range: 2-256) | string |  `hash`  `md5`  `sha1`  `sha256` 
 **search_in_public_tasks** |  optional  | Option for searching in public tasks (requires TI license) | boolean | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.Hash | string |  `hash`  `md5`  `sha1`  `sha256`  |  
+action_result.parameter.hash | string |  `hash`  `md5`  `sha1`  `sha256`  |  
 action_result.parameter.search_in_public_tasks | boolean |  |  
 action_result.data.\*.tasks.\*.uuid | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
 action_result.data.\*.tasks.\*.mainObject.name | string |  |  
@@ -124,8 +141,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN TI Get Domain Reputation'
-Get reports of analyses, that involve specific domain
+## action: 'domain reputation'
+Get reports of analyses, that involve specific domain.
 
 Type: **generic**  
 Read only: **True**
@@ -135,12 +152,12 @@ This action requests a list of already completed reports of analyses, where requ
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**DomainName** |  required  | Domain name (Size range: 2-256) | string |  `domain` 
+**domainname** |  required  | Domain name (Size range: 2-256) | string |  `domain` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.DomainName | string |  `domain`  |  
+action_result.parameter.domainname | string |  `domain`  |  
 action_result.data.\*.tasks.\*.uuid | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
 action_result.data.\*.tasks.\*.mainObject.name | string |  |  
 action_result.data.\*.tasks.\*.verdict | string |  |   No threats detected  Suspicious activity  Malicious activity 
@@ -157,8 +174,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN TI Get IP Reputation'
-Get reports of analyses, that involve specific IP
+## action: 'ip reputation'
+Get reports of analyses, that involve specific IP.
 
 Type: **generic**  
 Read only: **True**
@@ -168,12 +185,12 @@ This action requests a list of already completed reports of analyses, where requ
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**IP** |  required  | IP (Size range: 2-256) | string |  `ip` 
+**ip** |  required  | IP (Size range: 2-256) | string |  `ip` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.IP | string |  `ip`  |  
+action_result.parameter.ip | string |  `ip`  |  
 action_result.data.\*.tasks.\*.uuid | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
 action_result.data.\*.tasks.\*.mainObject.name | string |  |  
 action_result.data.\*.tasks.\*.verdict | string |  |   No threats detected  Suspicious activity  Malicious activity 
@@ -190,8 +207,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN SB Get Report'
-Get report for a submission
+## action: 'get report'
+Get report for a submission.
 
 Type: **investigate**  
 Read only: **True**
@@ -201,12 +218,12 @@ This action requires a submission <b>TaskID</b>.
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**TaskID** |  required  | ANY.RUN task UUID | string |  `anyrun task id` 
+**taskid** |  required  | ANY.RUN task UUID | string |  `anyrun task id` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.TaskID | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
+action_result.parameter.taskid | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
 action_result.data.\*.analysis.permanentUrl | string |  |   https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 
 action_result.data.\*.analysis.reports.ioc | string |  |   https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/ioc/json 
 action_result.data.\*.analysis.reports.graph | string |  |   https://content.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/graph 
@@ -227,8 +244,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN SB Get IoCs'
-Get list of IoCs for a submission
+## action: 'get iocs'
+Get list of IoCs for a submission.
 
 Type: **investigate**  
 Read only: **True**
@@ -238,12 +255,12 @@ This action requires a submission <b>TaskID</b>.
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**TaskID** |  required  | ANY.RUN task UUID | string |  `anyrun task id` 
+**taskid** |  required  | ANY.RUN task UUID | string |  `anyrun task id` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.TaskID | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
+action_result.parameter.taskid | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
 action_result.data.\*.ioc.\*.ioc | string |  |  
 action_result.data.\*.ioc.\*.type | string |  |   md5  sha1  sha256  domain  ip  url 
 action_result.data.\*.ioc.\*.category | string |  |  
@@ -253,8 +270,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN SB Detonate URL'
-Detonate a URL
+## action: 'detonate url'
+Detonate a URL.
 
 Type: **investigate**  
 Read only: **True**
@@ -308,7 +325,6 @@ action_result.parameter.obj_ext_startfolder | string |  |
 action_result.parameter.obj_ext_cmd | string |  |  
 action_result.parameter.obj_ext_browser | string |  |  
 action_result.parameter.obj_ext_useragent | string |  |  
-action_result.parameter.obj_ext_elevateprompt | boolean |  |  
 action_result.parameter.obj_ext_extension | boolean |  |  
 action_result.parameter.opt_privacy_hidesource | boolean |  |  
 action_result.data.\*.taskid | string |  `anyrun task id`  |   0cf223f2-530e-4a50-b68f-563045268648 
@@ -318,8 +334,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN SB Detonate File'
-Detonate a file
+## action: 'detonate file'
+Detonate a file.
 
 Type: **investigate**  
 Read only: **True**
@@ -380,8 +396,8 @@ action_result.message | string |  |
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
 
-## action: 'ANYRUN TI Get Intelligence'
-Threat Intelligence IoC Lookup
+## action: 'get intelligence'
+Threat Intelligence IoC Lookup.
 
 Type: **investigate**  
 Read only: **True**
@@ -391,41 +407,41 @@ Perform investigative actions by using the ANY.RUN Threat Intelligence Portal AP
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**Sha256** |  optional  | Sha256 (Size range: 2-256) | string |  `hash`  `sha256` 
-**Sha1** |  optional  | Sha1 (Size range: 2-256) | string |  `hash`  `sha1` 
-**MD5** |  optional  | MD5 (Size range: 2-256) | string |  `hash`  `md5` 
-**ThreatName** |  optional  | Name of threat (Size range: 2-256) | string | 
-**ThreatLevel** |  optional  | Threat level (Default: <empty>) | string | 
-**TaskType** |  optional  | Task run type (Default: <empty>) | string | 
-**SubmissionCountry** |  optional  | Submission country (Size range: 2-256) | string | 
-**OS** |  optional  | Operation system (Default: <empty> - not used) | string | 
-**OSSoftwareSet** |  optional  | Operation system software (Default: <empty> - not used) | string | 
-**OSBitVersion** |  optional  | Operation system bitness (Default: <empty> - not used) | numeric | 
-**RegistryKey** |  optional  | Registry key (Size range: 2-256) | string | 
-**RegistryName** |  optional  | Registry name (Size range: 2-256) | string | 
-**RegistryValue** |  optional  | Registry value (Size range: 2-256) | string | 
-**ModuleImagePath** |  optional  | Module image path (Size range: 2-256) | string |  `file path` 
-**RuleThreatLevel** |  optional  | Rule threat level (Default: <empty> - not used) | string | 
-**RuleName** |  optional  | Rule name (Size range: 2-256) | string | 
-**MITRE** |  optional  | MITRE (Size range: 2-256) | string | 
-**ImagePath** |  optional  | Process image path (Size range: 2-256) | string |  `file path` 
-**CommandLine** |  optional  | Command line (Size range: 2-256) | string |  `process name` 
-**InjectedFlag** |  optional  | Injected flag (Default: <empty> - not used) | string | 
-**DestinationIp** |  optional  | Destination ip (Size range: 2-256) | string |  `ip` 
-**DestinationPort** |  optional  | Destination port (Default: <empty> - not used) (Size range: 1-65535) | numeric |  `port` 
-**DestinationIPASN** |  optional  | Destination IPASN (Size range: 2-256) | string | 
-**DestinationIPGeo** |  optional  | Destination IP Geo (Size range: 2-256) | string | 
-**DomainName** |  optional  | Domain name (Size range: 2-256) | string |  `domain` 
-**FileName** |  optional  | File name (Size range: 2-256) | string |  `file name` 
-**SuricataClass** |  optional  | Suricata class (Default: <empty> - not used) | string | 
-**SuricataMessage** |  optional  | Suricata message (Size range: 2-256) | string | 
-**SuricataThreatLevel** |  optional  | Suricata threat level (Default: <empty> - not used) | string | 
-**SuricataID** |  optional  | Suricata ID (Size range: 2-256) | string | 
-**URL** |  optional  | URL (Size range: 2-256) | string |  `url` 
-**HTTPRequestContentType** |  optional  | HTTP request content type (Size range: 2-256) | string | 
-**HTTPResponseContentType** |  optional  | HTTP response content type (Size range: 2-256) | string | 
-**HTTPRequestFileType** |  optional  | HTTP request file type (Size range: 2-256) | string | 
-**HTTPResponseFileType** |  optional  | HTTP response file type (Size range: 2-256) | string | 
+**sha256** |  optional  | Sha256 (Size range: 2-256) | string |  `hash`  `sha256` 
+**sha1** |  optional  | Sha1 (Size range: 2-256) | string |  `hash`  `sha1` 
+**md5** |  optional  | MD5 (Size range: 2-256) | string |  `hash`  `md5` 
+**threatname** |  optional  | Name of threat (Size range: 2-256) | string | 
+**threatlevel** |  optional  | Threat level (Default: <empty>) | string | 
+**tasktype** |  optional  | Task run type (Default: <empty>) | string | 
+**submissioncountry** |  optional  | Submission country (Size range: 2-256) | string | 
+**os** |  optional  | Operation system (Default: <empty> - not used) | string | 
+**ossoftwareset** |  optional  | Operation system software (Default: <empty> - not used) | string | 
+**osbitversion** |  optional  | Operation system bitness (Default: <empty> - not used) | numeric | 
+**registrykey** |  optional  | Registry key (Size range: 2-256) | string | 
+**registryname** |  optional  | Registry name (Size range: 2-256) | string | 
+**registryvalue** |  optional  | Registry value (Size range: 2-256) | string | 
+**moduleimagepath** |  optional  | Module image path (Size range: 2-256) | string |  `file path` 
+**rulethreatlevel** |  optional  | Rule threat level (Default: <empty> - not used) | string | 
+**rulename** |  optional  | Rule name (Size range: 2-256) | string | 
+**mitre** |  optional  | MITRE (Size range: 2-256) | string | 
+**imagepath** |  optional  | Process image path (Size range: 2-256) | string |  `file path` 
+**commandline** |  optional  | Command line (Size range: 2-256) | string |  `process name` 
+**injectedflag** |  optional  | Injected flag (Default: <empty> - not used) | string | 
+**destinationip** |  optional  | Destination ip (Size range: 2-256) | string |  `ip` 
+**destinationport** |  optional  | Destination port (Default: <empty> - not used) (Size range: 1-65535) | numeric |  `port` 
+**destinationipasn** |  optional  | Destination IPASN (Size range: 2-256) | string | 
+**destinationipgeo** |  optional  | Destination IP Geo (Size range: 2-256) | string | 
+**domainname** |  optional  | Domain name (Size range: 2-256) | string |  `domain` 
+**filename** |  optional  | File name (Size range: 2-256) | string |  `file name` 
+**suricataclass** |  optional  | Suricata class (Default: <empty> - not used) | string | 
+**suricatamessage** |  optional  | Suricata message (Size range: 2-256) | string | 
+**suricatathreatlevel** |  optional  | Suricata threat level (Default: <empty> - not used) | string | 
+**suricataid** |  optional  | Suricata ID (Size range: 2-256) | string | 
+**url** |  optional  | URL (Size range: 2-256) | string |  `url` 
+**httprequestcontenttype** |  optional  | HTTP request content type (Size range: 2-256) | string | 
+**httpresponsecontenttype** |  optional  | HTTP response content type (Size range: 2-256) | string | 
+**httprequestfiletype** |  optional  | HTTP request file type (Size range: 2-256) | string | 
+**httpresponsefiletype** |  optional  | HTTP response file type (Size range: 2-256) | string | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
@@ -463,6 +479,8 @@ action_result.parameter.suricataid | string |  |
 action_result.parameter.url | string |  `url`  |  
 action_result.parameter.httprequestcontenttype | string |  |  
 action_result.parameter.httpresponsecontenttype | string |  |  
+action_result.parameter.httprequestfiletype | string |  |  
+action_result.parameter.httpresponsefiletype | string |  |  
 action_result.data.\*.summary.threatLevel | string |  |  
 action_result.data.\*.summary.detectedType | string |  |  
 action_result.data.\*.summary.lastSeen | string |  |  
