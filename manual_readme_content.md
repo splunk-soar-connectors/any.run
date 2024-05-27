@@ -5,13 +5,7 @@ Official API documentation can be found [here](https://any.run/api-documentation
 
 ## License requirements
 
-This connector is intended for customers with a 'Hunter' or 'Enterprise' subscription plans mainly, since some features provided by the connector are available with the mentioned plans only. Additionally actions provided with the connector have prefixes like:
-
-	- ANYRUN SB - indicates that action requires at least sandbox core features;
-	- ANYRUN TI - indicates that action requires threat intelligence features;
-	- ANYRUN SBTI - indicates that action requires at least sandbox core features, but some options require threat intelligence features;
-
-Information about subscription plans and features available with them can be found [here](https://app.any.run/plans/).
+This connector is intended for customers with a 'Hunter' or 'Enterprise' subscription plans mainly, since some features provided by the connector are available with the mentioned plans only. Information about subscription plans and features available with them can be found [here](https://app.any.run/plans/).
 
 ## Dependencies
 

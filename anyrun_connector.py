@@ -276,7 +276,7 @@ class AnyRunConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         domain = param["domainname"]
-        data = TI(DomainName=domain)
+        data = TI(domainname=domain)
 
         # Making an API call
         self.save_progress(f"Requesting a list of reports for a submission related to domain: {domain}.")
@@ -325,7 +325,7 @@ class AnyRunConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         ip = param["ip"]
-        data = TI(DestinationIp=ip)
+        data = TI(destinationip=ip)
 
         # Making an API call
         self.save_progress(f"Requesting a list of reports for a submission related to IP: {ip}.")
@@ -651,14 +651,14 @@ class AnyRunConnector(BaseConnector):
             if "related_incidents" in response and response["related_incidents"]:
                 for inc in response["related_incidents"]:
                     if ("process" in inc and "CommandLine" in inc["process"] and
-                        inc["process"]["CommandLine"] not in cmds):
+                            inc["process"]["CommandLine"] not in cmds):
                         cmds.append(inc["process"]["CommandLine"]
-                            .replace('\\', '\\\\')
-                            .replace('"', '\\"')
-                            .replace('|', '\\|')
-                        )
+                                    .replace('\\', '\\\\')
+                                    .replace('"', '\\"')
+                                    .replace('|', '\\|')
+                                    )
                     if ("event" in inc and "RegistryKey" in inc["event"] and
-                        inc["event"]["RegistryKey"] not in reg_keys):
+                            inc["event"]["RegistryKey"] not in reg_keys):
                         reg_keys.append(inc["event"]["RegistryKey"])
                 if cmds:
                     summary.update({
@@ -677,16 +677,16 @@ class AnyRunConnector(BaseConnector):
                         }
                     })
 
-            mutexes = []
-            if "related_mutex" in response and response["related_mutex"]:
-                for mutex in response["related_mutex"]:
-                    if mutex["name"] and mutex["name"] not in mutexes:
-                        mutexes.append(mutex["name"])
+            sync_objects = []
+            if "related_synchronization_objects" in response and response["related_synchronization_objects"]:
+                for sync_obj in response["related_synchronization_objects"]:
+                    if sync_obj["SyncObjectName"] and sync_obj["SyncObjectName"] not in sync_objects:
+                        sync_objects.append(sync_obj["SyncObjectName"])
             summary.update({
-                "Mutexes": {
-                    "str": ', '.join(mutex for mutex in mutexes),
-                    "Count": len(mutexes),
-                    "Type": "Mutexes"
+                "SynchronizationObjects": {
+                    "str": ', '.join(sync_obj for sync_obj in sync_objects),
+                    "Count": len(sync_objects),
+                    "Type": "SynchronizationObjects"
                 }
             })
 
