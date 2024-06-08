@@ -6,16 +6,17 @@
 
 # Python 3 Compatibility imports
 from __future__ import print_function, unicode_literals
+
 import re
 
 # Phantom App imports
 import phantom.app as phantom
 import phantom.rules as phantom_rules
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-
 # Usage of the consts file is recommended
-from anyrun import Configuration, TI, Sandbox, ThreatIntelligence, APIError
+from anyrun import TI, APIError, Configuration, Sandbox, ThreatIntelligence
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+
 from anyrun_consts import *  # pylint: disable=wildcard-import
 
 
@@ -650,15 +651,15 @@ class AnyRunConnector(BaseConnector):
             reg_keys = []
             if "related_incidents" in response and response["related_incidents"]:
                 for inc in response["related_incidents"]:
-                    if ("process" in inc and "CommandLine" in inc["process"] and
-                            inc["process"]["CommandLine"] not in cmds):
+                    if ("process" in inc and "CommandLine" in inc["process"] and inc["process"]["CommandLine"]
+                    not in cmds):
                         cmds.append(inc["process"]["CommandLine"]
                                     .replace('\\', '\\\\')
                                     .replace('"', '\\"')
                                     .replace('|', '\\|')
                                     )
-                    if ("event" in inc and "RegistryKey" in inc["event"] and
-                            inc["event"]["RegistryKey"] not in reg_keys):
+                    if ("event" in inc and "RegistryKey" in inc["event"] and inc["event"]["RegistryKey"]
+                    not in reg_keys):
                         reg_keys.append(inc["event"]["RegistryKey"])
                 if cmds:
                     summary.update({

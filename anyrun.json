@@ -4,8 +4,8 @@
     "description": "This app enables you to detonate files and URLs, and perform investigative actions, using the ANY.RUN interactive online malware sandbox service, thereby giving you automated analysis and advanced threat detection through an agentless sandbox.",
     "type": "sandbox",
     "product_vendor": "ANYRUN FZCO",
-    "logo": "anyrun.svg",
-    "logo_dark": "anyrun_dark.svg",
+    "logo": "logo_anyrun.svg",
+    "logo_dark": "logo_anyrun_dark.svg",
     "product_name": "ANY.RUN",
     "python_version": "3",
     "product_version_regex": ".*",
@@ -24,33 +24,27 @@
             "required": true,
             "value_list": [],
             "default": "https://api.any.run",
-            "order": 0,
-            "name": "anyrun_server",
-            "id": 0
+            "order": 0
         },
         "anyrun_api_key": {
             "description": "API Key used for API authentication",
             "data_type": "password",
             "required": true,
-            "order": 1,
-            "name": "anyrun_api_key",
-            "id": 1
+            "order": 1
         },
         "anyrun_timeout": {
             "description": "Number of seconds to wait for a request to timeout",
             "data_type": "numeric",
             "required": true,
             "default": "300",
-            "order": 2,
-            "name": "anyrun_timeout",
-            "id": 2
+            "order": 2
         }
     },
     "actions": [
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using supplied configuration.",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -60,7 +54,7 @@
         {
             "action": "url reputation",
             "identifier": "get_url_reputation",
-            "description": "Get reports of a specific URL analysis.",
+            "description": "Get reports of a specific URL analysis",
             "verbose": "This action requests a list of already completed reports of a URL analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.",
             "type": "generic",
             "read_only": true,
@@ -232,7 +226,7 @@
         {
             "action": "file reputation",
             "identifier": "get_file_reputation",
-            "description": "Get reports of a specific file analysis by that file's hash.",
+            "description": "Get reports of a specific file analysis by that file's hash",
             "verbose": "This action requests a list of already completed reports of a file analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.",
             "type": "generic",
             "read_only": true,
@@ -410,7 +404,7 @@
         {
             "action": "domain reputation",
             "identifier": "get_domain_reputation",
-            "description": "Get reports of analyses, that involve specific domain.",
+            "description": "Get reports of analyses, that involve specific domain",
             "verbose": "This action requests a list of already completed reports of analyses, where requested domain was involved. This action requires <b>ANY.RUN TI License</b>.",
             "type": "generic",
             "read_only": true,
@@ -566,7 +560,7 @@
         {
             "action": "ip reputation",
             "identifier": "get_ip_reputation",
-            "description": "Get reports of analyses, that involve specific IP.",
+            "description": "Get reports of analyses, that involve specific IP",
             "verbose": "This action requests a list of already completed reports of analyses, where requested IP was involved. This action requires <b>ANY.RUN TI License</b>.",
             "type": "generic",
             "read_only": true,
@@ -722,7 +716,7 @@
         {
             "action": "get report",
             "identifier": "get_report",
-            "description": "Get report for a submission.",
+            "description": "Get report for a submission",
             "verbose": "This action requires a submission <b>TaskID</b>.",
             "type": "investigate",
             "read_only": true,
@@ -902,7 +896,7 @@
         {
             "action": "get iocs",
             "identifier": "get_ioc",
-            "description": "Get list of IoCs for a submission.",
+            "description": "Get list of IoCs for a submission",
             "verbose": "This action requires a submission <b>TaskID</b>.",
             "type": "investigate",
             "read_only": true,
@@ -1007,7 +1001,7 @@
         {
             "action": "detonate url",
             "identifier": "detonate_url",
-            "description": "Detonate a URL.",
+            "description": "Detonate a URL",
             "verbose": "This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
@@ -1684,7 +1678,7 @@
         {
             "action": "detonate file",
             "identifier": "detonate_file",
-            "description": "Detonate a file.",
+            "description": "Detonate a file from Vault",
             "verbose": "This action requires a <b>vauld ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
@@ -2328,7 +2322,7 @@
         {
             "action": "get intelligence",
             "identifier": "get_intelligence",
-            "description": "Threat Intelligence IoC Lookup.",
+            "description": "Threat Intelligence IoC Lookup",
             "verbose": "Perform investigative actions by using the ANY.RUN Threat Intelligence Portal API method. This action requires <b>ANY.RUN TI License</b>. For more information about available parameters refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
