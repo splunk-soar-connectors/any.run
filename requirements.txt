@@ -4,5 +4,5 @@ attrs==23.2.0
 multidict==6.0.5
 yarl==1.9.4
 frozenlist==1.4.1
-aiohttp==3.9.3
+aiohttp==3.9.4
 anyrun==0.1.0
