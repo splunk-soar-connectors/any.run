@@ -42,19 +42,19 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **anyrun_timeout** |  required  | numeric | Number of seconds to wait for a request to timeout
 
 ### Supported Actions  
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration.  
-[url reputation](#action-url-reputation) - Get reports of a specific URL analysis.  
-[file reputation](#action-file-reputation) - Get reports of a specific file analysis by that file's hash.  
-[domain reputation](#action-domain-reputation) - Get reports of analyses, that involve specific domain.  
-[ip reputation](#action-ip-reputation) - Get reports of analyses, that involve specific IP.  
-[get report](#action-get-report) - Get report for a submission.  
-[get iocs](#action-get-iocs) - Get list of IoCs for a submission.  
-[detonate url](#action-detonate-url) - Detonate a URL.  
-[detonate file](#action-detonate-file) - Detonate a file.  
-[get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup.  
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration  
+[url reputation](#action-url-reputation) - Get reports of a specific URL analysis  
+[file reputation](#action-file-reputation) - Get reports of a specific file analysis by that file's hash  
+[domain reputation](#action-domain-reputation) - Get reports of analyses, that involve specific domain  
+[ip reputation](#action-ip-reputation) - Get reports of analyses, that involve specific IP  
+[get report](#action-get-report) - Get report for a submission  
+[get iocs](#action-get-iocs) - Get list of IoCs for a submission  
+[detonate url](#action-detonate-url) - Detonate a URL  
+[detonate file](#action-detonate-file) - Detonate a file from Vault  
+[get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup  
 
 ## action: 'test connectivity'
-Validate the asset configuration for connectivity using supplied configuration.
+Validate the asset configuration for connectivity using supplied configuration
 
 Type: **test**  
 Read only: **True**
@@ -66,7 +66,7 @@ No parameters are required for this action
 No Output  
 
 ## action: 'url reputation'
-Get reports of a specific URL analysis.
+Get reports of a specific URL analysis
 
 Type: **generic**  
 Read only: **True**
@@ -101,7 +101,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'file reputation'
-Get reports of a specific file analysis by that file's hash.
+Get reports of a specific file analysis by that file's hash
 
 Type: **generic**  
 Read only: **True**
@@ -136,7 +136,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'domain reputation'
-Get reports of analyses, that involve specific domain.
+Get reports of analyses, that involve specific domain
 
 Type: **generic**  
 Read only: **True**
@@ -169,7 +169,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'ip reputation'
-Get reports of analyses, that involve specific IP.
+Get reports of analyses, that involve specific IP
 
 Type: **generic**  
 Read only: **True**
@@ -202,7 +202,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'get report'
-Get report for a submission.
+Get report for a submission
 
 Type: **investigate**  
 Read only: **True**
@@ -239,7 +239,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'get iocs'
-Get list of IoCs for a submission.
+Get list of IoCs for a submission
 
 Type: **investigate**  
 Read only: **True**
@@ -265,7 +265,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'detonate url'
-Detonate a URL.
+Detonate a URL
 
 Type: **investigate**  
 Read only: **True**
@@ -329,7 +329,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'detonate file'
-Detonate a file.
+Detonate a file from Vault
 
 Type: **investigate**  
 Read only: **True**
@@ -391,7 +391,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'get intelligence'
-Threat Intelligence IoC Lookup.
+Threat Intelligence IoC Lookup
 
 Type: **investigate**  
 Read only: **True**
