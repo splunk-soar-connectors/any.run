@@ -8,7 +8,7 @@ Product Name: ANY.RUN
 Product Version Supported (regex): ".\*"  
 Minimum Product Version: 6.2.0.355  
 
-This app enables you to detonate files and URLs, and perform investigative actions, using the ANY.RUN interactive online malware sandbox service, thereby giving you automated analysis and advanced threat detection through an agentless sandbox.
+This app enables you to detonate files and URLs, and perform investigative actions, using the ANY.RUN interactive online malware sandbox service, thereby giving you automated analysis and advanced threat detection through an agentless sandbox
 
 ## Authentication
 
@@ -49,8 +49,8 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [ip reputation](#action-ip-reputation) - Get reports of analyses, that involve specific IP  
 [get report](#action-get-report) - Get report for a submission  
 [get iocs](#action-get-iocs) - Get list of IoCs for a submission  
-[detonate url](#action-detonate-url) - Detonate a URL  
-[detonate file](#action-detonate-file) - Detonate a file from Vault  
+[detonate url](#action-detonate-url) - Run a URL in the sandbox  
+[detonate file](#action-detonate-file) - Run a file in the sandbox and retrieve the analysis results  
 [get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup  
 
 ## action: 'test connectivity'
@@ -265,7 +265,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'detonate url'
-Detonate a URL
+Run a URL in the sandbox
 
 Type: **investigate**  
 Read only: **True**
@@ -329,7 +329,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'detonate file'
-Detonate a file from Vault
+Run a file in the sandbox and retrieve the analysis results
 
 Type: **investigate**  
 Read only: **True**
