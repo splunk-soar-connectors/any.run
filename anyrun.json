@@ -1001,7 +1001,7 @@
         {
             "action": "detonate url",
             "identifier": "detonate_url",
-            "description": "Run a URL in the sandbox",
+            "description": "Detonate a URL",
             "verbose": "This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
@@ -1678,7 +1678,7 @@
         {
             "action": "detonate file",
             "identifier": "detonate_file",
-            "description": "Run a file in the sandbox and retrieve the analysis results",
+            "description": "Detonate a file from Vault",
             "verbose": "This action requires a <b>vauld ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
