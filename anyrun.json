@@ -3121,5 +3121,57 @@
                 "input_file": "wheels/anyrun_py-0.1.0-py3-none-any.whl"
             }
         ]
+    },
+    "pip39_dependencies": {
+        "wheel": [
+            {
+                "module": "aiohttp",
+                "input_file": "wheels/py39/aiohttp-3.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            },
+            {
+                "module": "aiosignal",
+                "input_file": "wheels/py3/aiosignal-1.3.1-py3-none-any.whl"
+            },
+            {
+                "module": "anyrun",
+                "input_file": "wheels/shared/anyrun-0.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "async_timeout",
+                "input_file": "wheels/py3/async_timeout-4.0.3-py3-none-any.whl"
+            },
+            {
+                "module": "attrs",
+                "input_file": "wheels/py3/attrs-23.2.0-py3-none-any.whl"
+            },
+            {
+                "module": "frozenlist",
+                "input_file": "wheels/py39/frozenlist-1.4.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            },
+            {
+                "module": "idna",
+                "input_file": "wheels/py3/idna-3.7-py3-none-any.whl"
+            },
+            {
+                "module": "multidict",
+                "input_file": "wheels/py39/multidict-6.0.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            },
+            {
+                "module": "pytest_runner",
+                "input_file": "wheels/shared/pytest_runner-5.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "six",
+                "input_file": "wheels/shared/six-1.16.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "websocket_client",
+                "input_file": "wheels/shared/websocket_client-0.56.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "yarl",
+                "input_file": "wheels/py39/yarl-1.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            }
+        ]
     }
 }
