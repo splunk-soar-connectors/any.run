@@ -22,7 +22,6 @@
             "description": "ANY.RUN base URL (e.g. https://api.any.run)",
             "data_type": "string",
             "required": true,
-            "value_list": [],
             "default": "https://api.any.run",
             "order": 0
         },
@@ -67,8 +66,6 @@
                     "contains": [
                         "url"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "URL",
                     "id": 1,
@@ -77,9 +74,6 @@
                 "search_in_public_tasks": {
                     "description": "Option for searching in public tasks (requires TI license)",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 1,
                     "name": "search_in_public_tasks",
@@ -105,7 +99,7 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "column_name": "SUBMISSION ID",
+                    "column_name": "Submission ID",
                     "column_order": 0,
                     "example_values": [
                         "0cf223f2-530e-4a50-b68f-563045268648"
@@ -114,13 +108,13 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.mainObject.name",
                     "data_type": "string",
-                    "column_name": "OBJECT",
+                    "column_name": "Object",
                     "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.verdict",
                     "data_type": "string",
-                    "column_name": "VERDICT",
+                    "column_name": "Verdict",
                     "column_order": 2,
                     "example_values": [
                         "No threats detected",
@@ -131,7 +125,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.related",
                     "data_type": "string",
-                    "column_name": "REPORT URL",
+                    "column_name": "Report URL",
                     "column_order": 3,
                     "example_values": [
                         "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
@@ -140,7 +134,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.date",
                     "data_type": "string",
-                    "column_name": "DATE",
+                    "column_name": "Date",
                     "column_order": 4,
                     "example_values": [
                         "2024-01-01T00:00:00.000Z"
@@ -242,8 +236,6 @@
                         "sha1",
                         "sha256"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "Hash",
                     "id": 1,
@@ -252,9 +244,6 @@
                 "search_in_public_tasks": {
                     "description": "Option for searching in public tasks (requires TI license)",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 1,
                     "name": "search_in_public_tasks",
@@ -283,7 +272,7 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "column_name": "SUBMISSION ID",
+                    "column_name": "Submission ID",
                     "column_order": 0,
                     "example_values": [
                         "0cf223f2-530e-4a50-b68f-563045268648"
@@ -292,13 +281,13 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.mainObject.name",
                     "data_type": "string",
-                    "column_name": "OBJECT",
+                    "column_name": "Object",
                     "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.verdict",
                     "data_type": "string",
-                    "column_name": "VERDICT",
+                    "column_name": "Verdict",
                     "column_order": 2,
                     "example_values": [
                         "No threats detected",
@@ -309,7 +298,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.related",
                     "data_type": "string",
-                    "column_name": "REPORT URL",
+                    "column_name": "Report URL",
                     "column_order": 3,
                     "example_values": [
                         "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
@@ -318,7 +307,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.date",
                     "data_type": "string",
-                    "column_name": "DATE",
+                    "column_name": "Date",
                     "column_order": 4,
                     "example_values": [
                         "2024-01-01T00:00:00.000Z"
@@ -417,8 +406,6 @@
                     "contains": [
                         "domain"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "DomainName",
                     "id": 1,
@@ -439,7 +426,7 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "column_name": "SUBMISSION ID",
+                    "column_name": "Submission ID",
                     "column_order": 0,
                     "example_values": [
                         "0cf223f2-530e-4a50-b68f-563045268648"
@@ -448,13 +435,13 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.mainObject.name",
                     "data_type": "string",
-                    "column_name": "OBJECT",
+                    "column_name": "Object",
                     "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.verdict",
                     "data_type": "string",
-                    "column_name": "VERDICT",
+                    "column_name": "Verdict",
                     "column_order": 2,
                     "example_values": [
                         "No threats detected",
@@ -465,7 +452,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.related",
                     "data_type": "string",
-                    "column_name": "REPORT URL",
+                    "column_name": "Report URL",
                     "column_order": 3,
                     "example_values": [
                         "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
@@ -474,7 +461,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.date",
                     "data_type": "string",
-                    "column_name": "DATE",
+                    "column_name": "Date",
                     "column_order": 4,
                     "example_values": [
                         "2024-01-01T00:00:00.000Z"
@@ -573,8 +560,6 @@
                     "contains": [
                         "ip"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "IP",
                     "id": 1,
@@ -595,7 +580,7 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "column_name": "SUBMISSION ID",
+                    "column_name": "Submission ID",
                     "column_order": 0,
                     "example_values": [
                         "0cf223f2-530e-4a50-b68f-563045268648"
@@ -604,13 +589,13 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.mainObject.name",
                     "data_type": "string",
-                    "column_name": "OBJECT",
+                    "column_name": "Object",
                     "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.verdict",
                     "data_type": "string",
-                    "column_name": "VERDICT",
+                    "column_name": "Verdict",
                     "column_order": 2,
                     "example_values": [
                         "No threats detected",
@@ -621,7 +606,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.related",
                     "data_type": "string",
-                    "column_name": "REPORT URL",
+                    "column_name": "Report URL",
                     "column_order": 3,
                     "example_values": [
                         "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
@@ -630,7 +615,7 @@
                 {
                     "data_path": "action_result.data.*.tasks.*.date",
                     "data_type": "string",
-                    "column_name": "DATE",
+                    "column_name": "Date",
                     "column_order": 4,
                     "example_values": [
                         "2024-01-01T00:00:00.000Z"
@@ -729,8 +714,6 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "TaskID",
                     "id": 1,
@@ -744,7 +727,7 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "column_name": "SUBMISSION ID",
+                    "column_name": "Submission ID",
                     "column_order": 0,
                     "example_values": [
                         "0cf223f2-530e-4a50-b68f-563045268648"
@@ -753,7 +736,7 @@
                 {
                     "data_path": "action_result.data.*.analysis.permanentUrl",
                     "data_type": "string",
-                    "column_name": "REPORT URL",
+                    "column_name": "Report URL",
                     "column_order": 4,
                     "example_values": [
                         "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
@@ -776,7 +759,7 @@
                 {
                     "data_path": "action_result.data.*.analysis.scores.verdict.threatLevelText",
                     "data_type": "string",
-                    "column_name": "VERDICT",
+                    "column_name": "Verdict",
                     "column_order": 2,
                     "example_values": [
                         "No threats detected",
@@ -803,7 +786,7 @@
                 {
                     "data_path": "action_result.data.*.analysis.scores.specs.knownThreat",
                     "data_type": "string",
-                    "column_name": "KNOWN THREAT",
+                    "column_name": "Known Threat",
                     "column_order": 3,
                     "example_values": [
                         "false",
@@ -813,7 +796,7 @@
                 {
                     "data_path": "action_result.data.*.analysis.content.mainObject.type",
                     "data_type": "string",
-                    "column_name": "TYPE",
+                    "column_name": "Type",
                     "column_order": 1,
                     "example_values": [
                         "file",
@@ -909,8 +892,6 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "TaskID",
                     "id": 1,
@@ -938,7 +919,7 @@
                 {
                     "data_path": "action_result.data.*.ioc.*.type",
                     "data_type": "string",
-                    "column_name": "TYPE",
+                    "column_name": "Type",
                     "column_order": 1,
                     "example_values": [
                         "md5",
@@ -952,13 +933,13 @@
                 {
                     "data_path": "action_result.data.*.ioc.*.category",
                     "data_type": "string",
-                    "column_name": "CATEGORY",
+                    "column_name": "Category",
                     "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.ioc.*.reputation",
                     "data_type": "numeric",
-                    "column_name": "REPUTATION",
+                    "column_name": "Reputation",
                     "column_order": 3,
                     "example_values": [
                         0,
@@ -1014,8 +995,6 @@
                     "contains": [
                         "url"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "obj_url",
                     "id": 1,
@@ -1024,9 +1003,6 @@
                 "obj_type": {
                     "description": "Type of new task (Default: url)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "url",
                         "download"
@@ -1040,9 +1016,6 @@
                 "os": {
                     "description": "Operation System (Default: Windows10x64_complete)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "Linux22.04.2x64_office",
                         "Windows7x32_clean",
@@ -1079,10 +1052,6 @@
                 "env_locale": {
                     "description": "Operation system's language (Default: en-US)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
                     "default": "en-US",
                     "order": 3,
                     "name": "env_locale",
@@ -1092,9 +1061,6 @@
                 "opt_network_connect": {
                     "description": "Network connection state",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 4,
                     "name": "opt_network_connect",
@@ -1104,9 +1070,6 @@
                 "opt_network_fakenet": {
                     "description": "FakeNet feature status",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 5,
                     "name": "opt_network_fakenet",
@@ -1116,9 +1079,6 @@
                 "opt_network_tor": {
                     "description": "TOR using",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 6,
                     "name": "opt_network_tor",
@@ -1128,9 +1088,6 @@
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "fastest",
                         "AU",
@@ -1153,9 +1110,6 @@
                 "opt_network_mitm": {
                     "description": "HTTPS MITM proxy option",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 8,
                     "name": "opt_network_mitm",
@@ -1165,9 +1119,6 @@
                 "opt_network_residential_proxy": {
                     "description": "Residential proxy using",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 9,
                     "name": "opt_network_residential_proxy",
@@ -1177,16 +1128,12 @@
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "fastest",
                         "AD",
                         "AE",
                         "AF",
                         "AG",
-                        "AL",
                         "AL",
                         "AM",
                         "AO",
@@ -1382,9 +1329,6 @@
                 "opt_kernel_heavyevasion": {
                     "description": "Heavy evasion option",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 11,
                     "name": "opt_kernel_heavyevasion",
@@ -1394,9 +1338,6 @@
                 "opt_privacy_type": {
                     "description": "Privacy settings (Default: bylink)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "bylink",
                         "public",
@@ -1412,10 +1353,6 @@
                 "opt_timeout": {
                     "description": "Timeout option (seconds) (Default: 60) (Size range: 10-1200)",
                     "data_type": "numeric",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
                     "default": "60",
                     "order": 13,
                     "name": "opt_timeout",
@@ -1425,9 +1362,6 @@
                 "opt_automated_interactivity": {
                     "description": "Automated Interactivity (ML) option",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 14,
                     "name": "opt_automated_interactivity",
@@ -1437,9 +1371,6 @@
                 "obj_ext_startfolder": {
                     "description": "Start object from (Default: temp)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "desktop",
                         "home",
@@ -1458,11 +1389,6 @@
                 "obj_ext_cmd": {
                     "description": "Optional command line (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 16,
                     "name": "obj_ext_cmd",
                     "id": 17,
@@ -1471,9 +1397,6 @@
                 "obj_ext_browser": {
                     "description": "Browser name (Default: Google Chrome)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "Google Chrome",
                         "Mozilla Firefox",
@@ -1489,11 +1412,6 @@
                 "obj_ext_useragent": {
                     "description": "User agent (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 18,
                     "name": "obj_ext_useragent",
                     "id": 19,
@@ -1502,9 +1420,6 @@
                 "obj_ext_extension": {
                     "description": "Change extension to valid",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 19,
                     "name": "obj_ext_extension",
@@ -1514,9 +1429,6 @@
                 "opt_privacy_hidesource": {
                     "description": "Option for hiding of source URL",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 20,
                     "name": "opt_privacy_hidesource",
@@ -1541,7 +1453,7 @@
                         "url",
                         "download"
                     ],
-                    "column_name": "TYPE",
+                    "column_name": "Type",
                     "column_order": 1
                 },
                 {
@@ -1626,7 +1538,7 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "column_name": "SUBMISSION ID",
+                    "column_name": "Submission ID",
                     "column_order": 3,
                     "example_values": [
                         "0cf223f2-530e-4a50-b68f-563045268648"
@@ -1635,7 +1547,7 @@
                 {
                     "data_path": "action_result.data.*.permanentUrl",
                     "data_type": "string",
-                    "column_name": "REPORT URL",
+                    "column_name": "Report URL",
                     "column_order": 4,
                     "example_values": [
                         "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
@@ -1691,8 +1603,6 @@
                     "contains": [
                         "vault id"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "vault_id",
                     "id": 1,
@@ -1701,9 +1611,6 @@
                 "os": {
                     "description": "Operation System (Default: Windows10x64_complete)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "Linux22.04.2x64_office",
                         "Windows7x32_clean",
@@ -1740,10 +1647,6 @@
                 "env_locale": {
                     "description": "Operation system's language (Default: en-US)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
                     "default": "en-US",
                     "order": 2,
                     "name": "env_locale",
@@ -1753,9 +1656,6 @@
                 "opt_network_connect": {
                     "description": "Network connection state",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 3,
                     "name": "opt_network_connect",
@@ -1765,9 +1665,6 @@
                 "opt_network_fakenet": {
                     "description": "FakeNet feature status",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 4,
                     "name": "opt_network_fakenet",
@@ -1777,9 +1674,6 @@
                 "opt_network_tor": {
                     "description": "TOR using",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 5,
                     "name": "opt_network_tor",
@@ -1789,9 +1683,6 @@
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "fastest",
                         "AU",
@@ -1814,9 +1705,6 @@
                 "opt_network_mitm": {
                     "description": "HTTPS MITM proxy option",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 7,
                     "name": "opt_network_mitm",
@@ -1826,9 +1714,6 @@
                 "opt_network_residential_proxy": {
                     "description": "Residential proxy using",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 8,
                     "name": "opt_network_residential_proxy",
@@ -1838,16 +1723,12 @@
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "fastest",
                         "AD",
                         "AE",
                         "AF",
                         "AG",
-                        "AL",
                         "AL",
                         "AM",
                         "AO",
@@ -2043,9 +1924,6 @@
                 "opt_kernel_heavyevasion": {
                     "description": "Heavy evasion option",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 10,
                     "name": "opt_kernel_heavyevasion",
@@ -2055,9 +1933,6 @@
                 "opt_privacy_type": {
                     "description": "Privacy settings (Default: bylink)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "bylink",
                         "public",
@@ -2073,10 +1948,6 @@
                 "opt_timeout": {
                     "description": "Timeout option (seconds) (Default: 60) (Size range: 10-660)",
                     "data_type": "numeric",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
                     "default": "60",
                     "order": 12,
                     "name": "opt_timeout",
@@ -2086,9 +1957,6 @@
                 "opt_automated_interactivity": {
                     "description": "Automated Interactivity (ML) option",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 13,
                     "name": "opt_automated_interactivity",
@@ -2098,9 +1966,6 @@
                 "obj_ext_startfolder": {
                     "description": "Start object from (Default: temp)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "desktop",
                         "home",
@@ -2119,11 +1984,6 @@
                 "obj_ext_cmd": {
                     "description": "Optional command line (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 15,
                     "name": "obj_ext_cmd",
                     "id": 16,
@@ -2132,9 +1992,6 @@
                 "obj_ext_elevateprompt": {
                     "description": "Encounter UAC prompts",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 16,
                     "name": "obj_ext_elevateprompt",
@@ -2144,9 +2001,6 @@
                 "auto_confirm_uac": {
                     "description": "Auto confirm Windows UAC requests. Not applicable for Linux , use run_as_root instead",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 17,
                     "name": "auto_confirm_uac",
@@ -2156,9 +2010,6 @@
                 "run_as_root": {
                     "description": "Run file with superuser privileges. Not applicable for Windows, use auto_confirm_uac instead. Used only for file type",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": false,
                     "order": 18,
                     "name": "run_as_root",
@@ -2168,9 +2019,6 @@
                 "obj_ext_extension": {
                     "description": "Change extension to valid",
                     "data_type": "boolean",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "default": true,
                     "order": 19,
                     "name": "obj_ext_extension",
@@ -2185,7 +2033,7 @@
                     "contains": [
                         "vault id"
                     ],
-                    "column_name": "VAULT ID",
+                    "column_name": "Vault ID",
                     "column_order": 0
                 },
                 {
@@ -2270,7 +2118,7 @@
                     "contains": [
                         "anyrun task id"
                     ],
-                    "column_name": "SUBMISSION ID",
+                    "column_name": "Submission ID",
                     "column_order": 2,
                     "example_values": [
                         "0cf223f2-530e-4a50-b68f-563045268648"
@@ -2279,7 +2127,7 @@
                 {
                     "data_path": "action_result.data.*.permanentUrl",
                     "data_type": "string",
-                    "column_name": "REPORT URL",
+                    "column_name": "Report URL",
                     "column_order": 3,
                     "example_values": [
                         "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
@@ -2330,14 +2178,11 @@
                 "sha256": {
                     "description": "Sha256 (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "hash",
                         "sha256"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "Sha256",
                     "id": 1,
@@ -2346,14 +2191,11 @@
                 "sha1": {
                     "description": "Sha1 (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "hash",
                         "sha1"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 1,
                     "name": "Sha1",
                     "id": 2,
@@ -2362,14 +2204,11 @@
                 "md5": {
                     "description": "MD5 (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "hash",
                         "md5"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 2,
                     "name": "MD5",
                     "id": 3,
@@ -2378,11 +2217,6 @@
                 "threatname": {
                     "description": "Name of threat (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 3,
                     "name": "ThreatName",
                     "id": 4,
@@ -2391,15 +2225,11 @@
                 "threatlevel": {
                     "description": "Threat level (Default: <empty>)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "malicious",
                         "suspicious",
                         "info"
                     ],
-                    "default": "",
                     "order": 4,
                     "name": "ThreatLevel",
                     "id": 5,
@@ -2408,14 +2238,10 @@
                 "tasktype": {
                     "description": "Task run type (Default: <empty>)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "file",
                         "url"
                     ],
-                    "default": "",
                     "order": 5,
                     "name": "TaskType",
                     "id": 6,
@@ -2424,11 +2250,6 @@
                 "submissioncountry": {
                     "description": "Submission country (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 6,
                     "name": "SubmissionCountry",
                     "id": 7,
@@ -2437,16 +2258,12 @@
                 "os": {
                     "description": "Operation system (Default: <empty> - not used)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "Windows 7",
                         "Windows 8",
                         "Windows 10",
                         "Windows 11"
                     ],
-                    "default": "",
                     "order": 7,
                     "name": "OS",
                     "id": 8,
@@ -2455,15 +2272,11 @@
                 "ossoftwareset": {
                     "description": "Operation system software (Default: <empty> - not used)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "clean",
                         "office",
                         "complete"
                     ],
-                    "default": "",
                     "order": 8,
                     "name": "OSSoftwareSet",
                     "id": 9,
@@ -2472,14 +2285,10 @@
                 "osbitversion": {
                     "description": "Operation system bitness (Default: <empty> - not used)",
                     "data_type": "numeric",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "32",
                         "64"
                     ],
-                    "default": "",
                     "order": 9,
                     "name": "OSBitVersion",
                     "id": 10,
@@ -2488,11 +2297,6 @@
                 "registrykey": {
                     "description": "Registry key (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 10,
                     "name": "RegistryKey",
                     "id": 11,
@@ -2501,11 +2305,6 @@
                 "registryname": {
                     "description": "Registry name (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 11,
                     "name": "RegistryName",
                     "id": 12,
@@ -2514,11 +2313,6 @@
                 "registryvalue": {
                     "description": "Registry value (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 12,
                     "name": "RegistryValue",
                     "id": 13,
@@ -2527,13 +2321,10 @@
                 "moduleimagepath": {
                     "description": "Module image path (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "file path"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 13,
                     "name": "ModuleImagePath",
                     "id": 14,
@@ -2542,15 +2333,11 @@
                 "rulethreatlevel": {
                     "description": "Rule threat level (Default: <empty> - not used)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "suspicious",
                         "malicious",
                         "info"
                     ],
-                    "default": "",
                     "order": 14,
                     "name": "RuleThreatLevel",
                     "id": 15,
@@ -2559,11 +2346,6 @@
                 "rulename": {
                     "description": "Rule name (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 15,
                     "name": "RuleName",
                     "id": 16,
@@ -2572,11 +2354,6 @@
                 "mitre": {
                     "description": "MITRE (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 16,
                     "name": "MITRE",
                     "id": 17,
@@ -2585,13 +2362,10 @@
                 "imagepath": {
                     "description": "Process image path (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "file path"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 17,
                     "name": "ImagePath",
                     "id": 18,
@@ -2600,13 +2374,10 @@
                 "commandline": {
                     "description": "Command line (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "process name"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 18,
                     "name": "CommandLine",
                     "id": 19,
@@ -2615,14 +2386,10 @@
                 "injectedflag": {
                     "description": "Injected flag (Default: <empty> - not used)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "true",
                         "false"
                     ],
-                    "default": "",
                     "order": 19,
                     "name": "InjectedFlag",
                     "id": 20,
@@ -2631,13 +2398,10 @@
                 "destinationip": {
                     "description": "Destination ip (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "ip"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 20,
                     "name": "DestinationIp",
                     "id": 21,
@@ -2646,13 +2410,10 @@
                 "destinationport": {
                     "description": "Destination port (Default: <empty> - not used) (Size range: 1-65535)",
                     "data_type": "numeric",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "port"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 21,
                     "name": "DestinationPort",
                     "id": 22,
@@ -2661,11 +2422,6 @@
                 "destinationipasn": {
                     "description": "Destination IPASN (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 22,
                     "name": "DestinationIPASN",
                     "id": 23,
@@ -2674,11 +2430,6 @@
                 "destinationipgeo": {
                     "description": "Destination IP Geo (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 23,
                     "name": "DestinationIPGeo",
                     "id": 24,
@@ -2687,13 +2438,10 @@
                 "domainname": {
                     "description": "Domain name (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "domain"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 24,
                     "name": "DomainName",
                     "id": 25,
@@ -2702,13 +2450,10 @@
                 "filename": {
                     "description": "File name (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "file name"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 25,
                     "name": "FileName",
                     "id": 26,
@@ -2717,9 +2462,6 @@
                 "suricataclass": {
                     "description": "Suricata class (Default: <empty> - not used)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "unknown",
                         "A Network Trojan was detected",
@@ -2732,7 +2474,6 @@
                         "Potential Corporate Privacy Violation",
                         "Potentially Bad Traffic"
                     ],
-                    "default": "",
                     "order": 26,
                     "name": "SuricataClass",
                     "id": 27,
@@ -2741,11 +2482,6 @@
                 "suricatamessage": {
                     "description": "Suricata message (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 27,
                     "name": "SuricataMessage",
                     "id": 28,
@@ -2754,15 +2490,11 @@
                 "suricatathreatlevel": {
                     "description": "Suricata threat level (Default: <empty> - not used)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
                     "value_list": [
                         "malicious",
                         "suspicious",
                         "info"
                     ],
-                    "default": "",
                     "order": 28,
                     "name": "SuricataThreatLevel",
                     "id": 29,
@@ -2771,11 +2503,6 @@
                 "suricataid": {
                     "description": "Suricata ID (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 29,
                     "name": "SuricataID",
                     "id": 30,
@@ -2784,13 +2511,10 @@
                 "url": {
                     "description": "URL (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "url"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 30,
                     "name": "URL",
                     "id": 31,
@@ -2799,11 +2523,6 @@
                 "httprequestcontenttype": {
                     "description": "HTTP request content type (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 31,
                     "name": "HTTPRequestContentType",
                     "id": 32,
@@ -2812,11 +2531,6 @@
                 "httpresponsecontenttype": {
                     "description": "HTTP response content type (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 32,
                     "name": "HTTPResponseContentType",
                     "id": 33,
@@ -2825,11 +2539,6 @@
                 "httprequestfiletype": {
                     "description": "HTTP request file type (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 33,
                     "name": "HTTPRequestFileType",
                     "id": 34,
@@ -2838,11 +2547,6 @@
                 "httpresponsefiletype": {
                     "description": "HTTP response file type (Size range: 2-256)",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 34,
                     "name": "HTTPResponseFileType",
                     "id": 35,
@@ -3038,19 +2742,19 @@
                 {
                     "data_path": "action_result.summary.*.Type",
                     "data_type": "string",
-                    "column_name": "TYPE",
+                    "column_name": "Type",
                     "column_order": 0
                 },
                 {
                     "data_path": "action_result.summary.*.Count",
                     "data_type": "numeric",
-                    "column_name": "COUNT",
+                    "column_name": "Count",
                     "column_order": 1
                 },
                 {
                     "data_path": "action_result.summary.*.str",
                     "data_type": "string",
-                    "column_name": "STR",
+                    "column_name": "Str",
                     "column_order": 2
                 },
                 {
