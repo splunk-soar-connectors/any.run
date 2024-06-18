@@ -1326,15 +1326,6 @@
                     "id": 11,
                     "param_name": "opt_network_residential_proxy_geo"
                 },
-                "opt_kernel_heavyevasion": {
-                    "description": "Heavy evasion option",
-                    "data_type": "boolean",
-                    "default": false,
-                    "order": 11,
-                    "name": "opt_kernel_heavyevasion",
-                    "id": 12,
-                    "param_name": "opt_kernel_heavyevasion"
-                },
                 "opt_privacy_type": {
                     "description": "Privacy settings (Default: bylink)",
                     "data_type": "string",
@@ -1345,27 +1336,27 @@
                         "team"
                     ],
                     "default": "bylink",
-                    "order": 12,
+                    "order": 11,
                     "name": "opt_privacy_type",
-                    "id": 13,
+                    "id": 12,
                     "param_name": "opt_privacy_type"
                 },
                 "opt_timeout": {
                     "description": "Timeout option (seconds) (Default: 60) (Size range: 10-1200)",
                     "data_type": "numeric",
                     "default": "60",
-                    "order": 13,
+                    "order": 12,
                     "name": "opt_timeout",
-                    "id": 14,
+                    "id": 13,
                     "param_name": "opt_timeout"
                 },
                 "opt_automated_interactivity": {
                     "description": "Automated Interactivity (ML) option",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 14,
+                    "order": 13,
                     "name": "opt_automated_interactivity",
-                    "id": 15,
+                    "id": 14,
                     "param_name": "opt_automated_interactivity"
                 },
                 "obj_ext_startfolder": {
@@ -1381,17 +1372,17 @@
                         "root"
                     ],
                     "default": "temp",
-                    "order": 15,
+                    "order": 14,
                     "name": "obj_ext_startfolder",
-                    "id": 16,
+                    "id": 15,
                     "param_name": "obj_ext_startfolder"
                 },
                 "obj_ext_cmd": {
                     "description": "Optional command line (Size range: 2-256)",
                     "data_type": "string",
-                    "order": 16,
+                    "order": 15,
                     "name": "obj_ext_cmd",
-                    "id": 17,
+                    "id": 16,
                     "param_name": "obj_ext_cmd"
                 },
                 "obj_ext_browser": {
@@ -1404,35 +1395,35 @@
                         "Internet Explorer"
                     ],
                     "default": "Google Chrome",
-                    "order": 17,
+                    "order": 16,
                     "name": "obj_ext_browser",
-                    "id": 18,
+                    "id": 17,
                     "param_name": "obj_ext_browser"
                 },
                 "obj_ext_useragent": {
                     "description": "User agent (Size range: 2-256)",
                     "data_type": "string",
-                    "order": 18,
+                    "order": 17,
                     "name": "obj_ext_useragent",
-                    "id": 19,
+                    "id": 18,
                     "param_name": "obj_ext_useragent"
                 },
                 "obj_ext_extension": {
                     "description": "Change extension to valid",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 19,
+                    "order": 18,
                     "name": "obj_ext_extension",
-                    "id": 20,
+                    "id": 19,
                     "param_name": "obj_ext_extension"
                 },
                 "opt_privacy_hidesource": {
                     "description": "Option for hiding of source URL",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 20,
+                    "order": 19,
                     "name": "opt_privacy_hidesource",
-                    "id": 21,
+                    "id": 20,
                     "param_name": "opt_privacy_hidesource"
                 }
             },
@@ -1491,10 +1482,6 @@
                 {
                     "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
                     "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_kernel_heavyevasion",
-                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.parameter.opt_privacy_type",
@@ -1921,15 +1908,6 @@
                     "id": 10,
                     "param_name": "opt_network_residential_proxy_geo"
                 },
-                "opt_kernel_heavyevasion": {
-                    "description": "Heavy evasion option",
-                    "data_type": "boolean",
-                    "default": false,
-                    "order": 10,
-                    "name": "opt_kernel_heavyevasion",
-                    "id": 11,
-                    "param_name": "opt_kernel_heavyevasion"
-                },
                 "opt_privacy_type": {
                     "description": "Privacy settings (Default: bylink)",
                     "data_type": "string",
@@ -1940,27 +1918,27 @@
                         "team"
                     ],
                     "default": "bylink",
-                    "order": 11,
+                    "order": 10,
                     "name": "opt_privacy_type",
-                    "id": 12,
+                    "id": 11,
                     "param_name": "opt_privacy_type"
                 },
                 "opt_timeout": {
                     "description": "Timeout option (seconds) (Default: 60) (Size range: 10-660)",
                     "data_type": "numeric",
                     "default": "60",
-                    "order": 12,
+                    "order": 11,
                     "name": "opt_timeout",
-                    "id": 13,
+                    "id": 12,
                     "param_name": "opt_timeout"
                 },
                 "opt_automated_interactivity": {
                     "description": "Automated Interactivity (ML) option",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 13,
+                    "order": 12,
                     "name": "opt_automated_interactivity",
-                    "id": 14,
+                    "id": 13,
                     "param_name": "opt_automated_interactivity"
                 },
                 "obj_ext_startfolder": {
@@ -1976,53 +1954,53 @@
                         "root"
                     ],
                     "default": "temp",
-                    "order": 14,
+                    "order": 13,
                     "name": "obj_ext_startfolder",
-                    "id": 15,
+                    "id": 14,
                     "param_name": "obj_ext_startfolder"
                 },
                 "obj_ext_cmd": {
                     "description": "Optional command line (Size range: 2-256)",
                     "data_type": "string",
-                    "order": 15,
+                    "order": 14,
                     "name": "obj_ext_cmd",
-                    "id": 16,
+                    "id": 15,
                     "param_name": "obj_ext_cmd"
                 },
                 "obj_ext_elevateprompt": {
                     "description": "Encounter UAC prompts",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 16,
+                    "order": 15,
                     "name": "obj_ext_elevateprompt",
-                    "id": 17,
+                    "id": 16,
                     "param_name": "obj_ext_elevateprompt"
                 },
                 "auto_confirm_uac": {
                     "description": "Auto confirm Windows UAC requests. Not applicable for Linux , use run_as_root instead",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 17,
+                    "order": 16,
                     "name": "auto_confirm_uac",
-                    "id": 18,
+                    "id": 17,
                     "param_name": "auto_confirm_uac"
                 },
                 "run_as_root": {
                     "description": "Run file with superuser privileges. Not applicable for Windows, use auto_confirm_uac instead. Used only for file type",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 18,
+                    "order": 17,
                     "name": "run_as_root",
-                    "id": 19,
+                    "id": 18,
                     "param_name": "run_as_root"
                 },
                 "obj_ext_extension": {
                     "description": "Change extension to valid",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 19,
+                    "order": 18,
                     "name": "obj_ext_extension",
-                    "id": 20,
+                    "id": 19,
                     "param_name": "obj_ext_extension"
                 }
             },
@@ -2071,10 +2049,6 @@
                 {
                     "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
                     "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_kernel_heavyevasion",
-                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.parameter.opt_privacy_type",
@@ -2859,6 +2833,10 @@
             {
                 "module": "yarl",
                 "input_file": "wheels/py39/yarl-1.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            },
+            {
+                "module": "anyrun",
+                "input_file": "wheels/py3/anyrun_py-0.1.0-py3-none-any.whl"
             }
         ]
     }
