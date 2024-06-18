@@ -286,7 +286,6 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **opt_network_mitm** |  optional  | HTTPS MITM proxy option | boolean | 
 **opt_network_residential_proxy** |  optional  | Residential proxy using | boolean | 
 **opt_network_residential_proxy_geo** |  optional  | Residential proxy geo location option (Default: fastest) | string | 
-**opt_kernel_heavyevasion** |  optional  | Heavy evasion option | boolean | 
 **opt_privacy_type** |  optional  | Privacy settings (Default: bylink) | string | 
 **opt_timeout** |  optional  | Timeout option (seconds) (Default: 60) (Size range: 10-1200) | numeric | 
 **opt_automated_interactivity** |  optional  | Automated Interactivity (ML) option | boolean | 
@@ -311,7 +310,6 @@ action_result.parameter.opt_network_geo | string |  |
 action_result.parameter.opt_network_mitm | boolean |  |  
 action_result.parameter.opt_network_residential_proxy | boolean |  |  
 action_result.parameter.opt_network_residential_proxy_geo | string |  |  
-action_result.parameter.opt_kernel_heavyevasion | boolean |  |  
 action_result.parameter.opt_privacy_type | string |  |  
 action_result.parameter.opt_timeout | numeric |  |  
 action_result.parameter.opt_automated_interactivity | boolean |  |  
@@ -349,7 +347,6 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **opt_network_mitm** |  optional  | HTTPS MITM proxy option | boolean | 
 **opt_network_residential_proxy** |  optional  | Residential proxy using | boolean | 
 **opt_network_residential_proxy_geo** |  optional  | Residential proxy geo location option (Default: fastest) | string | 
-**opt_kernel_heavyevasion** |  optional  | Heavy evasion option | boolean | 
 **opt_privacy_type** |  optional  | Privacy settings (Default: bylink) | string | 
 **opt_timeout** |  optional  | Timeout option (seconds) (Default: 60) (Size range: 10-660) | numeric | 
 **opt_automated_interactivity** |  optional  | Automated Interactivity (ML) option | boolean | 
@@ -373,7 +370,6 @@ action_result.parameter.opt_network_geo | string |  |
 action_result.parameter.opt_network_mitm | boolean |  |  
 action_result.parameter.opt_network_residential_proxy | boolean |  |  
 action_result.parameter.opt_network_residential_proxy_geo | string |  |  
-action_result.parameter.opt_kernel_heavyevasion | boolean |  |  
 action_result.parameter.opt_privacy_type | string |  |  
 action_result.parameter.opt_timeout | numeric |  |  
 action_result.parameter.opt_automated_interactivity | boolean |  |  
