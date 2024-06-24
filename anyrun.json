@@ -36,7 +36,7 @@
             "description": "Number of seconds to wait for a request to timeout",
             "data_type": "numeric",
             "required": true,
-            "default": "300",
+            "default": 300,
             "order": 2
         }
     },
@@ -56,7 +56,7 @@
             "identifier": "get_url_reputation",
             "description": "Get reports of a specific URL analysis",
             "verbose": "This action requests a list of already completed reports of a URL analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.",
-            "type": "generic",
+            "type": "investigate",
             "read_only": true,
             "parameters": {
                 "url": {
@@ -223,7 +223,7 @@
             "identifier": "get_file_reputation",
             "description": "Get reports of a specific file analysis by that file's hash",
             "verbose": "This action requests a list of already completed reports of a file analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.",
-            "type": "generic",
+            "type": "investigate",
             "read_only": true,
             "parameters": {
                 "hash": {
@@ -396,7 +396,7 @@
             "identifier": "get_domain_reputation",
             "description": "Get reports of analyses, that involve specific domain",
             "verbose": "This action requests a list of already completed reports of analyses, where requested domain was involved. This action requires <b>ANY.RUN TI License</b>.",
-            "type": "generic",
+            "type": "investigate",
             "read_only": true,
             "parameters": {
                 "domainname": {
@@ -550,7 +550,7 @@
             "identifier": "get_ip_reputation",
             "description": "Get reports of analyses, that involve specific IP",
             "verbose": "This action requests a list of already completed reports of analyses, where requested IP was involved. This action requires <b>ANY.RUN TI License</b>.",
-            "type": "generic",
+            "type": "investigate",
             "read_only": true,
             "parameters": {
                 "ip": {
