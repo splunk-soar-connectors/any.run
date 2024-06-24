@@ -16,6 +16,7 @@
     "package_name": "phantom_any.run",
     "main_module": "anyrun_connector.py",
     "min_phantom_version": "6.2.0.355",
+    "fips_compliant": false,
     "app_wizard_version": "1.0.0",
     "configuration": {
         "anyrun_server": {
