@@ -68,7 +68,7 @@ No Output
 ## action: 'url reputation'
 Get reports of a specific URL analysis
 
-Type: **generic**  
+Type: **investigate**  
 Read only: **True**
 
 This action requests a list of already completed reports of a URL analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.
@@ -103,7 +103,7 @@ summary.total_objects_successful | numeric |  |   1
 ## action: 'file reputation'
 Get reports of a specific file analysis by that file's hash
 
-Type: **generic**  
+Type: **investigate**  
 Read only: **True**
 
 This action requests a list of already completed reports of a file analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.
@@ -138,7 +138,7 @@ summary.total_objects_successful | numeric |  |   1
 ## action: 'domain reputation'
 Get reports of analyses, that involve specific domain
 
-Type: **generic**  
+Type: **investigate**  
 Read only: **True**
 
 This action requests a list of already completed reports of analyses, where requested domain was involved. This action requires <b>ANY.RUN TI License</b>.
@@ -171,7 +171,7 @@ summary.total_objects_successful | numeric |  |   1
 ## action: 'ip reputation'
 Get reports of analyses, that involve specific IP
 
-Type: **generic**  
+Type: **investigate**  
 Read only: **True**
 
 This action requests a list of already completed reports of analyses, where requested IP was involved. This action requires <b>ANY.RUN TI License</b>.
