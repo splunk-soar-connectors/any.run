@@ -198,7 +198,7 @@ class AnyRunConnector(BaseConnector):
                 if "uuid" not in task:
                     task.update({"uuid": task["related"].rsplit("/")[-1]})
                 if "verdict" not in task:
-                    task.update({"verdict": levels[task["ThreatLevel"]]})
+                    task.update({"verdict": levels[task["threatLevel"]]})
                 if "mainObject" not in task:
                     task.update({"mainObject": {
                         "name": task.pop("name"),
@@ -257,7 +257,7 @@ class AnyRunConnector(BaseConnector):
                 if "uuid" not in task:
                     task.update({"uuid": task["related"].rsplit("/")[-1]})
                 if "verdict" not in task:
-                    task.update({"verdict": levels[task["ThreatLevel"]]})
+                    task.update({"verdict": levels[task["threatLevel"]]})
                 if "mainObject" not in task:
                     task.update({"mainObject": {
                         "name": task.pop("name"),
@@ -291,7 +291,7 @@ class AnyRunConnector(BaseConnector):
         self.save_progress(f"Requesting a list of reports for a submission related to domain: {domain}.")
         try:
             error_message = None
-            tasks = self._anyrun_threat_intelligence.get_intelligence(data)["source_tasks"]
+            tasks = self._anyrun_threat_intelligence.get_intelligence(data)["sourceTasks"]
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
         except Exception as exc:  # pylint: disable=broad-except
@@ -311,7 +311,7 @@ class AnyRunConnector(BaseConnector):
                 2: "Malicious activity"
             }
             for task in tasks:
-                task.update({"verdict": levels[task["ThreatLevel"]]})
+                task.update({"verdict": levels[task["threatLevel"]]})
             action_result.add_data({"tasks": tasks})
             action_result.update_summary({
                 'total_objects': len(tasks)
@@ -340,7 +340,7 @@ class AnyRunConnector(BaseConnector):
         self.save_progress(f"Requesting a list of reports for a submission related to IP: {ip}.")
         try:
             error_message = None
-            tasks = self._anyrun_threat_intelligence.get_intelligence(data)["source_tasks"]
+            tasks = self._anyrun_threat_intelligence.get_intelligence(data)["sourceTasks"]
         except APIError as exc:
             error_message = self._get_error_message_from_exception(exc)
         except Exception as exc:  # pylint: disable=broad-except
@@ -360,7 +360,7 @@ class AnyRunConnector(BaseConnector):
                 2: "Malicious activity"
             }
             for task in tasks:
-                task.update({"verdict": levels[task["ThreatLevel"]]})
+                task.update({"verdict": levels[task["threatLevel"]]})
             action_result.add_data({"tasks": tasks})
             action_result.update_summary({
                 'total_objects': len(tasks)
@@ -615,28 +615,28 @@ class AnyRunConnector(BaseConnector):
             action_result.add_data({key: value for key, value in response.items() if value != []})
             summary = {
                 "MD5": {
-                    "str": ', '.join(file["hashes"]["md5"] for file in response["related_files"]),
-                    "Count": len(response["related_files"]),
+                    "str": ', '.join(file["hashes"]["md5"] for file in response["relatedFiles"]),
+                    "Count": len(response["relatedFiles"]),
                     "Type": "MD5"
                 },
                 "SHA1": {
-                    "str": ', '.join(file["hashes"]["sha1"] for file in response["related_files"]),
-                    "Count": len(response["related_files"]),
+                    "str": ', '.join(file["hashes"]["sha1"] for file in response["relatedFiles"]),
+                    "Count": len(response["relatedFiles"]),
                     "Type": "SHA1"
                 },
                 "SHA256": {
-                    "str": ', '.join(file["hashes"]["sha256"] for file in response["related_files"]),
-                    "Count": len(response["related_files"]),
+                    "str": ', '.join(file["hashes"]["sha256"] for file in response["relatedFiles"]),
+                    "Count": len(response["relatedFiles"]),
                     "Type": "SHA256"
                 }
             }
 
             # (<field_name>, <subfield_name>, <type>)
             fields = [
-                ("related_urls", "URL", "URL"),
-                ("DestinationIp", "DestinationIp", "IP"),
-                ("related_dns", "DomainName", "DomainNames"),
-                ("source_tasks", "related", "Tasks")
+                ("relatedURLs", "url", "URL"),
+                ("destinationIP", "destinationIP", "IP"),
+                ("relatedDNS", "domainName", "DomainNames"),
+                ("sourceTasks", "related", "Tasks")
             ]
             level = ["unknown", "suspicious", "malicious", "whitelisted", "shared"]
             for field in fields:
@@ -644,7 +644,7 @@ class AnyRunConnector(BaseConnector):
                 # if field exists in response and it's value is not empty
                 if field[0] in response and response[field[0]]:
                     for item in response[field[0]]:
-                        result[item["ThreatLevel"]].append(item[field[1]])
+                        result[item["threatLevel"]].append(item[field[1]])
                     for key, lst in result.items():
                         if lst:
                             summary.update({
@@ -657,18 +657,18 @@ class AnyRunConnector(BaseConnector):
 
             cmds = []
             reg_keys = []
-            if "related_incidents" in response and response["related_incidents"]:
-                for inc in response["related_incidents"]:
-                    if ("process" in inc and "CommandLine" in inc["process"] and inc["process"]["CommandLine"]
+            if "relatedIncidents" in response and response["relatedIncidents"]:
+                for inc in response["relatedIncidents"]:
+                    if ("process" in inc and "commandLine" in inc["process"] and inc["process"]["commandLine"]
                     not in cmds):
-                        cmds.append(inc["process"]["CommandLine"]
+                        cmds.append(inc["process"]["commandLine"]
                                     .replace('\\', '\\\\')
                                     .replace('"', '\\"')
                                     .replace('|', '\\|')
                                     )
-                    if ("event" in inc and "RegistryKey" in inc["event"] and inc["event"]["RegistryKey"]
+                    if ("event" in inc and "registryKey" in inc["event"] and inc["event"]["registryKey"]
                     not in reg_keys):
-                        reg_keys.append(inc["event"]["RegistryKey"])
+                        reg_keys.append(inc["event"]["registryKey"])
                 if cmds:
                     summary.update({
                         "CommandLines": {
@@ -687,10 +687,10 @@ class AnyRunConnector(BaseConnector):
                     })
 
             sync_objects = []
-            if "related_synchronization_objects" in response and response["related_synchronization_objects"]:
-                for sync_obj in response["related_synchronization_objects"]:
-                    if sync_obj["SyncObjectName"] and sync_obj["SyncObjectName"] not in sync_objects:
-                        sync_objects.append(sync_obj["SyncObjectName"])
+            if "relatedSynchronizationObjects" in response and response["relatedSynchronizationObjects"]:
+                for sync_obj in response["relatedSynchronizationObjects"]:
+                    if sync_obj["syncObjectName"] and sync_obj["syncObjectName"] not in sync_objects:
+                        sync_objects.append(sync_obj["syncObjectName"])
             summary.update({
                 "SynchronizationObjects": {
                     "str": ', '.join(sync_obj for sync_obj in sync_objects),
@@ -700,7 +700,7 @@ class AnyRunConnector(BaseConnector):
             })
 
             tags = []
-            for task in response["source_tasks"]:
+            for task in response["sourceTasks"]:
                 for tag in task["tags"]:
                     if tag not in tags:
                         tags.append(tag)

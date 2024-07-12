@@ -2793,7 +2793,7 @@
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/aiohttp-3.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/aiohttp-3.9.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "anyrun",
@@ -2805,7 +2805,7 @@
         "wheel": [
             {
                 "module": "aiohttp",
-                "input_file": "wheels/py39/aiohttp-3.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/aiohttp-3.9.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "aiosignal",
