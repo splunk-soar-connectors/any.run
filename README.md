@@ -2,7 +2,7 @@
 # ANY.RUN
 
 Publisher: ANYRUN FZCO  
-Connector Version: 1.0.0  
+Connector Version: 1.0.1  
 Product Vendor: ANYRUN FZCO  
 Product Name: ANY.RUN  
 Product Version Supported (regex): ".\*"  
