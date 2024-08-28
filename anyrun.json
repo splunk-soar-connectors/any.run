@@ -2804,8 +2804,12 @@
     "pip39_dependencies": {
         "wheel": [
             {
+                "module": "aiohappyeyeballs",
+                "input_file": "wheels/py3/aiohappyeyeballs-2.4.0-py3-none-any.whl"
+            },
+            {
                 "module": "aiohttp",
-                "input_file": "wheels/py39/aiohttp-3.9.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/aiohttp-3.10.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
             },
             {
                 "module": "aiosignal",
