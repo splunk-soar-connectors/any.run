@@ -11,7 +11,7 @@
     "product_version_regex": ".*",
     "publisher": "ANYRUN FZCO",
     "license": "Copyright (c) ANYRUN FZCO, 2024",
-    "app_version": "1.0.1",
+    "app_version": "1.1.0",
     "utctime_updated": "2024-03-01T10:28:44.583548Z",
     "package_name": "phantom_any.run",
     "main_module": "anyrun_connector.py",
@@ -2797,15 +2797,19 @@
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/anyrun_py-0.1.0-py3-none-any.whl"
+                "input_file": "wheels/anyrun_py-0.1.1-py3-none-any.whl"
             }
         ]
     },
     "pip39_dependencies": {
         "wheel": [
             {
+                "module": "aiohappyeyeballs",
+                "input_file": "wheels/py3/aiohappyeyeballs-2.4.0-py3-none-any.whl"
+            },
+            {
                 "module": "aiohttp",
-                "input_file": "wheels/py39/aiohttp-3.9.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/aiohttp-3.10.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
             },
             {
                 "module": "aiosignal",
@@ -2837,7 +2841,7 @@
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/py3/anyrun_py-0.1.0-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_py-0.1.1-py3-none-any.whl"
             }
         ]
     }
