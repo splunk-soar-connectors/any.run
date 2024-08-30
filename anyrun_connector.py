@@ -585,7 +585,7 @@ class AnyRunConnector(BaseConnector):
 
         # Input validation
         try:
-            data = {key: value for key, value in param.items()
+            data = {key: str(value) for key, value in param.items()
                     if (key not in ["context"] and value not in ["", 0])}
             data = TI.from_dict(data)
         except (AttributeError, TypeError, ValueError) as exc:
