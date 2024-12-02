@@ -2,7 +2,7 @@
 # ANY.RUN
 
 Publisher: ANYRUN FZCO  
-Connector Version: 1.1.0  
+Connector Version: 1.2.0  
 Product Vendor: ANYRUN FZCO  
 Product Name: ANY.RUN  
 Product Version Supported (regex): ".\*"  
@@ -30,7 +30,7 @@ This connector comes with some additional python 3 libraries, that it depends on
 	- yarl-1.9.4 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
 	- frozenlist-1.4.1 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
 	- aiohttp-3.10.2 (Apache License 2.0, Copyright aio-libs contributors)
-	- anyrun_py-0.1.1
+	- anyrun_py-0.1.2
 
 
 ### Configuration Variables
