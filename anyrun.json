@@ -11,7 +11,7 @@
     "product_version_regex": ".*",
     "publisher": "ANYRUN FZCO",
     "license": "Copyright (c) ANYRUN FZCO, 2024",
-    "app_version": "1.1.0",
+    "app_version": "1.2.0",
     "utctime_updated": "2024-03-01T10:28:44.583548Z",
     "package_name": "phantom_any.run",
     "main_module": "anyrun_connector.py",
@@ -1022,9 +1022,6 @@
                         "Windows7x32_clean",
                         "Windows7x32_office",
                         "Windows7x32_complete",
-                        "Windows8.1x32_clean",
-                        "Windows8.1x32_office",
-                        "Windows8.1x32_complete",
                         "Windows10x32_clean",
                         "Windows10x32_office",
                         "Windows10x32_complete",
@@ -1034,9 +1031,6 @@
                         "Windows7x64_clean",
                         "Windows7x64_office",
                         "Windows7x64_complete",
-                        "Windows8.1x64_clean",
-                        "Windows8.1x64_office",
-                        "Windows8.1x64_complete",
                         "Windows10x64_clean",
                         "Windows10x64_office",
                         "Windows10x64_complete",
@@ -1604,9 +1598,6 @@
                         "Windows7x32_clean",
                         "Windows7x32_office",
                         "Windows7x32_complete",
-                        "Windows8.1x32_clean",
-                        "Windows8.1x32_office",
-                        "Windows8.1x32_complete",
                         "Windows10x32_clean",
                         "Windows10x32_office",
                         "Windows10x32_complete",
@@ -1616,9 +1607,6 @@
                         "Windows7x64_clean",
                         "Windows7x64_office",
                         "Windows7x64_complete",
-                        "Windows8.1x64_clean",
-                        "Windows8.1x64_office",
-                        "Windows8.1x64_complete",
                         "Windows10x64_clean",
                         "Windows10x64_office",
                         "Windows10x64_complete",
@@ -2797,7 +2785,7 @@
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/anyrun_py-0.1.1-py3-none-any.whl"
+                "input_file": "wheels/anyrun_py-0.1.2-py3-none-any.whl"
             }
         ]
     },
@@ -2841,7 +2829,7 @@
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/py3/anyrun_py-0.1.1-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_py-0.1.2-py3-none-any.whl"
             }
         ]
     }

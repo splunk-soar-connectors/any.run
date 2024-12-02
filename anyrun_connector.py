@@ -16,6 +16,7 @@
 from __future__ import print_function, unicode_literals
 
 import re
+import time
 
 # Phantom App imports
 import phantom.app as phantom
@@ -467,18 +468,23 @@ class AnyRunConnector(BaseConnector):
 
         # Making an API call
         self.save_progress(f"Detonating URL: {obj_url}")
-        try:
-            error_message = None
-            response = self._anyrun_sandbox.submit_url(obj_url, obj_type, data)
-        except APIError as exc:
-            error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc:  # pylint: disable=broad-except
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
-        finally:
-            if error_message:
-                self.save_progress(error_message)
-                return action_result.set_status(phantom.APP_ERROR, error_message)
+        response = None
+        while response is None:
+            try:
+                error_message = None
+                response = self._anyrun_sandbox.submit_url(obj_url, obj_type, data)
+            except APIError as exc:
+                if exc.message == "Parallel task limit":
+                    time.sleep(5)
+                    continue
+                error_message = self._get_error_message_from_exception(exc)
+            except Exception as exc:  # pylint: disable=broad-except
+                error_message = self._get_error_message_from_exception(exc)
+                error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
+            finally:
+                if error_message:
+                    self.save_progress(error_message)
+                    return action_result.set_status(phantom.APP_ERROR, error_message)
         self.save_progress(ANYRUN_SUCCESS_DETONATE_URL.format(obj_url))
 
         # Processing server response
@@ -548,18 +554,24 @@ class AnyRunConnector(BaseConnector):
 
         # Making an API call
         self.save_progress(f"Detonating file with vault ID: {vault_id}")
-        try:
-            error_message = None
-            response = self._anyrun_sandbox.submit_file(file_path, data)
-        except APIError as exc:
-            error_message = self._get_error_message_from_exception(exc)
-        except Exception as exc:  # pylint: disable=broad-except
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
-        finally:
-            if error_message:
-                self.save_progress(error_message)
-                return action_result.set_status(phantom.APP_ERROR, error_message)
+        response = None
+        while response is None:
+            try:
+                error_message = None
+                with open(file_path, "rb") as file:
+                    response = self._anyrun_sandbox.submit_file(file, data)
+            except APIError as exc:
+                if exc.message == "Parallel task limit":
+                    time.sleep(5)
+                    continue
+                error_message = self._get_error_message_from_exception(exc)
+            except Exception as exc:  # pylint: disable=broad-except
+                error_message = self._get_error_message_from_exception(exc)
+                error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
+            finally:
+                if error_message:
+                    self.save_progress(error_message)
+                    return action_result.set_status(phantom.APP_ERROR, error_message)
         self.save_progress(ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id))
 
         # Processing server response
