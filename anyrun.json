@@ -2785,7 +2785,7 @@
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/anyrun_py-0.1.1-py3-none-any.whl"
+                "input_file": "wheels/anyrun_py-0.1.2-py3-none-any.whl"
             }
         ]
     },
@@ -2829,7 +2829,7 @@
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/py3/anyrun_py-0.1.1-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_py-0.1.2-py3-none-any.whl"
             }
         ]
     }
