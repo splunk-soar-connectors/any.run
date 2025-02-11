@@ -789,13 +789,13 @@ class AnyRunConnector(BaseConnector):
             host=self._server,
             apikey=self._api_key,
             timeout=self._timeout,
-            agent="Splunk SOAR"
+            agent=f"Splunk-SOAR/{VERSION}"
         )
         self._anyrun_threat_intelligence = ThreatIntelligence(
             host=self._server,
             apikey=self._api_key,
             timeout=self._timeout,
-            agent="Splunk SOAR"
+            agent=f"Splunk-SOAR/{VERSION}"
         )
 
         return phantom.APP_SUCCESS
