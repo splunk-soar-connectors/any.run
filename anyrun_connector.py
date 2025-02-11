@@ -599,6 +599,8 @@ class AnyRunConnector(BaseConnector):
         try:
             data = {key: str(value) for key, value in param.items()
                     if (key not in ["context"] and value not in ["", 0])}
+            if "os" in data:
+                data["os"] = data["os"].split()[1]
             data = TI.from_dict(data)
         except (AttributeError, TypeError, ValueError) as exc:
             error_message = self._get_error_message_from_exception(exc)
