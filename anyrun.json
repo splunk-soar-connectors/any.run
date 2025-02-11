@@ -2225,7 +2225,8 @@
                         "Windows 7",
                         "Windows 8.1",
                         "Windows 10",
-                        "Windows 11"
+                        "Windows 11",
+                        "Ubuntu 22.04.2"
                     ],
                     "order": 7,
                     "name": "OS",
