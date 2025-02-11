@@ -1328,7 +1328,7 @@
                         "bylink",
                         "public",
                         "owner",
-                        "team"
+                        "byteam"
                     ],
                     "default": "bylink",
                     "order": 11,
@@ -1904,7 +1904,7 @@
                         "bylink",
                         "public",
                         "owner",
-                        "team"
+                        "byteam"
                     ],
                     "default": "bylink",
                     "order": 10,
