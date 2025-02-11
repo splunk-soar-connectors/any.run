@@ -2547,6 +2547,70 @@
                     "name": "HTTPResponseFileType",
                     "id": 35,
                     "param_name": "HTTPResponseFileType"
+                },
+                "fileeventname": {
+                    "description": "File Event Name (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 35,
+                    "name": "fileEventName",
+                    "id": 36,
+                    "param_name": "fileEventName"
+                },
+                "fileextension": {
+                    "description": "File Extension (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 36,
+                    "name": "fileExtension",
+                    "id": 37,
+                    "param_name": "fileExtension"
+                },
+                "syncobjectname": {
+                    "description": "Sync Object Name (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 37,
+                    "name": "syncObjectName",
+                    "id": 38,
+                    "param_name": "syncObjectName"
+                },
+                "syncobjecttype": {
+                    "description": "Sync Object Type (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 38,
+                    "name": "syncObjectType",
+                    "id": 39,
+                    "param_name": "syncObjectType"
+                },
+                "syncobjectoperation": {
+                    "description": "Sync Object Operation (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 39,
+                    "name": "syncObjectOperation",
+                    "id": 40,
+                    "param_name": "syncObjectOperation"
+                },
+                "ja3": {
+                    "description": "JA3 (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 40,
+                    "name": "JA3",
+                    "id": 41,
+                    "param_name": "JA3"
+                },
+                "ja3s": {
+                    "description": "JA3S (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 41,
+                    "name": "JA3S",
+                    "id": 42,
+                    "param_name": "JA3S"
+                },
+                "jarm": {
+                    "description": "JARM (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 42,
+                    "name": "JARM",
+                    "id": 43,
+                    "param_name": "JARM"
                 }
             },
             "output": [
@@ -2721,6 +2785,38 @@
                 },
                 {
                     "data_path": "action_result.parameter.httpresponsefiletype",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.fileeventname",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.fileextension",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.syncobjectname",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.syncobjecttype",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.syncobjectoperation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ja3",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ja3s",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.jarm",
                     "data_type": "string"
                 },
                 {
