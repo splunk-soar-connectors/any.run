@@ -1,6 +1,6 @@
 # File: anyrun_consts.py
 #
-# Copyright (c) ANYRUN FZCO, 2024
+# Copyright (c) ANYRUN FZCO, 2025
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-__VERSION__ = "1.0.0"
+VERSION = "1.3.0"
 # Action IDs
 ACTION_ID_ANYRUN_TEST_CONNECTIVITY = "test_connectivity"
 ACTION_ID_ANYRUN_GET_URL_REPUTATION = "get_url_reputation"
