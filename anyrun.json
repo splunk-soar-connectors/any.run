@@ -10,12 +10,12 @@
     "python_version": "3",
     "product_version_regex": ".*",
     "publisher": "ANYRUN FZCO",
-    "license": "Copyright (c) ANYRUN FZCO, 2024",
-    "app_version": "1.2.0",
+    "license": "Copyright (c) ANYRUN FZCO, 2025",
+    "app_version": "1.3.0",
     "utctime_updated": "2024-03-01T10:28:44.583548Z",
     "package_name": "phantom_any.run",
     "main_module": "anyrun_connector.py",
-    "min_phantom_version": "6.2.0.355",
+    "min_phantom_version": "6.3.0",
     "fips_compliant": false,
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -1328,7 +1328,7 @@
                         "bylink",
                         "public",
                         "owner",
-                        "team"
+                        "byteam"
                     ],
                     "default": "bylink",
                     "order": 11,
@@ -1904,7 +1904,7 @@
                         "bylink",
                         "public",
                         "owner",
-                        "team"
+                        "byteam"
                     ],
                     "default": "bylink",
                     "order": 10,
@@ -2223,9 +2223,10 @@
                     "data_type": "string",
                     "value_list": [
                         "Windows 7",
-                        "Windows 8",
+                        "Windows 8.1",
                         "Windows 10",
-                        "Windows 11"
+                        "Windows 11",
+                        "Ubuntu 22.04.2"
                     ],
                     "order": 7,
                     "name": "OS",
@@ -2426,16 +2427,48 @@
                     "description": "Suricata class (Default: <empty> - not used)",
                     "data_type": "string",
                     "value_list": [
-                        "unknown",
                         "A Network Trojan was detected",
                         "Attempted Administrator Privilege Gain",
-                        "Attempted Information Leak",
-                        "Generic Protocol Command Decode",
-                        "Not Suspicious Traffic",
-                        "Misc activity",
-                        "Misc Attack",
+                        "Attempted User Privilege Gain",
+                        "Domain Observed Used for C2 Detected",
+                        "Executable code was detected",
+                        "Exploit Kit Activity Detected",
+                        "Malware Command and Control Activity Detected",
                         "Potential Corporate Privacy Violation",
-                        "Potentially Bad Traffic"
+                        "Successful Administrator Privilege Gain",
+                        "Successful Credential Theft Detected",
+                        "Successful User Privilege Gain",
+                        "Targeted Malicious Activity was Detected",
+                        "Unsuccessful User Privilege Gain",
+                        "Web Application Attack",
+                        "A client was using an unusual port",
+                        "A suspicious filename was detected",
+                        "A system call was detected",
+                        "Access to a potentially vulnerable web application",
+                        "An attempted login using a suspicious username was detected",
+                        "Attempt to login by a default username and password",
+                        "Attempted Denial of Service",
+                        "Attempted Information Leak",
+                        "Crypto Currency Mining Activity Detected",
+                        "Decode of an RPC Query",
+                        "Denial of Service",
+                        "Detection of a Denial of Service Attack",
+                        "Detection of a non-standard protocol or event",
+                        "Device Retrieving External IP Address Detected",
+                        "Information Leak",
+                        "Large Scale Information Leak",
+                        "Misc Attack",
+                        "Possible Social Engineering Attempted",
+                        "Possibly Unwanted Program Detected",
+                        "Potentially Bad Traffic",
+                        "A suspicious string was detected",
+                        "Detection of a Network Scan",
+                        "Generic ICMP event",
+                        "Generic Protocol Command Decode",
+                        "Misc activity",
+                        "Not Suspicious Traffic",
+                        "Unknown Traffic",
+                        "A TCP connection was detected"
                     ],
                     "order": 26,
                     "name": "SuricataClass",
@@ -2514,6 +2547,70 @@
                     "name": "HTTPResponseFileType",
                     "id": 35,
                     "param_name": "HTTPResponseFileType"
+                },
+                "fileeventname": {
+                    "description": "File Event Name (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 35,
+                    "name": "fileEventName",
+                    "id": 36,
+                    "param_name": "fileEventName"
+                },
+                "fileextension": {
+                    "description": "File Extension (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 36,
+                    "name": "fileExtension",
+                    "id": 37,
+                    "param_name": "fileExtension"
+                },
+                "syncobjectname": {
+                    "description": "Sync Object Name (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 37,
+                    "name": "syncObjectName",
+                    "id": 38,
+                    "param_name": "syncObjectName"
+                },
+                "syncobjecttype": {
+                    "description": "Sync Object Type (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 38,
+                    "name": "syncObjectType",
+                    "id": 39,
+                    "param_name": "syncObjectType"
+                },
+                "syncobjectoperation": {
+                    "description": "Sync Object Operation (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 39,
+                    "name": "syncObjectOperation",
+                    "id": 40,
+                    "param_name": "syncObjectOperation"
+                },
+                "ja3": {
+                    "description": "JA3 (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 40,
+                    "name": "JA3",
+                    "id": 41,
+                    "param_name": "JA3"
+                },
+                "ja3s": {
+                    "description": "JA3S (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 41,
+                    "name": "JA3S",
+                    "id": 42,
+                    "param_name": "JA3S"
+                },
+                "jarm": {
+                    "description": "JARM (Size range: 2-256)",
+                    "data_type": "string",
+                    "order": 42,
+                    "name": "JARM",
+                    "id": 43,
+                    "param_name": "JARM"
                 }
             },
             "output": [
@@ -2691,6 +2788,38 @@
                     "data_type": "string"
                 },
                 {
+                    "data_path": "action_result.parameter.fileeventname",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.fileextension",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.syncobjectname",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.syncobjecttype",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.syncobjectoperation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ja3",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ja3s",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.jarm",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.data.*.summary.threatLevel",
                     "data_type": "string"
                 },
@@ -2757,35 +2886,39 @@
         "wheel": [
             {
                 "module": "aiosignal",
-                "input_file": "wheels/aiosignal-1.3.1-py3-none-any.whl"
+                "input_file": "wheels/aiosignal-1.3.2-py2.py3-none-any.whl"
             },
             {
                 "module": "async_timeout",
-                "input_file": "wheels/async_timeout-4.0.3-py3-none-any.whl"
+                "input_file": "wheels/async_timeout-5.0.1-py3-none-any.whl"
             },
             {
                 "module": "attrs",
-                "input_file": "wheels/attrs-23.2.0-py3-none-any.whl"
+                "input_file": "wheels/attrs-25.1.0-py3-none-any.whl"
             },
             {
                 "module": "multidict",
-                "input_file": "wheels/multidict-6.0.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/multidict-6.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            },
+            {
+                "module": "propcache",
+                "input_file": "wheels/propcache-0.2.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "yarl",
-                "input_file": "wheels/yarl-1.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/yarl-1.18.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "frozenlist",
-                "input_file": "wheels/frozenlist-1.4.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/frozenlist-1.5.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/aiohttp-3.9.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/aiohttp-3.11.12-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/anyrun_py-0.1.2-py3-none-any.whl"
+                "input_file": "wheels/anyrun_py-0.1.3-py3-none-any.whl"
             }
         ]
     },
@@ -2793,43 +2926,47 @@
         "wheel": [
             {
                 "module": "aiohappyeyeballs",
-                "input_file": "wheels/py3/aiohappyeyeballs-2.4.0-py3-none-any.whl"
+                "input_file": "wheels/py3/aiohappyeyeballs-2.4.6-py3-none-any.whl"
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/py39/aiohttp-3.10.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+                "input_file": "wheels/py39/aiohttp-3.11.12-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "aiosignal",
-                "input_file": "wheels/py3/aiosignal-1.3.1-py3-none-any.whl"
+                "input_file": "wheels/shared/aiosignal-1.3.2-py2.py3-none-any.whl"
             },
             {
                 "module": "async_timeout",
-                "input_file": "wheels/py3/async_timeout-4.0.3-py3-none-any.whl"
+                "input_file": "wheels/py3/async_timeout-5.0.1-py3-none-any.whl"
             },
             {
                 "module": "attrs",
-                "input_file": "wheels/py3/attrs-23.2.0-py3-none-any.whl"
+                "input_file": "wheels/py3/attrs-25.1.0-py3-none-any.whl"
             },
             {
                 "module": "frozenlist",
-                "input_file": "wheels/py39/frozenlist-1.4.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "idna",
-                "input_file": "wheels/py3/idna-3.7-py3-none-any.whl"
+                "input_file": "wheels/py39/frozenlist-1.5.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "multidict",
-                "input_file": "wheels/py39/multidict-6.0.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/multidict-6.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
-                "module": "yarl",
-                "input_file": "wheels/py39/yarl-1.9.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "module": "propcache",
+                "input_file": "wheels/py39/propcache-0.2.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            },
+            {
+                "module": "typing_extensions",
+                "input_file": "wheels/py3/typing_extensions-4.12.2-py3-none-any.whl"
             },
             {
                 "module": "anyrun",
-                "input_file": "wheels/py3/anyrun_py-0.1.2-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_py-0.1.3-py3-none-any.whl"
+            },
+            {
+                "module": "yarl",
+                "input_file": "wheels/py39/yarl-1.18.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             }
         ]
     }
