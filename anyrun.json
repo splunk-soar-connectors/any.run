@@ -2706,7 +2706,10 @@
                 },
                 {
                     "data_path": "action_result.parameter.commandline",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": [
+                        "process name"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.injectedflag",
