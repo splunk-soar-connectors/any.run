@@ -13,7 +13,6 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-from __future__ import print_function, unicode_literals
 
 import re
 import time
@@ -31,9 +30,8 @@ from anyrun_consts import *  # pylint: disable=wildcard-import
 
 
 class AnyRunConnector(BaseConnector):
-
     def __init__(self):
-        super(AnyRunConnector, self).__init__()
+        super().__init__()
         self._state = None
         self._server = None
         self._api_key = None
@@ -585,7 +583,7 @@ class AnyRunConnector(BaseConnector):
 
             cmds = []
             reg_keys = []
-            if "relatedIncidents" in response and response["relatedIncidents"]:
+            if response.get("relatedIncidents"):
                 for inc in response["relatedIncidents"]:
                     if "process" in inc and "commandLine" in inc["process"] and inc["process"]["commandLine"] not in cmds:
                         cmds.append(inc["process"]["commandLine"].replace("\\", "\\\\").replace('"', '\\"').replace("|", "\\|"))
@@ -597,7 +595,7 @@ class AnyRunConnector(BaseConnector):
                     summary.update({"RegistryKeys": {"str": ", ".join(key for key in reg_keys), "Count": len(reg_keys), "Type": "RegistryKeys"}})
 
             sync_objects = []
-            if "relatedSynchronizationObjects" in response and response["relatedSynchronizationObjects"]:
+            if response.get("relatedSynchronizationObjects"):
                 for sync_obj in response["relatedSynchronizationObjects"]:
                     if sync_obj["syncObjectName"] and sync_obj["syncObjectName"] not in sync_objects:
                         sync_objects.append(sync_obj["syncObjectName"])
@@ -708,7 +706,6 @@ def main():
     password = args.password
 
     if username is not None and password is None:
-
         # User specified a username but not a password, so ask
         import getpass
 
