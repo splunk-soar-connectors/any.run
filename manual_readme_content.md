@@ -19,4 +19,7 @@ This connector comes with some additional python 3 libraries, that it depends on
 	- yarl-1.18.3 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
 	- frozenlist-1.5.0 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
 	- aiohttp-3.11.12 (Apache License 2.0, Copyright aio-libs contributors)
-	- anyrun_py-0.1.3
+	- aiofiles-24.1.0
+	- aiohappyeyeballs-2.6.1
+	- async-timeout-5.0.1
+	- anyrun-sdk-1.2.3
