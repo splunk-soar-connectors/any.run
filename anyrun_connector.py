@@ -39,9 +39,8 @@ from anyrun_consts import *
 
 
 class AnyRunConnector(BaseConnector):
-
     def __init__(self):
-        super(AnyRunConnector, self).__init__()
+        super().__init__()
         self._state = None
         self._server = None
         self._api_key = None
@@ -649,7 +648,7 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             action_result.add_data({key: value for key, value in response.items() if value != []})
-
+            
             processor = IntelligenceProcessor(response)
             summary = processor.summary
 

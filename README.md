@@ -495,7 +495,7 @@ action_result.parameter.rulethreatlevel | string | | |
 action_result.parameter.rulename | string | | |
 action_result.parameter.mitre | string | | |
 action_result.parameter.imagepath | string | `file path` | |
-action_result.parameter.commandline | string | | |
+action_result.parameter.commandline | string | `process name` | |
 action_result.parameter.injectedflag | string | | |
 action_result.parameter.destinationip | string | `ip` | |
 action_result.parameter.destinationport | numeric | `port` | |
