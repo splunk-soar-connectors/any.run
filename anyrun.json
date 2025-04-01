@@ -23,14 +23,14 @@
             "description": "API Key used for API authentication",
             "data_type": "password",
             "required": true,
-            "order": 1
+            "order": 0
         },
         "anyrun_timeout": {
             "description": "Number of seconds to wait for a request to timeout",
             "data_type": "numeric",
             "required": true,
             "default": 300,
-            "order": 2
+            "order": 1
         }
     },
     "actions": [
@@ -2632,132 +2632,11 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.threatname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.threatlevel",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.tasktype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.submissioncountry",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.parameter.os",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.ossoftwareset",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.osbitversion",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.parameter.registrykey",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.registryname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.registryvalue",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.moduleimagepath",
-                    "data_type": "string",
-                    "contains": [
-                        "file path"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.rulethreatlevel",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.rulename",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.parameter.mitre",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.imagepath",
-                    "data_type": "string",
-                    "contains": [
-                        "file path"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.commandline",
-                    "data_type": "string",
-                    "contains": [
-                        "process name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.injectedflag",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.destinationip",
-                    "data_type": "string",
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.destinationport",
-                    "data_type": "numeric",
-                    "contains": [
-                        "port"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.destinationipasn",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.destinationipgeo",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.domainname",
-                    "data_type": "string",
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.filename",
-                    "data_type": "string",
-                    "contains": [
-                        "file name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.suricataclass",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.suricatamessage",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.suricatathreatlevel",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.suricataid",
                     "data_type": "string"
                 },
                 {
@@ -2766,42 +2645,6 @@
                     "contains": [
                         "url"
                     ]
-                },
-                {
-                    "data_path": "action_result.parameter.httprequestcontenttype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.httpresponsecontenttype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.httprequestfiletype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.httpresponsefiletype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.fileeventname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.fileextension",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.syncobjectname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.syncobjecttype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.syncobjectoperation",
-                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.parameter.ja3",
@@ -2870,6 +2713,163 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.threat_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.threat_level",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.task_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.submission_country",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.os_software_set",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.os_bit_version",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.registry_key",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.registry_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.registry_value",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.module_image_path",
+                    "data_type": "string",
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.rule_threat_level",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.rule_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.image_path",
+                    "data_type": "string",
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.command_line",
+                    "data_type": "string",
+                    "contains": [
+                        "process name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.injected_flag",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_ip",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.destination_port",
+                    "data_type": "numeric",
+                    "contains": [
+                        "port"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.destination_ip_asn",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_ip_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.domain_name",
+                    "data_type": "string",
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.file_path",
+                    "data_type": "string",
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_class",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_threat_level",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_request_content_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_response_content_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_request_file_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_response_file_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.file_event_path",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.file_extension",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.sync_object_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.sync_object_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.sync_object_operation",
+                    "data_type": "string"
                 }
             ],
             "render": {

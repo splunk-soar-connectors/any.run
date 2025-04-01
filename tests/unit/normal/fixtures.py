@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """
 Fixtures for the normal tests
 """
@@ -9,16 +22,16 @@ import pytest
 
 __all__ = [
     "test_connectivity",
-    "test_get_url_reputation",
-    "test_get_file_reputation",
+    "test_detonate_file",
+    "test_detonate_url",
+    "test_detonate_url_with_obj_ext_startfolder",
     "test_get_domain_reputation",
+    "test_get_file_reputation",
+    "test_get_intelligence",
+    "test_get_ioc",
     "test_get_ip_reputation",
     "test_get_report",
-    "test_get_ioc",
-    "test_detonate_url",
-    "test_detonate_file",
-    "test_get_intelligence",
-    "test_detonate_url_with_obj_ext_startfolder",
+    "test_get_url_reputation",
 ]
 
 
@@ -62,7 +75,7 @@ def test_get_file_reputation() -> str:
             "action": "get_file_reputation",
             "parameters": [
                 {
-                    "hash": "977c18cb2becc8a82d9c46760218fd1140cc1174ac0f38d151bbb11224ba6bcb",
+                    "hash": "977c18cb2becc8a82d9c46760218fd1140cc1174ac0f38d151bbb11224ba6bcb",  # pragma: allowlist secret
                     "search_in_public_tasks": True,
                 }
             ],

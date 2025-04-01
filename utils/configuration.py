@@ -1,4 +1,16 @@
-import typing
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 import re
 
 
@@ -68,9 +80,7 @@ class Configuration:
         return new_params
 
     @classmethod
-    def _validate_integer(
-        cls, parameter: str, key: str, allow_zero: bool = False
-    ) -> tuple[str, str]:
+    def _validate_integer(cls, parameter: str, key: str, allow_zero: bool = False) -> tuple[str, str]:
         """
         Validate integer input
 
@@ -96,7 +106,7 @@ class Configuration:
         return parameter
 
     @classmethod
-    def from_dict(cls, attr_dict: typing.Dict):
+    def from_dict(cls, attr_dict: dict):
         """Creates an object from its dictionary representation."""
         if not isinstance(attr_dict, dict):
             raise ValueError(f"Expecting dictionary, got: {type(attr_dict).__name__}")
@@ -108,19 +118,9 @@ class Configuration:
         params = cls._process_os(param)
 
         if is_file:
-            attributes = (
-                cls.ATTRIBUTES_STR
-                + cls.ATTRIBUTES_BOOL
-                + cls.ATTRIBUTES_INT
-                + cls.FILE_SPECIFIC_ATTRIBUTES
-            )
+            attributes = cls.ATTRIBUTES_STR + cls.ATTRIBUTES_BOOL + cls.ATTRIBUTES_INT + cls.FILE_SPECIFIC_ATTRIBUTES
         else:
-            attributes = (
-                cls.ATTRIBUTES_STR
-                + cls.ATTRIBUTES_BOOL
-                + cls.ATTRIBUTES_INT
-                + cls.LINK_SPECIFIC_ATTRIBUTES
-            )
+            attributes = cls.ATTRIBUTES_STR + cls.ATTRIBUTES_BOOL + cls.ATTRIBUTES_INT + cls.LINK_SPECIFIC_ATTRIBUTES
 
         data = {key: value for key, value in params.items() if key in attributes}
         for attr in cls.ATTRIBUTES_INT:

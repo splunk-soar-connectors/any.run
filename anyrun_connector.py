@@ -17,25 +17,24 @@
 # pylint: disable=wildcard-import
 # pylint: disable=line-too-long
 
-from __future__ import print_function, unicode_literals
 
 import time
 
 # Phantom App imports
 import phantom.app as phantom
 import phantom.rules as phantom_rules
-from phantom.action_result import ActionResult
-from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
 from anyrun.connectors.sandbox.sandbox_connector import SandBoxConnector
 from anyrun.connectors.threat_intelligence.lookup_connector import LookupConnector
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
+from anyrun_consts import *
 from utils.configuration import Configuration
 from utils.get_iocs import extract_iocs
-from utils.reputation import Reputation
 from utils.intelligence_processor import IntelligenceProcessor
-from anyrun_consts import *
+from utils.reputation import Reputation
 
 
 class AnyRunConnector(BaseConnector):
@@ -100,9 +99,7 @@ class AnyRunConnector(BaseConnector):
                     if "verdict" not in task:
                         task.update({"verdict": levels[task["threatLevel"]]})
                     if "mainObject" not in task:
-                        task.update(
-                            {"mainObject": {"name": task.pop("name"), "hashes": task.pop("hashes")}}
-                        )
+                        task.update({"mainObject": {"name": task.pop("name"), "hashes": task.pop("hashes")}})
                 else:
                     task.update({"verdict": levels[task["threatLevel"]]})
             action_result.add_data({"tasks": tasks})
@@ -114,9 +111,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-    def _get_configuration(
-        self, action_result: ActionResult, param: dict, is_file: bool = False
-    ) -> tuple[bool, Configuration]:
+    def _get_configuration(self, action_result: ActionResult, param: dict, is_file: bool = False) -> tuple[bool, Configuration]:
         """
         Get configuration from parameters
 
@@ -181,9 +176,7 @@ class AnyRunConnector(BaseConnector):
         except Exception as exc:
             error_message = self._get_error_message_from_exception(exc)
             self.save_progress(ANYRUN_ERROR_TEST_CONNECTIVITY.format(error_message))
-            return action_result.set_status(
-                phantom.APP_ERROR, f"Could not connect to server. {error_message}"
-            )
+            return action_result.set_status(phantom.APP_ERROR, f"Could not connect to server. {error_message}")
 
         self.save_progress(ANYRUN_SUCCESS_TEST_CONNECTIVITY)
         return action_result.set_status(phantom.APP_SUCCESS)
@@ -210,24 +203,18 @@ class AnyRunConnector(BaseConnector):
             tasks = self._reputation.get_url_reputation(url, search_in_public_tasks)
         except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(
-                ACTION_ID_ANYRUN_GET_URL_REPUTATION, error_message
-            )
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_URL_REPUTATION, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
         self.save_progress(ANYRUN_SUCCESS_GET_URL_REPUTATION.format(url))
 
         # Processing server response
-        ret_val = self._process_reputation_response(
-            action_result, tasks, ACTION_ID_ANYRUN_GET_URL_REPUTATION
-        )
+        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_URL_REPUTATION)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_URL_REPUTATION.format(url)
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_URL_REPUTATION.format(url))
 
     def _handle_get_file_reputation(self, param: dict) -> ActionResult:
         """
@@ -251,24 +238,18 @@ class AnyRunConnector(BaseConnector):
             tasks = self._reputation.get_file_reputation(file_hash, search_in_public_tasks)
         except Exception as exc:
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(
-                ACTION_ID_ANYRUN_GET_FILE_REPUTATION, error_message
-            )
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_FILE_REPUTATION, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
         self.save_progress(ANYRUN_SUCCESS_GET_FILE_REPUTATION.format(file_hash))
 
         # Processing server response
-        ret_val = self._process_reputation_response(
-            action_result, tasks, ACTION_ID_ANYRUN_GET_FILE_REPUTATION
-        )
+        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_FILE_REPUTATION)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_FILE_REPUTATION.format(file_hash)
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_FILE_REPUTATION.format(file_hash))
 
     def _handle_get_domain_reputation(self, param: dict) -> ActionResult:
         """
@@ -285,32 +266,24 @@ class AnyRunConnector(BaseConnector):
         domain = param["domainname"]
 
         # Making an API call
-        self.save_progress(
-            f"Requesting a list of reports for a submission related to domain: {domain}."
-        )
+        self.save_progress(f"Requesting a list of reports for a submission related to domain: {domain}.")
         try:
             error_message = None
             tasks = self._reputation.get_domain_reputation(domain)
         except Exception as exc:
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(
-                ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, error_message
-            )
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
         self.save_progress(ANYRUN_SUCCESS_GET_DOMAIN_REPUTATION.format(domain))
 
         # Processing server response
-        ret_val = self._process_reputation_response(
-            action_result, tasks, ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, False
-        )
+        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, False)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_DOMAIN_REPUTATION.format(domain)
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_DOMAIN_REPUTATION.format(domain))
 
     def _handle_get_ip_reputation(self, param: dict) -> ActionResult:
         """
@@ -333,24 +306,18 @@ class AnyRunConnector(BaseConnector):
             tasks = self._reputation.get_ip_reputation(ip)
         except Exception as exc:
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(
-                ACTION_ID_ANYRUN_GET_IP_REPUTATION, error_message
-            )
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IP_REPUTATION, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
         self.save_progress(ANYRUN_SUCCESS_GET_IP_REPUTATION.format(ip))
 
         # Processing server response
-        ret_val = self._process_reputation_response(
-            action_result, tasks, ACTION_ID_ANYRUN_GET_IP_REPUTATION, False
-        )
+        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_IP_REPUTATION, False)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IP_REPUTATION.format(ip)
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IP_REPUTATION.format(ip))
 
     def _handle_get_report(self, param: dict) -> ActionResult:
         """
@@ -388,9 +355,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_REPORT.format(taskid)
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_REPORT.format(taskid))
 
     def _handle_get_ioc(self, param: dict) -> ActionResult:
         """
@@ -474,9 +439,7 @@ class AnyRunConnector(BaseConnector):
                     continue
 
                 error_message = self._get_error_message_from_exception(exc)
-                error_message = ANYRUN_REST_API_ERROR.format(
-                    ACTION_ID_ANYRUN_DETONATE_URL, error_message
-                )
+                error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
 
                 self.save_progress(error_message)
                 return action_result.set_status(phantom.APP_ERROR, error_message)
@@ -489,15 +452,11 @@ class AnyRunConnector(BaseConnector):
             action_result.add_data(response)
         except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(
-                ACTION_ID_ANYRUN_DETONATE_URL, error_message
-            )
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_URL.format(obj_url)
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_URL.format(obj_url))
 
     def _handle_detonate_file(self, param: dict) -> ActionResult:
         """
@@ -543,20 +502,14 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(ANYRUN_VAULT_MULTIPLE_FILES_ERROR.format(vault_id))
         elif len(vault_meta_info) == 0:
             self.save_progress(ANYRUN_VAULT_NO_FILES_ERROR.format(vault_id))
-            return action_result.set_status(
-                phantom.APP_ERROR, ANYRUN_VAULT_NO_FILES_ERROR.format(vault_id)
-            )
+            return action_result.set_status(phantom.APP_ERROR, ANYRUN_VAULT_NO_FILES_ERROR.format(vault_id))
 
         try:
             file_path = vault_meta_info[0].get("path")
             if not file_path:
-                return action_result.set_status(
-                    phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id)
-                )
+                return action_result.set_status(phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id))
         except:  # pylint: disable=bare-except
-            return action_result.set_status(
-                phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id)
-            )
+            return action_result.set_status(phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id))
 
         # Making an API call
         self.save_progress(f"Detonating file with vault ID: {vault_id}")
@@ -576,9 +529,7 @@ class AnyRunConnector(BaseConnector):
                     time.sleep(5)
                     continue
                 error_message = self._get_error_message_from_exception(exc)
-                error_message = ANYRUN_REST_API_ERROR.format(
-                    ACTION_ID_ANYRUN_DETONATE_FILE, error_message
-                )
+                error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
                 self.save_progress(error_message)
                 return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -590,15 +541,11 @@ class AnyRunConnector(BaseConnector):
             action_result.add_data(response)
         except Exception as exc:  # pylint: disable=broad-except
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(
-                ACTION_ID_ANYRUN_DETONATE_FILE, error_message
-            )
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id)
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id))
 
     def _handle_get_intelligence(self, param: dict) -> ActionResult:
         """
@@ -614,11 +561,7 @@ class AnyRunConnector(BaseConnector):
 
         # Input validation
         try:
-            data = {
-                key: str(value)
-                for key, value in param.items()
-                if (key not in ["context"] and value not in ["", 0])
-            }
+            data = {key: str(value) for key, value in param.items() if (key not in ["context"] and value not in ["", 0])}
             if "os" in data:
                 data["os"] = data["os"].split()[1]
             if data == {}:
@@ -637,9 +580,7 @@ class AnyRunConnector(BaseConnector):
                 response = lookup.get_intelligence(**data)
         except Exception as exc:
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(
-                ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message
-            )
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -648,16 +589,14 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             action_result.add_data({key: value for key, value in response.items() if value != []})
-            
+
             processor = IntelligenceProcessor(response)
             summary = processor.summary
 
             action_result.update_summary(summary)
         except Exception as exc:
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(
-                ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message
-            )
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -736,9 +675,7 @@ class AnyRunConnector(BaseConnector):
             timeout=self._timeout,
         )
 
-        self._reputation = Reputation(
-            sandbox=self._anyrun_sandbox, lookup=self._anyrun_threat_intelligence
-        )
+        self._reputation = Reputation(sandbox=self._anyrun_sandbox, lookup=self._anyrun_threat_intelligence)
 
         return phantom.APP_SUCCESS
 

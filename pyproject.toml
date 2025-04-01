@@ -1,12 +1,3 @@
-[tool.black]
-line-length = 100
-target-version = ['py39']
-verbose = true
-
-[tool.isort]
-line_length = 100
-profile = "black"
-
 # Ruff linting
 [tool.ruff]
 line-length = 145
