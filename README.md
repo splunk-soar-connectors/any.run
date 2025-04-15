@@ -1,7 +1,7 @@
 # ANY.RUN
 
 Publisher: ANYRUN FZCO \
-Connector Version: 1.3.1 \
+Connector Version: 1.3.0 \
 Product Vendor: ANYRUN FZCO \
 Product Name: ANY.RUN \
 Minimum Product Version: 6.3.0
