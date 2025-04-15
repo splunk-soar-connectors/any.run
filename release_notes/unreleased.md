@@ -1,3 +1,3 @@
 **Unreleased**
 
-* chore(ci): Pre-commit config updates
+* fix: Revert dependency updates
