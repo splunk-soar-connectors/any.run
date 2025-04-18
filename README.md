@@ -1,7 +1,7 @@
 # ANY.RUN
 
 Publisher: ANYRUN FZCO \
-Connector Version: 1.3.2 \
+Connector Version: 1.4.0 \
 Product Vendor: ANYRUN FZCO \
 Product Name: ANY.RUN \
 Minimum Product Version: 6.3.0
@@ -22,15 +22,18 @@ This connector is intended for customers with a 'Hunter' or 'Enterprise' subscri
 This connector comes with some additional python 3 libraries, that it depends on, including:
 
 ```
-- aiosignal-1.3.2 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
-- async_timeout-5.0.1 (Apache License 2.0, Copyright 2016-2020 aio-libs collaboration)
-- attrs-25.1.0 (MIT License, Copyright (c) 2015 Hynek Schlawack and the attrs contributors)
-- multidict-6.1.0 (Apache License 2.0, Copyright 2016 Andrew Svetlov and aio-libs contributors)
-- propcache-0.2.1 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
-- yarl-1.18.3 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
-- frozenlist-1.5.0 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
-- aiohttp-3.11.12 (Apache License 2.0, Copyright aio-libs contributors)
-- anyrun_py-0.1.3
+	- aiosignal-1.3.2 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
+	- async_timeout-5.0.1 (Apache License 2.0, Copyright 2016-2020 aio-libs collaboration)
+	- attrs-25.1.0 (MIT License, Copyright (c) 2015 Hynek Schlawack and the attrs contributors)
+	- multidict-6.1.0 (Apache License 2.0, Copyright 2016 Andrew Svetlov and aio-libs contributors)
+	- propcache-0.2.1 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
+	- yarl-1.18.3 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
+	- frozenlist-1.5.0 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
+	- aiohttp-3.11.12 (Apache License 2.0, Copyright aio-libs contributors)
+	- aiofiles-24.1.0
+	- aiohappyeyeballs-2.6.1
+	- async-timeout-5.0.1
+	- anyrun-sdk-1.2.3
 ```
 
 ### Configuration variables
@@ -39,7 +42,6 @@ This table lists the configuration variables required to operate ANY.RUN. These 
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
-**anyrun_server** | required | string | ANY.RUN base URL (e.g. https://api.any.run) |
 **anyrun_api_key** | required | password | API Key used for API authentication |
 **anyrun_timeout** | required | numeric | Number of seconds to wait for a request to timeout |
 
@@ -432,43 +434,43 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **sha256** | optional | Sha256 (Size range: 2-256) | string | `hash` `sha256` |
 **sha1** | optional | Sha1 (Size range: 2-256) | string | `hash` `sha1` |
 **md5** | optional | MD5 (Size range: 2-256) | string | `hash` `md5` |
-**threatname** | optional | Name of threat (Size range: 2-256) | string | |
-**threatlevel** | optional | Threat level (Default: <empty>) | string | |
-**tasktype** | optional | Task run type (Default: <empty>) | string | |
-**submissioncountry** | optional | Submission country (Size range: 2-256) | string | |
+**threat_name** | optional | Name of threat (Size range: 2-256) | string | |
+**threat_level** | optional | Threat level (Default: <empty>) | string | |
+**task_type** | optional | Task run type (Default: <empty>) | string | |
+**submission_country** | optional | Submission country (Size range: 2-256) | string | |
 **os** | optional | Operation system (Default: <empty> - not used) | string | |
-**ossoftwareset** | optional | Operation system software (Default: <empty> - not used) | string | |
-**osbitversion** | optional | Operation system bitness (Default: <empty> - not used) | numeric | |
-**registrykey** | optional | Registry key (Size range: 2-256) | string | |
-**registryname** | optional | Registry name (Size range: 2-256) | string | |
-**registryvalue** | optional | Registry value (Size range: 2-256) | string | |
-**moduleimagepath** | optional | Module image path (Size range: 2-256) | string | `file path` |
-**rulethreatlevel** | optional | Rule threat level (Default: <empty> - not used) | string | |
-**rulename** | optional | Rule name (Size range: 2-256) | string | |
+**os_software_set** | optional | Operation system software (Default: <empty> - not used) | string | |
+**os_bit_version** | optional | Operation system bitness (Default: <empty> - not used) | numeric | |
+**registry_key** | optional | Registry key (Size range: 2-256) | string | |
+**registry_name** | optional | Registry name (Size range: 2-256) | string | |
+**registry_value** | optional | Registry value (Size range: 2-256) | string | |
+**module_image_path** | optional | Module image path (Size range: 2-256) | string | `file path` |
+**rule_threat_level** | optional | Rule threat level (Default: <empty> - not used) | string | |
+**rule_name** | optional | Rule name (Size range: 2-256) | string | |
 **mitre** | optional | MITRE (Size range: 2-256) | string | |
-**imagepath** | optional | Process image path (Size range: 2-256) | string | `file path` |
-**commandline** | optional | Command line (Size range: 2-256) | string | `process name` |
-**injectedflag** | optional | Injected flag (Default: <empty> - not used) | string | |
-**destinationip** | optional | Destination ip (Size range: 2-256) | string | `ip` |
-**destinationport** | optional | Destination port (Default: <empty> - not used) (Size range: 1-65535) | numeric | `port` |
-**destinationipasn** | optional | Destination IPASN (Size range: 2-256) | string | |
-**destinationipgeo** | optional | Destination IP Geo (Size range: 2-256) | string | |
-**domainname** | optional | Domain name (Size range: 2-256) | string | `domain` |
-**filename** | optional | File name (Size range: 2-256) | string | `file name` |
-**suricataclass** | optional | Suricata class (Default: <empty> - not used) | string | |
-**suricatamessage** | optional | Suricata message (Size range: 2-256) | string | |
-**suricatathreatlevel** | optional | Suricata threat level (Default: <empty> - not used) | string | |
-**suricataid** | optional | Suricata ID (Size range: 2-256) | string | |
+**image_path** | optional | Process image path (Size range: 2-256) | string | `file path` |
+**command_line** | optional | Command line (Size range: 2-256) | string | `process name` |
+**injected_flag** | optional | Injected flag (Default: <empty> - not used) | string | |
+**destination_ip** | optional | Destination ip (Size range: 2-256) | string | `ip` |
+**destination_port** | optional | Destination port (Default: <empty> - not used) (Size range: 1-65535) | numeric | `port` |
+**destination_ip_asn** | optional | Destination IPASN (Size range: 2-256) | string | |
+**destination_ip_geo** | optional | Destination IP Geo (Size range: 2-256) | string | |
+**domain_name** | optional | Domain name (Size range: 2-256) | string | `domain` |
+**file_path** | optional | File path (Size range: 2-256) | string | `file path` |
+**suricata_class** | optional | Suricata class (Default: <empty> - not used) | string | |
+**suricata_message** | optional | Suricata message (Size range: 2-256) | string | |
+**suricata_threat_level** | optional | Suricata threat level (Default: <empty> - not used) | string | |
+**suricata_id** | optional | Suricata ID (Size range: 2-256) | string | |
 **url** | optional | URL (Size range: 2-256) | string | `url` |
-**httprequestcontenttype** | optional | HTTP request content type (Size range: 2-256) | string | |
-**httpresponsecontenttype** | optional | HTTP response content type (Size range: 2-256) | string | |
-**httprequestfiletype** | optional | HTTP request file type (Size range: 2-256) | string | |
-**httpresponsefiletype** | optional | HTTP response file type (Size range: 2-256) | string | |
-**fileeventname** | optional | File Event Name (Size range: 2-256) | string | |
-**fileextension** | optional | File Extension (Size range: 2-256) | string | |
-**syncobjectname** | optional | Sync Object Name (Size range: 2-256) | string | |
-**syncobjecttype** | optional | Sync Object Type (Size range: 2-256) | string | |
-**syncobjectoperation** | optional | Sync Object Operation (Size range: 2-256) | string | |
+**http_request_content_type** | optional | HTTP request content type (Size range: 2-256) | string | |
+**http_response_content_type** | optional | HTTP response content type (Size range: 2-256) | string | |
+**http_request_file_type** | optional | HTTP request file type (Size range: 2-256) | string | |
+**http_response_file_type** | optional | HTTP response file type (Size range: 2-256) | string | |
+**file_event_path** | optional | File Event Path (Size range: 2-256) | string | |
+**file_extension** | optional | File Extension (Size range: 2-256) | string | |
+**sync_object_name** | optional | Sync Object Name (Size range: 2-256) | string | |
+**sync_object_type** | optional | Sync Object Type (Size range: 2-256) | string | |
+**sync_object_operation** | optional | Sync Object Operation (Size range: 2-256) | string | |
 **ja3** | optional | JA3 (Size range: 2-256) | string | |
 **ja3s** | optional | JA3S (Size range: 2-256) | string | |
 **jarm** | optional | JARM (Size range: 2-256) | string | |
@@ -480,43 +482,9 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.parameter.sha256 | string | `hash` `sha256` | |
 action_result.parameter.sha1 | string | `hash` `sha1` | |
 action_result.parameter.md5 | string | `hash` `md5` | |
-action_result.parameter.threatname | string | | |
-action_result.parameter.threatlevel | string | | |
-action_result.parameter.tasktype | string | | |
-action_result.parameter.submissioncountry | string | | |
 action_result.parameter.os | string | | |
-action_result.parameter.ossoftwareset | string | | |
-action_result.parameter.osbitversion | numeric | | |
-action_result.parameter.registrykey | string | | |
-action_result.parameter.registryname | string | | |
-action_result.parameter.registryvalue | string | | |
-action_result.parameter.moduleimagepath | string | `file path` | |
-action_result.parameter.rulethreatlevel | string | | |
-action_result.parameter.rulename | string | | |
 action_result.parameter.mitre | string | | |
-action_result.parameter.imagepath | string | `file path` | |
-action_result.parameter.commandline | string | `process name` | |
-action_result.parameter.injectedflag | string | | |
-action_result.parameter.destinationip | string | `ip` | |
-action_result.parameter.destinationport | numeric | `port` | |
-action_result.parameter.destinationipasn | string | | |
-action_result.parameter.destinationipgeo | string | | |
-action_result.parameter.domainname | string | `domain` | |
-action_result.parameter.filename | string | `file name` | |
-action_result.parameter.suricataclass | string | | |
-action_result.parameter.suricatamessage | string | | |
-action_result.parameter.suricatathreatlevel | string | | |
-action_result.parameter.suricataid | string | | |
 action_result.parameter.url | string | `url` | |
-action_result.parameter.httprequestcontenttype | string | | |
-action_result.parameter.httpresponsecontenttype | string | | |
-action_result.parameter.httprequestfiletype | string | | |
-action_result.parameter.httpresponsefiletype | string | | |
-action_result.parameter.fileeventname | string | | |
-action_result.parameter.fileextension | string | | |
-action_result.parameter.syncobjectname | string | | |
-action_result.parameter.syncobjecttype | string | | |
-action_result.parameter.syncobjectoperation | string | | |
 action_result.parameter.ja3 | string | | |
 action_result.parameter.ja3s | string | | |
 action_result.parameter.jarm | string | | |
@@ -530,6 +498,40 @@ action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.parameter.threat_name | string | | |
+action_result.parameter.threat_level | string | | |
+action_result.parameter.task_type | string | | |
+action_result.parameter.submission_country | string | | |
+action_result.parameter.os_software_set | string | | |
+action_result.parameter.os_bit_version | numeric | | |
+action_result.parameter.registry_key | string | | |
+action_result.parameter.registry_name | string | | |
+action_result.parameter.registry_value | string | | |
+action_result.parameter.module_image_path | string | `file path` | |
+action_result.parameter.rule_threat_level | string | | |
+action_result.parameter.rule_name | string | | |
+action_result.parameter.image_path | string | `file path` | |
+action_result.parameter.command_line | string | `process name` | |
+action_result.parameter.injected_flag | string | | |
+action_result.parameter.destination_ip | string | `ip` | |
+action_result.parameter.destination_port | numeric | `port` | |
+action_result.parameter.destination_ip_asn | string | | |
+action_result.parameter.destination_ip_geo | string | | |
+action_result.parameter.domain_name | string | `domain` | |
+action_result.parameter.file_path | string | `file path` | |
+action_result.parameter.suricata_class | string | | |
+action_result.parameter.suricata_message | string | | |
+action_result.parameter.suricata_threat_level | string | | |
+action_result.parameter.suricata_id | string | | |
+action_result.parameter.http_request_content_type | string | | |
+action_result.parameter.http_response_content_type | string | | |
+action_result.parameter.http_request_file_type | string | | |
+action_result.parameter.http_response_file_type | string | | |
+action_result.parameter.file_event_path | string | | |
+action_result.parameter.file_extension | string | | |
+action_result.parameter.sync_object_name | string | | |
+action_result.parameter.sync_object_type | string | | |
+action_result.parameter.sync_object_operation | string | | |
 
 ______________________________________________________________________
 
