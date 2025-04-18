@@ -2878,42 +2878,6 @@
             "versions": "EQ(*)"
         }
     ],
-    "pip3_dependencies": {
-        "wheel": [
-            {
-                "module": "aiosignal",
-                "input_file": "wheels/aiosignal-1.3.2-py2.py3-none-any.whl"
-            },
-            {
-                "module": "async_timeout",
-                "input_file": "wheels/async_timeout-5.0.1-py3-none-any.whl"
-            },
-            {
-                "module": "attrs",
-                "input_file": "wheels/attrs-25.1.0-py3-none-any.whl"
-            },
-            {
-                "module": "multidict",
-                "input_file": "wheels/multidict-6.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "propcache",
-                "input_file": "wheels/propcache-0.2.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "yarl",
-                "input_file": "wheels/yarl-1.18.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "frozenlist",
-                "input_file": "wheels/frozenlist-1.5.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "aiohttp",
-                "input_file": "wheels/aiohttp-3.11.12-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            }
-        ]
-    },
     "pip39_dependencies": {
         "wheel": [
             {
@@ -2926,7 +2890,7 @@
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/py39/aiohttp-3.11.12-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/aiohttp-3.11.12-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "aiosignal",
@@ -2946,15 +2910,15 @@
             },
             {
                 "module": "frozenlist",
-                "input_file": "wheels/py39/frozenlist-1.5.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/frozenlist-1.5.0-cp39-cp39-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "multidict",
-                "input_file": "wheels/py39/multidict-6.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/multidict-6.1.0-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "propcache",
-                "input_file": "wheels/py39/propcache-0.2.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/propcache-0.2.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "typing_extensions",
@@ -2962,7 +2926,7 @@
             },
             {
                 "module": "yarl",
-                "input_file": "wheels/py39/yarl-1.18.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/yarl-1.18.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             }
         ]
     },
@@ -2998,7 +2962,7 @@
             },
             {
                 "module": "frozenlist",
-                "input_file": "wheels/py313/frozenlist-1.5.0-cp313-cp313-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py313/frozenlist-1.5.0-cp313-cp313-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl"
             },
             {
                 "module": "multidict",
