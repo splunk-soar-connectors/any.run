@@ -2912,11 +2912,6 @@
                 "module": "aiohttp",
                 "input_file": "wheels/aiohttp-3.11.12-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             }
-        ],
-        "pypi": [
-            {
-                "module": "anyrun-sdk"
-            }
         ]
     },
     "pip39_dependencies": {
