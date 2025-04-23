@@ -13,16 +13,17 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-# pylint: disable=broad-except
 # pylint: disable=wildcard-import
 # pylint: disable=line-too-long
 
 
+import json
 import time
 
 # Phantom App imports
 import phantom.app as phantom
 import phantom.rules as phantom_rules
+import requests
 
 # Usage of the consts file is recommended
 from anyrun.connectors.sandbox.sandbox_connector import SandBoxConnector
@@ -95,17 +96,17 @@ class AnyRunConnector(BaseConnector):
             for task in tasks:
                 if is_url_file:
                     if "uuid" not in task:
-                        task.update({"uuid": task["related"].rsplit("/")[-1]})
+                        task["uuid"] = task["related"].rsplit("/")[-1]
                     if "verdict" not in task:
-                        task.update({"verdict": levels[task["threatLevel"]]})
+                        task["verdict"] = levels[task["threatLevel"]]
                     if "mainObject" not in task:
-                        task.update({"mainObject": {"name": task.pop("name"), "hashes": task.pop("hashes")}})
+                        task["mainObject"] = {"name": task.pop("name"), "hashes": task.pop("hashes")}
                 else:
-                    task.update({"verdict": levels[task["threatLevel"]]})
+                    task["verdict"] = levels[task["threatLevel"]]
             action_result.add_data({"tasks": tasks})
             action_result.update_summary({"total_objects": len(tasks)})
             return phantom.APP_SUCCESS
-        except Exception as exc:  # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(action_id, error_message)
             self.save_progress(error_message)
@@ -173,7 +174,7 @@ class AnyRunConnector(BaseConnector):
         try:
             with self._anyrun_sandbox as sandbox:
                 sandbox.get_user_limits()
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             self.save_progress(ANYRUN_ERROR_TEST_CONNECTIVITY.format(error_message))
             return action_result.set_status(phantom.APP_ERROR, f"Could not connect to server. {error_message}")
@@ -201,7 +202,7 @@ class AnyRunConnector(BaseConnector):
         try:
             error_message = None
             tasks = self._reputation.get_url_reputation(url, search_in_public_tasks)
-        except Exception as exc:  # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_URL_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -236,7 +237,7 @@ class AnyRunConnector(BaseConnector):
         try:
             error_message = None
             tasks = self._reputation.get_file_reputation(file_hash, search_in_public_tasks)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_FILE_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -270,7 +271,7 @@ class AnyRunConnector(BaseConnector):
         try:
             error_message = None
             tasks = self._reputation.get_domain_reputation(domain)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -304,7 +305,7 @@ class AnyRunConnector(BaseConnector):
         try:
             error_message = None
             tasks = self._reputation.get_ip_reputation(ip)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IP_REPUTATION, error_message)
             self.save_progress(error_message)
@@ -338,7 +339,7 @@ class AnyRunConnector(BaseConnector):
             error_message = None
             with self._anyrun_sandbox as sandbox:
                 report = sandbox.get_analysis_report(taskid)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, error_message)
             self.save_progress(error_message)
@@ -349,7 +350,7 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             action_result.add_data(report)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, error_message)
             self.save_progress(error_message)
@@ -375,7 +376,7 @@ class AnyRunConnector(BaseConnector):
         try:
             error_message = None
             iocs = self._get_iocs(taskid)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, error_message)
             self.save_progress(error_message)
@@ -392,7 +393,7 @@ class AnyRunConnector(BaseConnector):
                     "max_reputation": max(item["reputation"] for item in iocs),
                 }
             )
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, error_message)
             self.save_progress(error_message)
@@ -433,7 +434,7 @@ class AnyRunConnector(BaseConnector):
 
                     response = sandbox.get_analysis_report(taskid, simplify=True)
                     response = response if response is not None else {}
-            except Exception as exc:
+            except Exception as exc:  # pylint: disable=broad-exception-caught
                 if "Parallel task limit" in str(exc):
                     time.sleep(5)
                     continue
@@ -448,9 +449,9 @@ class AnyRunConnector(BaseConnector):
 
         # Processing server response
         try:
-            response.update({"permanentUrl": f"https://app.any.run/tasks/{taskid}"})
+            response["permanentUrl"] = f"https://app.any.run/tasks/{taskid}"
             action_result.add_data(response)
-        except Exception as exc:  # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
             self.save_progress(error_message)
@@ -488,7 +489,7 @@ class AnyRunConnector(BaseConnector):
                         error_message,
                     ),
                 )
-        except Exception as exc:  # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             return action_result.set_status(
                 phantom.APP_ERROR,
@@ -524,7 +525,7 @@ class AnyRunConnector(BaseConnector):
 
                     response = sandbox.get_analysis_report(taskid, simplify=True)
                     response = response if response is not None else {}
-            except Exception as exc:
+            except Exception as exc:  # pylint: disable=broad-exception-caught
                 if "Parallel task limit" in str(exc):
                     time.sleep(5)
                     continue
@@ -537,9 +538,9 @@ class AnyRunConnector(BaseConnector):
 
         # Processing server response
         try:
-            response.update({"permanentUrl": f"https://app.any.run/tasks/{taskid}"})
+            response["permanentUrl"] = f"https://app.any.run/tasks/{taskid}"
             action_result.add_data(response)
-        except Exception as exc:  # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
             self.save_progress(error_message)
@@ -578,7 +579,7 @@ class AnyRunConnector(BaseConnector):
             error_message = None
             with self._anyrun_threat_intelligence as lookup:
                 response = lookup.get_intelligence(**data)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
             self.save_progress(error_message)
@@ -594,7 +595,7 @@ class AnyRunConnector(BaseConnector):
             summary = processor.summary
 
             action_result.update_summary(summary)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
             self.save_progress(error_message)
@@ -681,7 +682,72 @@ class AnyRunConnector(BaseConnector):
 
     def finalize(self):
         # Save the state, this data is saved across actions and app upgrades
-        # self._anyrun_sandbox.close()
-        # self._anyrun_threat_intelligence.close()
         self.save_state(self._state)
         return phantom.APP_SUCCESS
+
+
+def main():
+    import argparse
+
+    argparser = argparse.ArgumentParser()
+
+    argparser.add_argument("input_test_json", help="Input Test JSON file")
+    argparser.add_argument("-u", "--username", help="username", required=False)
+    argparser.add_argument("-p", "--password", help="password", required=False)
+
+    args = argparser.parse_args()
+    session_id = None
+
+    username = args.username
+    password = args.password
+
+    if username is not None and password is None:
+        # User specified a username but not a password, so ask
+        import getpass
+
+        password = getpass.getpass("Password: ")
+
+    if username and password:
+        try:
+            login_url = AnyRunConnector._get_phantom_base_url() + "/login"
+
+            print("Accessing the Login page")
+            r = requests.get(login_url, verify=False)
+            csrftoken = r.cookies["csrftoken"]
+
+            data = dict()
+            data["username"] = username
+            data["password"] = password
+            data["csrfmiddlewaretoken"] = csrftoken
+
+            headers = dict()
+            headers["Cookie"] = "csrftoken=" + csrftoken
+            headers["Referer"] = login_url
+
+            print("Logging into Platform to get the session id")
+            r2 = requests.post(login_url, verify=False, data=data, headers=headers)
+            session_id = r2.cookies["sessionid"]
+        except Exception as e:
+            print("Unable to get session id from the platform. Error: " + str(e))
+            exit(1)
+
+    with open(args.input_test_json) as f:
+        in_json = f.read()
+        in_json = json.loads(in_json)
+        print(json.dumps(in_json, indent=4))
+
+        connector = AnyRunConnector()
+        connector.print_progress_message = True
+
+        if session_id is not None:
+            in_json["user_session_token"] = session_id
+            connector._set_csrf_info(csrftoken, headers["Referer"])
+
+        ret_val = connector._handle_action(json.dumps(in_json), None)
+        print(json.dumps(json.loads(ret_val), indent=4))
+
+    exit(0)
+
+
+if __name__ == "__main__":
+    main()

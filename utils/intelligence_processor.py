@@ -102,9 +102,9 @@ class IntelligenceProcessor:
                 continue
 
             # Group items by threat level
-            by_level = {level: [] for level in range(5)}
+            by_level = {level: set() for level in range(5)}
             for item in self.response[field_name]:
-                by_level[item["threatLevel"]].append(item[subfield_name])
+                by_level[item["threatLevel"]].add(item[subfield_name])
 
             # Add non-empty levels to results
             for level, items in by_level.items():
@@ -133,8 +133,8 @@ class IntelligenceProcessor:
             return {}
 
         result = {}
-        cmds = []
-        reg_keys = []
+        cmds = set()
+        reg_keys = set()
 
         for inc in incidents:
             if "process" in inc and "commandLine" in inc["process"] and inc["process"]["commandLine"] not in cmds:
@@ -142,9 +142,9 @@ class IntelligenceProcessor:
                 for old, new in replacements:
                     inc["process"]["commandLine"] = inc["process"]["commandLine"].replace(old, new)
 
-                cmds.append(inc["process"]["commandLine"])
-            if "event" in inc and "registryKey" in inc["event"] and inc["event"]["registryKey"] not in reg_keys:
-                reg_keys.append(inc["event"]["registryKey"])
+                cmds.add(inc["process"]["commandLine"])
+            if "event" in inc and "registryKey" in inc["event"]:
+                reg_keys.add(inc["event"]["registryKey"])
 
         if cmds:
             result["CommandLines"] = {"str": ", ".join(cmds), "Count": len(cmds), "Type": "CommandLines"}
@@ -165,13 +165,13 @@ class IntelligenceProcessor:
         Returns:
             dict: A dictionary with the synchronization objects and their count.
         """
-        objects = []
+        objects = set()
         if not sync_objects:
             return {}
 
         for sync_obj in sync_objects:
-            if sync_obj["syncObjectName"] and sync_obj["syncObjectName"] not in objects:
-                objects.append(sync_obj["syncObjectName"])
+            if sync_obj["syncObjectName"]:
+                objects.add(sync_obj["syncObjectName"])
 
         return {
             "SynchronizationObjects": {
@@ -192,11 +192,10 @@ class IntelligenceProcessor:
         Returns:
             dict: A dictionary with the tags and their count.
         """
-        tags = []
+        tags = set()
 
         for task in source_tasks:
             for tag in task["tags"]:
-                if tag not in tags:
-                    tags.append(tag)
+                tags.add(tag)
 
         return {"Tags": {"str": ", ".join(tags), "Count": len(tags), "Type": "Tags"}}

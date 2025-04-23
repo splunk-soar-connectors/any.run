@@ -45,7 +45,7 @@ def setup_connector(username: str, password: str) -> tuple[AnyRunConnector, str]
         session_id = r2.cookies["sessionid"]
 
         connector._set_csrf_info(csrftoken, headers["Referer"])
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         print("Unable to get session id from the platform. Error: " + str(e))
         exit(1)
 

@@ -57,7 +57,7 @@ class Reputation:
             with self.lookup as lookup:
                 response = lookup.get_intelligence(**{hash_type: file_hash})
 
-            tasks += response["sourceTasks"]
+            tasks.extend(response["sourceTasks"])
 
         return tasks
 
@@ -71,7 +71,7 @@ class Reputation:
         if search_in_public_tasks:
             with self.lookup as lookup:
                 response = lookup.get_intelligence(url=url)
-                tasks += response["sourceTasks"]
+                tasks.extend(response["sourceTasks"])
 
         return tasks
 
