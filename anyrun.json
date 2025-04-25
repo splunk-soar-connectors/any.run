@@ -11,33 +11,26 @@
     "product_version_regex": ".*",
     "publisher": "ANYRUN FZCO",
     "license": "Copyright (c) ANYRUN FZCO, 2025",
-    "app_version": "1.3.2",
-    "utctime_updated": "2025-04-15T23:05:02.953664Z",
+    "app_version": "1.4.0",
+    "utctime_updated": "2025-03-20T10:28:44.583548Z",
     "package_name": "phantom_any.run",
     "main_module": "anyrun_connector.py",
     "min_phantom_version": "6.3.0",
     "fips_compliant": false,
     "app_wizard_version": "1.0.0",
     "configuration": {
-        "anyrun_server": {
-            "description": "ANY.RUN base URL (e.g. https://api.any.run)",
-            "data_type": "string",
-            "required": true,
-            "default": "https://api.any.run",
-            "order": 0
-        },
         "anyrun_api_key": {
             "description": "API Key used for API authentication",
             "data_type": "password",
             "required": true,
-            "order": 1
+            "order": 0
         },
         "anyrun_timeout": {
             "description": "Number of seconds to wait for a request to timeout",
             "data_type": "numeric",
             "required": true,
             "default": 300,
-            "order": 2
+            "order": 1
         }
     },
     "actions": [
@@ -2177,7 +2170,7 @@
                     "id": 3,
                     "param_name": "MD5"
                 },
-                "threatname": {
+                "threat_name": {
                     "description": "Name of threat (Size range: 2-256)",
                     "data_type": "string",
                     "order": 3,
@@ -2185,7 +2178,7 @@
                     "id": 4,
                     "param_name": "ThreatName"
                 },
-                "threatlevel": {
+                "threat_level": {
                     "description": "Threat level (Default: <empty>)",
                     "data_type": "string",
                     "value_list": [
@@ -2198,7 +2191,7 @@
                     "id": 5,
                     "param_name": "ThreatLevel"
                 },
-                "tasktype": {
+                "task_type": {
                     "description": "Task run type (Default: <empty>)",
                     "data_type": "string",
                     "value_list": [
@@ -2210,7 +2203,7 @@
                     "id": 6,
                     "param_name": "TaskType"
                 },
-                "submissioncountry": {
+                "submission_country": {
                     "description": "Submission country (Size range: 2-256)",
                     "data_type": "string",
                     "order": 6,
@@ -2233,7 +2226,7 @@
                     "id": 8,
                     "param_name": "OS"
                 },
-                "ossoftwareset": {
+                "os_software_set": {
                     "description": "Operation system software (Default: <empty> - not used)",
                     "data_type": "string",
                     "value_list": [
@@ -2246,7 +2239,7 @@
                     "id": 9,
                     "param_name": "OSSoftwareSet"
                 },
-                "osbitversion": {
+                "os_bit_version": {
                     "description": "Operation system bitness (Default: <empty> - not used)",
                     "data_type": "numeric",
                     "value_list": [
@@ -2258,7 +2251,7 @@
                     "id": 10,
                     "param_name": "OSBitVersion"
                 },
-                "registrykey": {
+                "registry_key": {
                     "description": "Registry key (Size range: 2-256)",
                     "data_type": "string",
                     "order": 10,
@@ -2266,7 +2259,7 @@
                     "id": 11,
                     "param_name": "RegistryKey"
                 },
-                "registryname": {
+                "registry_name": {
                     "description": "Registry name (Size range: 2-256)",
                     "data_type": "string",
                     "order": 11,
@@ -2274,7 +2267,7 @@
                     "id": 12,
                     "param_name": "RegistryName"
                 },
-                "registryvalue": {
+                "registry_value": {
                     "description": "Registry value (Size range: 2-256)",
                     "data_type": "string",
                     "order": 12,
@@ -2282,7 +2275,7 @@
                     "id": 13,
                     "param_name": "RegistryValue"
                 },
-                "moduleimagepath": {
+                "module_image_path": {
                     "description": "Module image path (Size range: 2-256)",
                     "data_type": "string",
                     "primary": true,
@@ -2294,7 +2287,7 @@
                     "id": 14,
                     "param_name": "ModuleImagePath"
                 },
-                "rulethreatlevel": {
+                "rule_threat_level": {
                     "description": "Rule threat level (Default: <empty> - not used)",
                     "data_type": "string",
                     "value_list": [
@@ -2307,7 +2300,7 @@
                     "id": 15,
                     "param_name": "RuleThreatLevel"
                 },
-                "rulename": {
+                "rule_name": {
                     "description": "Rule name (Size range: 2-256)",
                     "data_type": "string",
                     "order": 15,
@@ -2323,7 +2316,7 @@
                     "id": 17,
                     "param_name": "MITRE"
                 },
-                "imagepath": {
+                "image_path": {
                     "description": "Process image path (Size range: 2-256)",
                     "data_type": "string",
                     "primary": true,
@@ -2335,7 +2328,7 @@
                     "id": 18,
                     "param_name": "ImagePath"
                 },
-                "commandline": {
+                "command_line": {
                     "description": "Command line (Size range: 2-256)",
                     "data_type": "string",
                     "primary": true,
@@ -2347,7 +2340,7 @@
                     "id": 19,
                     "param_name": "CommandLine"
                 },
-                "injectedflag": {
+                "injected_flag": {
                     "description": "Injected flag (Default: <empty> - not used)",
                     "data_type": "string",
                     "value_list": [
@@ -2359,7 +2352,7 @@
                     "id": 20,
                     "param_name": "InjectedFlag"
                 },
-                "destinationip": {
+                "destination_ip": {
                     "description": "Destination ip (Size range: 2-256)",
                     "data_type": "string",
                     "primary": true,
@@ -2371,7 +2364,7 @@
                     "id": 21,
                     "param_name": "DestinationIp"
                 },
-                "destinationport": {
+                "destination_port": {
                     "description": "Destination port (Default: <empty> - not used) (Size range: 1-65535)",
                     "data_type": "numeric",
                     "primary": true,
@@ -2383,7 +2376,7 @@
                     "id": 22,
                     "param_name": "DestinationPort"
                 },
-                "destinationipasn": {
+                "destination_ip_asn": {
                     "description": "Destination IPASN (Size range: 2-256)",
                     "data_type": "string",
                     "order": 22,
@@ -2391,7 +2384,7 @@
                     "id": 23,
                     "param_name": "DestinationIPASN"
                 },
-                "destinationipgeo": {
+                "destination_ip_geo": {
                     "description": "Destination IP Geo (Size range: 2-256)",
                     "data_type": "string",
                     "order": 23,
@@ -2399,7 +2392,7 @@
                     "id": 24,
                     "param_name": "DestinationIPGeo"
                 },
-                "domainname": {
+                "domain_name": {
                     "description": "Domain name (Size range: 2-256)",
                     "data_type": "string",
                     "primary": true,
@@ -2411,19 +2404,19 @@
                     "id": 25,
                     "param_name": "DomainName"
                 },
-                "filename": {
-                    "description": "File name (Size range: 2-256)",
+                "file_path": {
+                    "description": "File path (Size range: 2-256)",
                     "data_type": "string",
                     "primary": true,
                     "contains": [
-                        "file name"
+                        "file path"
                     ],
                     "order": 25,
-                    "name": "FileName",
+                    "name": "FilePath",
                     "id": 26,
-                    "param_name": "FileName"
+                    "param_name": "FilePath"
                 },
-                "suricataclass": {
+                "suricata_class": {
                     "description": "Suricata class (Default: <empty> - not used)",
                     "data_type": "string",
                     "value_list": [
@@ -2475,7 +2468,7 @@
                     "id": 27,
                     "param_name": "SuricataClass"
                 },
-                "suricatamessage": {
+                "suricata_message": {
                     "description": "Suricata message (Size range: 2-256)",
                     "data_type": "string",
                     "order": 27,
@@ -2483,7 +2476,7 @@
                     "id": 28,
                     "param_name": "SuricataMessage"
                 },
-                "suricatathreatlevel": {
+                "suricata_threat_level": {
                     "description": "Suricata threat level (Default: <empty> - not used)",
                     "data_type": "string",
                     "value_list": [
@@ -2496,7 +2489,7 @@
                     "id": 29,
                     "param_name": "SuricataThreatLevel"
                 },
-                "suricataid": {
+                "suricata_id": {
                     "description": "Suricata ID (Size range: 2-256)",
                     "data_type": "string",
                     "order": 29,
@@ -2516,7 +2509,7 @@
                     "id": 31,
                     "param_name": "URL"
                 },
-                "httprequestcontenttype": {
+                "http_request_content_type": {
                     "description": "HTTP request content type (Size range: 2-256)",
                     "data_type": "string",
                     "order": 31,
@@ -2524,7 +2517,7 @@
                     "id": 32,
                     "param_name": "HTTPRequestContentType"
                 },
-                "httpresponsecontenttype": {
+                "http_response_content_type": {
                     "description": "HTTP response content type (Size range: 2-256)",
                     "data_type": "string",
                     "order": 32,
@@ -2532,7 +2525,7 @@
                     "id": 33,
                     "param_name": "HTTPResponseContentType"
                 },
-                "httprequestfiletype": {
+                "http_request_file_type": {
                     "description": "HTTP request file type (Size range: 2-256)",
                     "data_type": "string",
                     "order": 33,
@@ -2540,7 +2533,7 @@
                     "id": 34,
                     "param_name": "HTTPRequestFileType"
                 },
-                "httpresponsefiletype": {
+                "http_response_file_type": {
                     "description": "HTTP response file type (Size range: 2-256)",
                     "data_type": "string",
                     "order": 34,
@@ -2548,15 +2541,15 @@
                     "id": 35,
                     "param_name": "HTTPResponseFileType"
                 },
-                "fileeventname": {
-                    "description": "File Event Name (Size range: 2-256)",
+                "file_event_path": {
+                    "description": "File Event Path (Size range: 2-256)",
                     "data_type": "string",
                     "order": 35,
-                    "name": "fileEventName",
+                    "name": "fileEventPath",
                     "id": 36,
-                    "param_name": "fileEventName"
+                    "param_name": "fileEventPath"
                 },
-                "fileextension": {
+                "file_extension": {
                     "description": "File Extension (Size range: 2-256)",
                     "data_type": "string",
                     "order": 36,
@@ -2564,7 +2557,7 @@
                     "id": 37,
                     "param_name": "fileExtension"
                 },
-                "syncobjectname": {
+                "sync_object_name": {
                     "description": "Sync Object Name (Size range: 2-256)",
                     "data_type": "string",
                     "order": 37,
@@ -2572,7 +2565,7 @@
                     "id": 38,
                     "param_name": "syncObjectName"
                 },
-                "syncobjecttype": {
+                "sync_object_type": {
                     "description": "Sync Object Type (Size range: 2-256)",
                     "data_type": "string",
                     "order": 38,
@@ -2580,7 +2573,7 @@
                     "id": 39,
                     "param_name": "syncObjectType"
                 },
-                "syncobjectoperation": {
+                "sync_object_operation": {
                     "description": "Sync Object Operation (Size range: 2-256)",
                     "data_type": "string",
                     "order": 39,
@@ -2639,132 +2632,11 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.threatname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.threatlevel",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.tasktype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.submissioncountry",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.parameter.os",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.ossoftwareset",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.osbitversion",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.parameter.registrykey",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.registryname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.registryvalue",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.moduleimagepath",
-                    "data_type": "string",
-                    "contains": [
-                        "file path"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.rulethreatlevel",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.rulename",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.parameter.mitre",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.imagepath",
-                    "data_type": "string",
-                    "contains": [
-                        "file path"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.commandline",
-                    "data_type": "string",
-                    "contains": [
-                        "process name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.injectedflag",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.destinationip",
-                    "data_type": "string",
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.destinationport",
-                    "data_type": "numeric",
-                    "contains": [
-                        "port"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.destinationipasn",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.destinationipgeo",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.domainname",
-                    "data_type": "string",
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.filename",
-                    "data_type": "string",
-                    "contains": [
-                        "file name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.suricataclass",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.suricatamessage",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.suricatathreatlevel",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.suricataid",
                     "data_type": "string"
                 },
                 {
@@ -2773,42 +2645,6 @@
                     "contains": [
                         "url"
                     ]
-                },
-                {
-                    "data_path": "action_result.parameter.httprequestcontenttype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.httpresponsecontenttype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.httprequestfiletype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.httpresponsefiletype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.fileeventname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.fileextension",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.syncobjectname",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.syncobjecttype",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.syncobjectoperation",
-                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.parameter.ja3",
@@ -2877,6 +2713,163 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.threat_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.threat_level",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.task_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.submission_country",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.os_software_set",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.os_bit_version",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.registry_key",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.registry_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.registry_value",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.module_image_path",
+                    "data_type": "string",
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.rule_threat_level",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.rule_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.image_path",
+                    "data_type": "string",
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.command_line",
+                    "data_type": "string",
+                    "contains": [
+                        "process name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.injected_flag",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_ip",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.destination_port",
+                    "data_type": "numeric",
+                    "contains": [
+                        "port"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.destination_ip_asn",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_ip_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.domain_name",
+                    "data_type": "string",
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.file_path",
+                    "data_type": "string",
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_class",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_threat_level",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.suricata_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_request_content_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_response_content_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_request_file_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.http_response_file_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.file_event_path",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.file_extension",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.sync_object_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.sync_object_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.sync_object_operation",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -2885,59 +2878,27 @@
             "versions": "EQ(*)"
         }
     ],
-    "pip3_dependencies": {
-        "wheel": [
-            {
-                "module": "aiosignal",
-                "input_file": "wheels/aiosignal-1.3.2-py2.py3-none-any.whl"
-            },
-            {
-                "module": "async_timeout",
-                "input_file": "wheels/async_timeout-5.0.1-py3-none-any.whl"
-            },
-            {
-                "module": "attrs",
-                "input_file": "wheels/attrs-25.1.0-py3-none-any.whl"
-            },
-            {
-                "module": "multidict",
-                "input_file": "wheels/multidict-6.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "propcache",
-                "input_file": "wheels/propcache-0.2.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "yarl",
-                "input_file": "wheels/yarl-1.18.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "frozenlist",
-                "input_file": "wheels/frozenlist-1.5.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "aiohttp",
-                "input_file": "wheels/aiohttp-3.11.12-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "anyrun",
-                "input_file": "wheels/anyrun_py-0.1.3-py3-none-any.whl"
-            }
-        ]
-    },
     "pip39_dependencies": {
         "wheel": [
             {
+                "module": "aiofiles",
+                "input_file": "wheels/py3/aiofiles-24.1.0-py3-none-any.whl"
+            },
+            {
                 "module": "aiohappyeyeballs",
-                "input_file": "wheels/py3/aiohappyeyeballs-2.4.6-py3-none-any.whl"
+                "input_file": "wheels/py3/aiohappyeyeballs-2.6.1-py3-none-any.whl"
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/py39/aiohttp-3.11.12-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/aiohttp-3.11.12-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "aiosignal",
                 "input_file": "wheels/shared/aiosignal-1.3.2-py2.py3-none-any.whl"
+            },
+            {
+                "module": "anyrun_sdk",
+                "input_file": "wheels/py3/anyrun_sdk-1.2.3-py3-none-any.whl"
             },
             {
                 "module": "async_timeout",
@@ -2945,31 +2906,75 @@
             },
             {
                 "module": "attrs",
-                "input_file": "wheels/py3/attrs-25.1.0-py3-none-any.whl"
+                "input_file": "wheels/py3/attrs-25.3.0-py3-none-any.whl"
             },
             {
                 "module": "frozenlist",
-                "input_file": "wheels/py39/frozenlist-1.5.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/frozenlist-1.6.0-cp39-cp39-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "multidict",
-                "input_file": "wheels/py39/multidict-6.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/multidict-6.4.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "propcache",
-                "input_file": "wheels/py39/propcache-0.2.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py39/propcache-0.3.1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "typing_extensions",
                 "input_file": "wheels/py3/typing_extensions-4.12.2-py3-none-any.whl"
             },
             {
-                "module": "anyrun",
-                "input_file": "wheels/py3/anyrun_py-0.1.3-py3-none-any.whl"
+                "module": "yarl",
+                "input_file": "wheels/py39/yarl-1.20.0-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+            }
+        ]
+    },
+    "pip313_dependencies": {
+        "wheel": [
+            {
+                "module": "aiofiles",
+                "input_file": "wheels/py3/aiofiles-24.1.0-py3-none-any.whl"
+            },
+            {
+                "module": "aiohappyeyeballs",
+                "input_file": "wheels/py3/aiohappyeyeballs-2.6.1-py3-none-any.whl"
+            },
+            {
+                "module": "aiohttp",
+                "input_file": "wheels/py313/aiohttp-3.11.12-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+            },
+            {
+                "module": "aiosignal",
+                "input_file": "wheels/shared/aiosignal-1.3.2-py2.py3-none-any.whl"
+            },
+            {
+                "module": "anyrun_sdk",
+                "input_file": "wheels/py3/anyrun_sdk-1.2.3-py3-none-any.whl"
+            },
+            {
+                "module": "attrs",
+                "input_file": "wheels/py3/attrs-25.3.0-py3-none-any.whl"
+            },
+            {
+                "module": "frozenlist",
+                "input_file": "wheels/py313/frozenlist-1.6.0-cp313-cp313-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.manylinux_2_28_x86_64.whl"
+            },
+            {
+                "module": "multidict",
+                "input_file": "wheels/py313/multidict-6.4.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+            },
+            {
+                "module": "propcache",
+                "input_file": "wheels/py313/propcache-0.3.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+            },
+            {
+                "module": "typing_extensions",
+                "input_file": "wheels/py3/typing_extensions-4.12.2-py3-none-any.whl"
             },
             {
                 "module": "yarl",
-                "input_file": "wheels/py39/yarl-1.18.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+                "input_file": "wheels/py313/yarl-1.20.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             }
         ]
     }
