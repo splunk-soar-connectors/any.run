@@ -26,8 +26,7 @@ import phantom.rules as phantom_rules
 import requests
 
 # Usage of the consts file is recommended
-from anyrun.connectors.sandbox.sandbox_connector import SandBoxConnector
-from anyrun.connectors.threat_intelligence.lookup_connector import LookupConnector
+from anyrun.connectors import LookupConnector, SandboxConnector
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
@@ -39,6 +38,8 @@ from utils.reputation import Reputation
 
 
 class AnyRunConnector(BaseConnector):
+    _anyrun_sandbox: SandboxConnector
+
     def __init__(self):
         super().__init__()
         self._state = None
@@ -137,8 +138,8 @@ class AnyRunConnector(BaseConnector):
         :param taskid: Task ID
         :return: List of IoCs
         """
-        with self._anyrun_sandbox as sandbox:
-            report = sandbox.get_analysis_report(taskid, simplify=False)
+        with self._default_sandbox as sandbox:
+            report = sandbox.get_analysis_report(taskid)
 
         return extract_iocs(report, self._api_key)
 
@@ -172,7 +173,7 @@ class AnyRunConnector(BaseConnector):
 
         self.save_progress("Connecting to endpoint")
         try:
-            with self._anyrun_sandbox as sandbox:
+            with self._default_sandbox as sandbox:
                 sandbox.get_user_limits()
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
@@ -199,9 +200,12 @@ class AnyRunConnector(BaseConnector):
 
         # Making an API call
         self.save_progress(f"Requesting a list of reports for a URL: {url}.")
+
         try:
             error_message = None
+            t1 = time.time()
             tasks = self._reputation.get_url_reputation(url, search_in_public_tasks)
+            t2 = time.time()
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_URL_REPUTATION, error_message)
@@ -215,7 +219,9 @@ class AnyRunConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_URL_REPUTATION.format(url))
+        return action_result.set_status(
+            phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_URL_REPUTATION.format(url) + f" Time for API call: {t2 - t1} seconds"
+        )
 
     def _handle_get_file_reputation(self, param: dict) -> ActionResult:
         """
@@ -337,7 +343,7 @@ class AnyRunConnector(BaseConnector):
         self.save_progress(f"Requesting report for submission: {taskid}")
         try:
             error_message = None
-            with self._anyrun_sandbox as sandbox:
+            with self._default_sandbox as sandbox:
                 report = sandbox.get_analysis_report(taskid)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
@@ -390,7 +396,7 @@ class AnyRunConnector(BaseConnector):
             action_result.update_summary(
                 {
                     "total_objects": len(iocs),
-                    "max_reputation": max(item["reputation"] for item in iocs),
+                    "max_reputation": max(item["reputation"] for item in iocs) if len(iocs) > 0 else 0,
                 }
             )
         except Exception as exc:  # pylint: disable=broad-exception-caught
@@ -418,6 +424,28 @@ class AnyRunConnector(BaseConnector):
 
         # Input validation
         ret_val, data = self._get_configuration(action_result, param, is_file=False)
+
+        env_os = data.pop("env_os", None)
+        if not env_os:
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, "env_os is required")
+            self.save_progress(error_message)
+            return action_result.set_status(phantom.APP_ERROR, error_message)
+
+        if env_os == "windows":
+            sandbox = self._default_sandbox
+        elif env_os == "android":
+            sandbox = self._anyrun_sandbox.android(
+                api_key=self._api_key,
+                user_agent=USER_AGENT,
+                timeout=self._timeout,
+            )
+        else:
+            sandbox = self._anyrun_sandbox.linux(
+                api_key=self._api_key,
+                user_agent=USER_AGENT,
+                timeout=self._timeout,
+            )
+
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
@@ -427,12 +455,12 @@ class AnyRunConnector(BaseConnector):
         while response is None:
             try:
                 error_message = None
-                with self._anyrun_sandbox as sandbox:
+                with sandbox:
                     taskid = sandbox.run_url_analysis(**data)
                     for status in sandbox.get_task_status(taskid):
                         self.debug_print(f"Waiting for task to complete {taskid}: {status}")
 
-                    response = sandbox.get_analysis_report(taskid, simplify=True)
+                    response = sandbox.get_analysis_report(taskid)
                     response = response if response is not None else {}
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 if "Parallel task limit" in str(exc):
@@ -473,6 +501,28 @@ class AnyRunConnector(BaseConnector):
 
         # Input validation
         ret_val, data = self._get_configuration(action_result, param, is_file=True)
+
+        env_os = data.pop("env_os", None)
+        if not env_os:
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, "env_os is required")
+            self.save_progress(error_message)
+            return action_result.set_status(phantom.APP_ERROR, error_message)
+
+        if env_os == "windows":
+            sandbox = self._default_sandbox
+        elif env_os == "android":
+            sandbox = self._anyrun_sandbox.android(
+                api_key=self._api_key,
+                user_agent=USER_AGENT,
+                timeout=self._timeout,
+            )
+        else:
+            sandbox = self._anyrun_sandbox.linux(
+                api_key=self._api_key,
+                user_agent=USER_AGENT,
+                timeout=self._timeout,
+            )
+
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
@@ -518,12 +568,12 @@ class AnyRunConnector(BaseConnector):
         while response is None:
             try:
                 error_message = None
-                with self._anyrun_sandbox as sandbox:
+                with sandbox:
                     taskid = sandbox.run_file_analysis(file_path, **data)
                     for status in sandbox.get_task_status(taskid):
                         self.debug_print(f"Waiting for task to complete {taskid}: {status}")
 
-                    response = sandbox.get_analysis_report(taskid, simplify=True)
+                    response = sandbox.get_analysis_report(taskid)
                     response = response if response is not None else {}
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 if "Parallel task limit" in str(exc):
@@ -664,19 +714,21 @@ class AnyRunConnector(BaseConnector):
 
         self._api_key = self._normalize_api_key()
 
-        self._anyrun_sandbox = SandBoxConnector(
+        self._anyrun_sandbox = SandboxConnector()
+
+        self._default_sandbox = self._anyrun_sandbox.windows(
             api_key=self._api_key,
-            user_agent=f"Splunk-SOAR/{VERSION}",
+            user_agent=USER_AGENT,
             timeout=self._timeout,
         )
 
         self._anyrun_threat_intelligence = LookupConnector(
             api_key=self._api_key,
-            user_agent=f"Splunk-SOAR/{VERSION}",
+            user_agent=USER_AGENT,
             timeout=self._timeout,
         )
 
-        self._reputation = Reputation(sandbox=self._anyrun_sandbox, lookup=self._anyrun_threat_intelligence)
+        self._reputation = Reputation(sandbox=self._default_sandbox, lookup=self._anyrun_threat_intelligence)
 
         return phantom.APP_SUCCESS
 

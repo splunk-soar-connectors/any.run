@@ -4,7 +4,9 @@ __pycache__/
 dist/
 .vscode/
 .ruff_cache/
+.venv/
 
+uv.lock
 .coverage
 .env
 .DS_Store

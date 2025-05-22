@@ -11,7 +11,7 @@
     "product_version_regex": ".*",
     "publisher": "ANYRUN FZCO",
     "license": "Copyright (c) ANYRUN FZCO, 2025",
-    "app_version": "1.4.0",
+    "app_version": "1.4.1",
     "utctime_updated": "2025-04-25T22:04:32.026074Z",
     "package_name": "phantom_any.run",
     "main_module": "anyrun_connector.py",

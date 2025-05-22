@@ -13,7 +13,8 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-VERSION = "1.4.0"
+VERSION = "1.4.1"
+USER_AGENT = f"Splunk_SOAR/{VERSION}"
 # Action IDs
 ACTION_ID_ANYRUN_TEST_CONNECTIVITY = "test_connectivity"
 ACTION_ID_ANYRUN_GET_URL_REPUTATION = "get_url_reputation"
