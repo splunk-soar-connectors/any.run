@@ -2898,7 +2898,7 @@
             },
             {
                 "module": "anyrun_sdk",
-                "input_file": "wheels/py3/anyrun_sdk-1.2.3-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_sdk-1.5.3-py3-none-any.whl"
             },
             {
                 "module": "async_timeout",
@@ -2914,7 +2914,7 @@
             },
             {
                 "module": "multidict",
-                "input_file": "wheels/py39/multidict-6.4.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py39/multidict-6.4.4-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "propcache",
@@ -2950,7 +2950,7 @@
             },
             {
                 "module": "anyrun_sdk",
-                "input_file": "wheels/py3/anyrun_sdk-1.2.3-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_sdk-1.5.3-py3-none-any.whl"
             },
             {
                 "module": "attrs",
@@ -2962,7 +2962,7 @@
             },
             {
                 "module": "multidict",
-                "input_file": "wheels/py313/multidict-6.4.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py313/multidict-6.4.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "propcache",
