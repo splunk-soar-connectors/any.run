@@ -25,6 +25,7 @@ __all__ = [
     "test_detonate_file",
     "test_detonate_url",
     "test_detonate_url_with_obj_ext_startfolder",
+    "test_download_pcap_fixture",
     "test_get_domain_reputation",
     "test_get_file_reputation",
     "test_get_intelligence",
@@ -120,12 +121,13 @@ def test_get_report() -> str:
     """
     Basic test of the get_report action
     """
+    fmt = "html"
     return json.dumps(
         {
-            "action": "get_report",
-            "parameters": [{"taskid": "279be11e-0799-4d62-ac47-f1d56e88ee57"}],
+            "action": f"get_report_{fmt}",
+            "parameters": [{"taskid": "279be11e-0799-4d62-ac47-f1d56e88ee57", "report_format": fmt}],
             "asset_id": "anyrun_instance_01",
-            "identifier": "get_report",
+            "identifier": f"get_report_{fmt}",
         }
     )
 
@@ -138,9 +140,10 @@ def test_get_ioc() -> str:
     return json.dumps(
         {
             "action": "get_ioc",
-            "parameters": [{"taskid": "279be11e-0799-4d62-ac47-f1d56e88ee57"}],
+            "parameters": [{"taskid": "38e0dfb5-c253-45d9-bdb0-3f5a261f5a6a"}],
             "asset_id": "anyrun_instance_01",
             "identifier": "get_ioc",
+            "container_id": 4,
         }
     )
 
@@ -152,21 +155,15 @@ def test_detonate_url() -> str:
     """
     return json.dumps(
         {
-            "action": "detonate_url",
+            "action": "detonate_url_android",
             "parameters": [
                 {
                     "obj_url": "https://example.com",
-                    "obj_type": "url",
-                    "os": "Windows10x64_clean",
-                    "env_bitness": "64",
-                    "env_os": "windows",
-                    "env_version": "10",
-                    "env_type": "clean",
-                    "opt_timeout": 10,
+                    "opt_timeout": 15,
                 }
             ],
             "asset_id": "anyrun_instance_01",
-            "identifier": "detonate_url",
+            "identifier": "detonate_url_android",
         }
     )
 
@@ -239,5 +236,21 @@ def test_detonate_url_with_obj_ext_startfolder() -> str:
             ],
             "asset_id": "anyrun_instance_01",
             "identifier": "detonate_url",
+        }
+    )
+
+
+@pytest.fixture
+def test_download_pcap_fixture() -> str:
+    """
+    Basic test of the download_pcap action
+    """
+    return json.dumps(
+        {
+            "action": "download_pcap",
+            "parameters": [{"taskid": "ec15a232-c48e-4673-b62d-0ef0c43758fe"}],
+            "asset_id": "anyrun_instance_01",
+            "identifier": "download_pcap",
+            "container_id": 4,
         }
     )

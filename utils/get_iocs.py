@@ -11,25 +11,64 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import requests
+
+types = {
+    "destinationAddress": ["ip"],
+    "destinationDnsDomain": ["domain"],
+    "requestURL": ["url"],
+    "fileHash": ["sha256", "md5", "sha1"],
+}
 
 
-def extract_iocs(report_json: dict, api_key: str) -> list[dict]:
-    """Get IOCs from the report"""
-    if report_json is None:
-        return []
+def define_type(raw_type: str) -> str:
+    for key, values in types.items():
+        if raw_type in values:
+            return key
+    return "unknown"
 
-    ioc_link = report_json.get("analysis", {}).get("reports", {}).get("IOC", None)
-    if ioc_link is None:
-        return []
 
-    headers = {"Authorization": api_key}
-    response = requests.get(
-        ioc_link,
-        headers=headers,
-        timeout=10,
-    )
-    if response.status_code != 200:
-        return []
+def extract_iocs(sandbox, taskid: str, container_id: int) -> list[dict]:
+    """
+    Get IoCs from AnyRun sandbox
 
-    return response.json()
+    :param taskid: Task ID
+    :return: List of IoCs
+    """
+    with sandbox:
+        raw_iocs = sandbox.get_analysis_report(task_uuid=taskid, report_format="ioc")
+
+    artifacts = list()
+    for entry in raw_iocs:
+        reputation = entry.pop("reputation")
+
+        if reputation == 1:
+            severity = "medium"
+        elif reputation == 2:
+            severity = "high"
+        elif reputation == 0:
+            severity = "low"
+        else:
+            continue
+
+        entry["severity"] = severity
+        ioc_type = define_type(entry.pop("type"))
+
+        cef = dict()
+        cef[ioc_type] = entry.pop("ioc")
+        cef["id"] = entry.pop("discoveringEntryId")
+        cef["category"] = entry.pop("category")
+        cef["type"] = ioc_type
+
+        artifact = {
+            "label": "indicator",
+            "name": cef[ioc_type],
+            "severity": severity,
+            "source": "AnyRun",
+            "cef": cef,
+            "container_id": container_id,
+            "tags": ["anyrun", "ioc", taskid],
+        }
+
+        artifacts.append(artifact)
+
+    return artifacts

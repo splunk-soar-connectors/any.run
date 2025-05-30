@@ -58,13 +58,12 @@ class BaseTest:
         t1 = time.time()
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
+        if not ret_val:
+            raise Exception(ret_val)
 
         t2 = time.time()
 
         result = json.loads(ret_val)
         result["time_taken"] = t2 - t1
-
-        with open("ret_val.json", "w") as f:
-            f.write(json.dumps(result, indent=4, ensure_ascii=False))
 
         return result

@@ -1,2 +1,2 @@
-anyrun-sdk==1.5.3
+anyrun-sdk==1.6.3
 requests==2.32.3

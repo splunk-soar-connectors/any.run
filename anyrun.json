@@ -45,6 +45,84 @@
             "versions": "EQ(*)"
         },
         {
+            "action": "get analysis verdict",
+            "identifier": "get_analysis_verdict",
+            "description": "Get the verdict of a specific analysis",
+            "verbose": "This action requires a submission <b>TaskID</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "taskid": {
+                    "description": "ANY.RUN task UUID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "order": 0,
+                    "name": "TaskID",
+                    "id": 1,
+                    "param_name": "TaskID",
+                    "descriptionError": false
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.taskid",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.verdict",
+                    "data_type": "string",
+                    "column_name": "Verdict",
+                    "column_order": 0,
+                    "example_values": [
+                        "No threats detected",
+                        "Suspicious activity",
+                        "Malicious activity"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
             "action": "url reputation",
             "identifier": "get_url_reputation",
             "description": "Get reports of a specific URL analysis",
@@ -204,6 +282,10 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -359,6 +441,10 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -531,6 +617,10 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -685,6 +775,10 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -863,7 +957,283 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get report stix",
+            "identifier": "get_report_stix",
+            "description": "Get report for a submission in STIX format",
+            "verbose": "This action requires a submission <b>TaskID</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "taskid": {
+                    "description": "ANY.RUN task UUID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "order": 0,
+                    "name": "TaskID",
+                    "id": 1,
+                    "param_name": "TaskID"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.taskid", 
+                    "column_order": 0, 
+                    "column_name": "Submission ID", 
+                    "data_type": "string", 
+                    "contains": ["anyrun task id"]
+                }, 
+                {
+                    "data_path": "action_result.data.type", 
+                    "column_order": 1, 
+                    "column_name": "Type", 
+                    "data_type": "string", 
+                    "example_values": ["bundle"] 
+                }, 
+                {
+                    "data_path": "action_result.data.id", 
+                    "column_order": 2, 
+                    "column_name": "ID", 
+                    "data_type": "string" 
+                }, 
+                {
+                    "data_path": "action_result.data.objects.*.id", 
+                    "column_order": 3, 
+                    "column_name": "Object ID", 
+                    "data_type": "string" 
+                }, 
+                {
+                    "data_path": "action_result.data.objects.*.name", 
+                    "column_order": 4, 
+                    "column_name": "Object Name", 
+                    "data_type": "string" 
+                }, 
+                {
+                    "data_path": "action_result.data.objects.*.type", 
+                    "column_order": 5, 
+                    "column_name": "Object Type", 
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                }   
+
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get report misp",
+            "identifier": "get_report_misp",
+            "description": "Get report for a submission in MISP format",
+            "verbose": "This action requires a submission <b>TaskID</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "taskid": {
+                    "description": "ANY.RUN task UUID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "order": 0,
+                    "name": "TaskID",
+                    "id": 1,
+                    "param_name": "TaskID"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.taskid", 
+                    "column_order": 0, 
+                    "column_name": "Submission ID", 
+                    "data_type": "string", 
+                    "contains": ["anyrun task id"]
+                }, 
+                {
+                    "data_path": "action_result.data.Event.uuid", 
+                    "column_order": 1, 
+                    "column_name": "Event UUID", 
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.Event.distribution", 
+                    "column_order": 2, 
+                    "column_name": "Distribution", 
+                    "data_type": "numeric"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.analysis", 
+                    "column_order": 3, 
+                    "column_name": "Analysis", 
+                    "data_type": "numeric"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.threat_level_id", 
+                    "column_order": 4, 
+                    "column_name": "Threat Level ID", 
+                    "data_type": "numeric"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.info", 
+                    "column_order": 5, 
+                    "column_name": "Info", 
+                    "data_type": "string"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.timestamp", 
+                    "column_order": 6, 
+                    "column_name": "Timestamp", 
+                    "data_type": "string"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.date", 
+                    "column_order": 7, 
+                    "column_name": "Date", 
+                    "data_type": "string"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.Attribute.*.category", 
+                    "column_order": 8, 
+                    "column_name": "Category", 
+                    "data_type": "string"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.Attribute.*.type", 
+                    "column_order": 9, 
+                    "column_name": "Type", 
+                    "data_type": "string"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.Attribute.*.value", 
+                    "column_order": 10, 
+                    "column_name": "Value", 
+                    "data_type": "string"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.Attribute.*.distribution", 
+                    "column_order": 11, 
+                    "column_name": "Distribution", 
+                    "data_type": "numeric"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.Orgc.uuid", 
+                    "column_order": 12, 
+                    "column_name": "Orgc UUID", 
+                    "data_type": "string"
+                }, 
+                {
+                    "data_path": "action_result.data.Event.Orgc.name", 
+                    "column_order": 13, 
+                    "column_name": "Orgc Name", 
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                }   
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get report html",
+            "identifier": "get_report_html",
+            "description": "Get report for a submission in HTML format",
+            "verbose": "This action requires a submission <b>TaskID</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "taskid": {
+                    "description": "ANY.RUN task UUID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "order": 0,
+                    "name": "TaskID",
+                    "id": 1,
+                    "param_name": "TaskID"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.taskid", 
+                    "column_order": 0, 
+                    "column_name": "Submission ID", 
+                    "data_type": "string", 
+                    "contains": ["anyrun task id"]
+                }, 
+                {
+                    "data_path": "action_result.data.html", 
+                    "column_order": 1, 
+                    "column_name": "HTML", 
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                }   
             ],
             "render": {
                 "type": "table"
@@ -966,6 +1336,10 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -974,8 +1348,8 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "detonate url",
-            "identifier": "detonate_url",
+            "action": "detonate url windows",
+            "identifier": "detonate_url_windows",
             "description": "Detonate a URL",
             "verbose": "This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
@@ -994,48 +1368,27 @@
                     "id": 1,
                     "param_name": "obj_url"
                 },
-                "obj_type": {
-                    "description": "Type of new task (Default: url)",
-                    "data_type": "string",
-                    "value_list": [
-                        "url",
-                        "download"
-                    ],
-                    "default": "url",
+                "opt_timeout": {
+                    "description": "Timeout (Default: 60)",
+                    "data_type": "numeric",
+                    "default": 60,
                     "order": 1,
-                    "name": "obj_type",
+                    "name": "opt_timeout",
                     "id": 2,
-                    "param_name": "obj_type"
+                    "param_name": "opt_timeout"
                 },
-                "os": {
-                    "description": "Operation System (Default: Windows10x64_complete)",
-                    "data_type": "string",
+                "env_bitness": {
+                    "description": "Bitness of the operation system (Default: 64)",
+                    "data_type": "numeric",
                     "value_list": [
-                        "Linux22.04.2x64_office",
-                        "Windows7x32_clean",
-                        "Windows7x32_office",
-                        "Windows7x32_complete",
-                        "Windows10x32_clean",
-                        "Windows10x32_office",
-                        "Windows10x32_complete",
-                        "Windows11x32_clean",
-                        "Windows11x32_office",
-                        "Windows11x32_complete",
-                        "Windows7x64_clean",
-                        "Windows7x64_office",
-                        "Windows7x64_complete",
-                        "Windows10x64_clean",
-                        "Windows10x64_office",
-                        "Windows10x64_complete",
-                        "Windows11x64_clean",
-                        "Windows11x64_office",
-                        "Windows11x64_complete"
+                        32,
+                        64
                     ],
-                    "default": "Windows10x64_complete",
+                    "default": 64,
                     "order": 2,
-                    "name": "os",
+                    "name": "env_bitness",
                     "id": 3,
-                    "param_name": "os"
+                    "param_name": "env_bitness"
                 },
                 "env_locale": {
                     "description": "Operation system's language (Default: en-US)",
@@ -1046,373 +1399,150 @@
                     "id": 4,
                     "param_name": "env_locale"
                 },
-                "opt_network_connect": {
-                    "description": "Network connection state",
+                "env_type": {
+                    "description": "Type of the operation system (Default: complete)",
+                    "data_type": "string",
+                    "value_list": [
+                        "clean",
+                        "office",
+                        "complete"
+                    ],
+                    "default": "complete",
+                    "order": 4,
+                    "name": "env_type",
+                    "id": 5,
+                    "param_name": "env_type"
+                },
+                "env_version": {
+                    "description": "Version of the operation system (Default: 10)",
+                    "data_type": "string",
+                    "value_list": [
+                        "7",
+                        "10",
+                        "11"
+                    ],
+                    "default": "10",
+                    "order": 5,
+                    "name": "env_version",
+                    "id": 6,
+                    "param_name": "env_version"
+                },
+                "obj_ext_browser": {
+                    "description": "Browser to use (Default: Microsoft Edge)",
+                    "data_type": "string",
+                    "value_list": [
+                        "Microsoft Edge",
+                        "Google Chrome",
+                        "Mozilla Firefox",
+                        "Internet Explorer"
+                    ],
+                    "default": "Microsoft Edge",
+                    "order": 6,
+                    "name": "obj_ext_browser",
+                    "id": 7,
+                    "param_name": "obj_ext_browser"
+                },
+                "obj_ext_extension": {
+                    "description": "Extension to use (Default: True)",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 4,
+                    "order": 7,
+                    "name": "obj_ext_extension",
+                    "id": 8,
+                    "param_name": "obj_ext_extension"
+                },
+                "opt_automated_interactivity": {
+                    "description": "Automated interactivity (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 8,
+                    "name": "opt_automated_interactivity",
+                    "id": 9,
+                    "param_name": "opt_automated_interactivity"
+                },
+                "opt_kernel_heavyevasion": {
+                    "description": "Kernel heavy evasion (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 9,
+                    "name": "opt_kernel_heavyevasion",
+                    "id": 10,
+                    "param_name": "opt_kernel_heavyevasion"
+                },
+                "opt_network_connect": {
+                    "description": "Network connection state (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 10,
                     "name": "opt_network_connect",
-                    "id": 5,
+                    "id": 11,
                     "param_name": "opt_network_connect"
                 },
                 "opt_network_fakenet": {
-                    "description": "FakeNet feature status",
+                    "description": "FakeNet feature status (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 5,
+                    "order": 11,
                     "name": "opt_network_fakenet",
-                    "id": 6,
+                    "id": 12,
                     "param_name": "opt_network_fakenet"
-                },
-                "opt_network_tor": {
-                    "description": "TOR using",
-                    "data_type": "boolean",
-                    "default": false,
-                    "order": 6,
-                    "name": "opt_network_tor",
-                    "id": 7,
-                    "param_name": "opt_network_tor"
                 },
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": [
-                        "fastest",
-                        "AU",
-                        "BR",
-                        "DE",
-                        "CH",
-                        "FR",
-                        "KR",
-                        "US",
-                        "RU",
-                        "GB",
-                        "IT"
-                    ],
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
                     "default": "fastest",
-                    "order": 7,
+                    "order": 12,
                     "name": "opt_network_geo",
-                    "id": 8,
+                    "id": 13,
                     "param_name": "opt_network_geo"
                 },
                 "opt_network_mitm": {
-                    "description": "HTTPS MITM proxy option",
+                    "description": "HTTPS MITM proxy option (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 8,
+                    "order": 13,
                     "name": "opt_network_mitm",
-                    "id": 9,
+                    "id": 14,
                     "param_name": "opt_network_mitm"
                 },
                 "opt_network_residential_proxy": {
-                    "description": "Residential proxy using",
+                    "description": "Residential proxy using (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 9,
+                    "order": 14,
                     "name": "opt_network_residential_proxy",
-                    "id": 10,
+                    "id": 15,
                     "param_name": "opt_network_residential_proxy"
                 },
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": [
-                        "fastest",
-                        "AD",
-                        "AE",
-                        "AF",
-                        "AG",
-                        "AL",
-                        "AM",
-                        "AO",
-                        "AR",
-                        "AT",
-                        "AU",
-                        "AZ",
-                        "BA",
-                        "BB",
-                        "BD",
-                        "BE",
-                        "BF",
-                        "BG",
-                        "BH",
-                        "BI",
-                        "BJ",
-                        "BN",
-                        "BO",
-                        "BR",
-                        "BS",
-                        "BT",
-                        "BW",
-                        "BY",
-                        "BZ",
-                        "CA",
-                        "CD",
-                        "CF",
-                        "CG",
-                        "CH",
-                        "CI",
-                        "CL",
-                        "CM",
-                        "CN",
-                        "CO",
-                        "CR",
-                        "CU",
-                        "CV",
-                        "CW",
-                        "CY",
-                        "CZ",
-                        "DE",
-                        "DJ",
-                        "DK",
-                        "DM",
-                        "DO",
-                        "DZ",
-                        "EC",
-                        "EE",
-                        "EG",
-                        "ES",
-                        "ET",
-                        "FI",
-                        "FJ",
-                        "FR",
-                        "GA",
-                        "GB",
-                        "GD",
-                        "GE",
-                        "GF",
-                        "GH",
-                        "GM",
-                        "GN",
-                        "GP",
-                        "GQ",
-                        "GR",
-                        "GT",
-                        "GU",
-                        "GW",
-                        "GY",
-                        "HK",
-                        "HN",
-                        "HR",
-                        "HT",
-                        "HU",
-                        "ID",
-                        "IE",
-                        "IL",
-                        "IM",
-                        "IN",
-                        "IQ",
-                        "IR",
-                        "IS",
-                        "IT",
-                        "JE",
-                        "JM",
-                        "JO",
-                        "JP",
-                        "KE",
-                        "KG",
-                        "KH",
-                        "KR",
-                        "KW",
-                        "KY",
-                        "KZ",
-                        "LA",
-                        "LB",
-                        "LC",
-                        "LK",
-                        "LR",
-                        "LS",
-                        "LT",
-                        "LU",
-                        "LV",
-                        "LY",
-                        "MA",
-                        "MD",
-                        "ME",
-                        "MG",
-                        "MK",
-                        "ML",
-                        "MM",
-                        "MN",
-                        "MO",
-                        "MQ",
-                        "MR",
-                        "MT",
-                        "MU",
-                        "MW",
-                        "MX",
-                        "MY",
-                        "MZ",
-                        "NA",
-                        "NE",
-                        "NG",
-                        "NI",
-                        "NL",
-                        "NO",
-                        "NP",
-                        "NZ",
-                        "OM",
-                        "PA",
-                        "PE",
-                        "PF",
-                        "PG",
-                        "PH",
-                        "PK",
-                        "PL",
-                        "PR",
-                        "PS",
-                        "PT",
-                        "PY",
-                        "QA",
-                        "RE",
-                        "RO",
-                        "RS",
-                        "RU",
-                        "RW",
-                        "SA",
-                        "SC",
-                        "SD",
-                        "SE",
-                        "SG",
-                        "SI",
-                        "SK",
-                        "SL",
-                        "SN",
-                        "SO",
-                        "SR",
-                        "SS",
-                        "SV",
-                        "SX",
-                        "SY",
-                        "SZ",
-                        "TD",
-                        "TG",
-                        "TH",
-                        "TJ",
-                        "TN",
-                        "TR",
-                        "TT",
-                        "TW",
-                        "TZ",
-                        "UA",
-                        "UG",
-                        "US",
-                        "UY",
-                        "UZ",
-                        "VE",
-                        "VI",
-                        "VN",
-                        "YE",
-                        "YT",
-                        "ZA",
-                        "ZM",
-                        "ZW"
-                    ],
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
                     "default": "fastest",
-                    "order": 10,
+                    "order": 15,
                     "name": "opt_network_residential_proxy_geo",
-                    "id": 11,
+                    "id": 16,
                     "param_name": "opt_network_residential_proxy_geo"
                 },
-                "opt_privacy_type": {
-                    "description": "Privacy settings (Default: bylink)",
-                    "data_type": "string",
-                    "value_list": [
-                        "bylink",
-                        "public",
-                        "owner",
-                        "byteam"
-                    ],
-                    "default": "bylink",
-                    "order": 11,
-                    "name": "opt_privacy_type",
-                    "id": 12,
-                    "param_name": "opt_privacy_type"
-                },
-                "opt_timeout": {
-                    "description": "Timeout option (seconds) (Default: 60) (Size range: 10-1200)",
-                    "data_type": "numeric",
-                    "default": "60",
-                    "order": 12,
-                    "name": "opt_timeout",
-                    "id": 13,
-                    "param_name": "opt_timeout"
-                },
-                "opt_automated_interactivity": {
-                    "description": "Automated Interactivity (ML) option",
-                    "data_type": "boolean",
-                    "default": true,
-                    "order": 13,
-                    "name": "opt_automated_interactivity",
-                    "id": 14,
-                    "param_name": "opt_automated_interactivity"
-                },
-                "obj_ext_startfolder": {
-                    "description": "Start object from (Default: temp)",
-                    "data_type": "string",
-                    "value_list": [
-                        "desktop",
-                        "home",
-                        "downloads",
-                        "appdata",
-                        "temp",
-                        "windows",
-                        "root"
-                    ],
-                    "default": "temp",
-                    "order": 14,
-                    "name": "obj_ext_startfolder",
-                    "id": 15,
-                    "param_name": "obj_ext_startfolder"
-                },
-                "obj_ext_cmd": {
-                    "description": "Optional command line (Size range: 2-256)",
-                    "data_type": "string",
-                    "order": 15,
-                    "name": "obj_ext_cmd",
-                    "id": 16,
-                    "param_name": "obj_ext_cmd"
-                },
-                "obj_ext_browser": {
-                    "description": "Browser name (Default: Google Chrome)",
-                    "data_type": "string",
-                    "value_list": [
-                        "Google Chrome",
-                        "Mozilla Firefox",
-                        "Microsoft Edge",
-                        "Internet Explorer"
-                    ],
-                    "default": "Google Chrome",
-                    "order": 16,
-                    "name": "obj_ext_browser",
-                    "id": 17,
-                    "param_name": "obj_ext_browser"
-                },
-                "obj_ext_useragent": {
-                    "description": "User agent (Size range: 2-256)",
-                    "data_type": "string",
-                    "order": 17,
-                    "name": "obj_ext_useragent",
-                    "id": 18,
-                    "param_name": "obj_ext_useragent"
-                },
-                "obj_ext_extension": {
-                    "description": "Change extension to valid",
-                    "data_type": "boolean",
-                    "default": true,
-                    "order": 18,
-                    "name": "obj_ext_extension",
-                    "id": 19,
-                    "param_name": "obj_ext_extension"
-                },
-                "opt_privacy_hidesource": {
-                    "description": "Option for hiding of source URL",
+                "opt_network_tor": {
+                    "description": "TOR using (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 19,
-                    "name": "opt_privacy_hidesource",
-                    "id": 20,
-                    "param_name": "opt_privacy_hidesource"
+                    "order": 16,
+                    "name": "opt_network_tor",
+                    "id": 17,
+                    "param_name": "opt_network_tor"
+                },
+                "opt_privacy_type": {
+                    "description": "Privacy type (Default: bylink)",
+                    "data_type": "string",
+                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "default": "bylink",
+                    "order": 17,
+                    "name": "opt_privacy_type",
+                    "id": 18,
+                    "param_name": "opt_privacy_type"
                 }
             },
             "output": [
@@ -1426,107 +1556,13 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.parameter.obj_type",
-                    "data_type": "string",
-                    "example_values": [
-                        "url",
-                        "download"
-                    ],
-                    "column_name": "Type",
-                    "column_order": 1
-                },
-                {
-                    "data_path": "action_result.parameter.os",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.env_locale",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_connect",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_fakenet",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_tor",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_geo",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_mitm",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_residential_proxy",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_privacy_type",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_timeout",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_automated_interactivity",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_startfolder",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_cmd",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_browser",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_useragent",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_extension",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_privacy_hidesource",
-                    "data_type": "boolean"
-                },
-                {
                     "data_path": "action_result.data.*.taskid",
                     "data_type": "string",
                     "contains": [
                         "anyrun task id"
                     ],
                     "column_name": "Submission ID",
-                    "column_order": 3,
-                    "example_values": [
-                        "0cf223f2-530e-4a50-b68f-563045268648"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.permanentUrl",
-                    "data_type": "string",
-                    "column_name": "Report URL",
-                    "column_order": 4,
-                    "example_values": [
-                        "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
-                    ]
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.status",
@@ -1555,6 +1591,10 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -1563,10 +1603,419 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "detonate file",
-            "identifier": "detonate_file",
+            "action": "detonate url linux",
+            "identifier": "detonate_url_linux",
+            "description": "Detonate a URL on Linux",
+            "verbose": "This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "obj_url": {
+                    "description": "URL to detonate (Size range: 5-512)",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "url"
+                    ],
+                    "order": 0,
+                    "name": "obj_url",
+                    "id": 1,
+                    "param_name": "obj_url"
+                },
+                "opt_timeout": {
+                    "description": "Timeout (Default: 60)",
+                    "data_type": "numeric",
+                    "default": 60,
+                    "order": 1,
+                    "name": "opt_timeout",
+                    "id": 2,
+                    "param_name": "opt_timeout"
+                },
+                "env_os": {
+                    "description": "Operation System (Default: ubuntu)",
+                    "data_type": "string",
+                    "value_list": [
+                        "ubuntu"
+                    ],
+                    "default": "ubuntu",
+                    "order": 2,
+                    "name": "env_os",
+                    "id": 3,
+                    "param_name": "env_os"
+                },
+                "obj_ext_browser": {
+                    "description": "Browser to use (Default: Google Chrome)",
+                    "data_type": "string",
+                    "value_list": [
+                        "Google Chrome",
+                        "Mozilla Firefox"
+                    ],
+                    "default": "Google Chrome",
+                    "order": 3,
+                    "name": "obj_ext_browser",
+                    "id": 4,
+                    "param_name": "obj_ext_browser"
+                },
+                "obj_ext_extension": {
+                    "description": "Extension to use (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 4,
+                    "name": "obj_ext_extension",
+                    "id": 5,
+                    "param_name": "obj_ext_extension"
+                },
+                "opt_automated_interactivity": {
+                    "description": "Automated interactivity (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 5,
+                    "name": "opt_automated_interactivity",
+                    "id": 6,
+                    "param_name": "opt_automated_interactivity"
+                },
+                "opt_kernel_heavyevasion": {
+                    "description": "Kernel heavy evasion (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 6,
+                    "name": "opt_kernel_heavyevasion",
+                    "id": 7,
+                    "param_name": "opt_kernel_heavyevasion"
+                },
+                "opt_network_connect": {
+                    "description": "Network connection state (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 7,
+                    "name": "opt_network_connect",
+                    "id": 8,
+                    "param_name": "opt_network_connect"
+                },
+                "opt_network_fakenet": {
+                    "description": "FakeNet feature status (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 8,
+                    "name": "opt_network_fakenet",
+                    "id": 9,
+                    "param_name": "opt_network_fakenet"
+                },
+                "opt_network_geo": {
+                    "description": "Geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 9,
+                    "name": "opt_network_geo",
+                    "id": 10,
+                    "param_name": "opt_network_geo"
+                },
+                "opt_network_mitm": {
+                    "description": "HTTPS MITM proxy option (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 10,
+                    "name": "opt_network_mitm",
+                    "id": 11,
+                    "param_name": "opt_network_mitm"
+                },
+                "opt_network_residential_proxy": {
+                    "description": "Residential proxy using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 11,
+                    "name": "opt_network_residential_proxy",
+                    "id": 12,
+                    "param_name": "opt_network_residential_proxy"
+                },
+                "opt_network_residential_proxy_geo": {
+                    "description": "Residential proxy geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 12,
+                    "name": "opt_network_residential_proxy_geo",
+                    "id": 13,
+                    "param_name": "opt_network_residential_proxy_geo"
+                },
+                "opt_network_tor": {
+                    "description": "TOR using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 13,
+                    "name": "opt_network_tor",
+                    "id": 14,
+                    "param_name": "opt_network_tor"
+                },
+                "opt_privacy_type": {
+                    "description": "Privacy type (Default: bylink)",
+                    "data_type": "string",
+                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "default": "bylink",
+                    "order": 14,
+                    "name": "opt_privacy_type",
+                    "id": 15,
+                    "param_name": "opt_privacy_type"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.obj_url",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ],
+                    "column_name": "URL",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.taskid",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "column_name": "Submission ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 2,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "detonate url android",
+            "identifier": "detonate_url_android",
+            "description": "Detonate a URL on Android",
+            "verbose": "This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "obj_url": {
+                    "description": "URL to detonate (Size range: 5-512)",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "url"
+                    ],
+                    "order": 0,
+                    "name": "obj_url",
+                    "id": 1,
+                    "param_name": "obj_url"
+                },
+                "env_locale": {
+                    "description": "Operation system's language (Default: en-US)",
+                    "data_type": "string",
+                    "default": "en-US",
+                    "order": 1,
+                    "name": "env_locale",
+                    "id": 2,
+                    "param_name": "env_locale"
+                },
+                "opt_timeout": {
+                    "description": "Timeout (Default: 60)",
+                    "data_type": "numeric",
+                    "default": 60,
+                    "order": 3,
+                    "name": "opt_timeout",
+                    "id": 4,
+                    "param_name": "opt_timeout"
+                },
+                "obj_ext_browser": {
+                    "description": "Browser to use (Default: Google Chrome)",
+                    "data_type": "string",
+                    "value_list": [
+                        "Google Chrome",
+                        "Mozilla Firefox"
+                    ],
+                    "default": "Google Chrome",
+                    "order": 4,
+                    "name": "obj_ext_browser",
+                    "id": 5,
+                    "param_name": "obj_ext_browser"
+                },
+                "opt_automated_interactivity": {
+                    "description": "Automated interactivity (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 5,
+                    "name": "opt_automated_interactivity",
+                    "id": 6,
+                    "param_name": "opt_automated_interactivity"
+                },
+                "opt_network_connect": {
+                    "description": "Network connection state (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 6,
+                    "name": "opt_network_connect",
+                    "id": 7,
+                    "param_name": "opt_network_connect"
+                },
+                "opt_network_fakenet": {
+                    "description": "FakeNet feature status (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 7,
+                    "name": "opt_network_fakenet",
+                    "id": 8,
+                    "param_name": "opt_network_fakenet"
+                },
+                "opt_network_geo": {
+                    "description": "Geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 8,
+                    "name": "opt_network_geo",
+                    "id": 9,
+                    "param_name": "opt_network_geo"
+                },
+                "opt_network_mitm": {
+                    "description": "HTTPS MITM proxy option (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 9,
+                    "name": "opt_network_mitm",
+                    "id": 10,
+                    "param_name": "opt_network_mitm"
+                },
+                "opt_network_residential_proxy": {
+                    "description": "Residential proxy using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 10,
+                    "name": "opt_network_residential_proxy",
+                    "id": 11,
+                    "param_name": "opt_network_residential_proxy"
+                },
+                "opt_network_residential_proxy_geo": {
+                    "description": "Residential proxy geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 11,
+                    "name": "opt_network_residential_proxy_geo",
+                    "id": 12,
+                    "param_name": "opt_network_residential_proxy_geo"
+                },
+                "opt_network_tor": {
+                    "description": "TOR using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 12,
+                    "name": "opt_network_tor",
+                    "id": 13,
+                    "param_name": "opt_network_tor"
+                },
+                "opt_privacy_type": {
+                    "description": "Privacy type (Default: bylink)",
+                    "data_type": "string",
+                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "default": "bylink",
+                    "order": 13,
+                    "name": "opt_privacy_type",
+                    "id": 14,
+                    "param_name": "opt_privacy_type"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.obj_url",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ],
+                    "column_name": "URL",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.taskid",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "column_name": "Submission ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 2,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "detonate file windows",
+            "identifier": "detonate_file_windows",
             "description": "Detonate a file from Vault",
-            "verbose": "This action requires a <b>vauld ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
+            "verbose": "This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -1583,349 +2032,87 @@
                     "id": 1,
                     "param_name": "vault_id"
                 },
-                "os": {
-                    "description": "Operation System (Default: Windows10x64_complete)",
-                    "data_type": "string",
-                    "value_list": [
-                        "Linux22.04.2x64_office",
-                        "Windows7x32_clean",
-                        "Windows7x32_office",
-                        "Windows7x32_complete",
-                        "Windows10x32_clean",
-                        "Windows10x32_office",
-                        "Windows10x32_complete",
-                        "Windows11x32_clean",
-                        "Windows11x32_office",
-                        "Windows11x32_complete",
-                        "Windows7x64_clean",
-                        "Windows7x64_office",
-                        "Windows7x64_complete",
-                        "Windows10x64_clean",
-                        "Windows10x64_office",
-                        "Windows10x64_complete",
-                        "Windows11x64_clean",
-                        "Windows11x64_office",
-                        "Windows11x64_complete"
-                    ],
-                    "default": "Windows10x64_complete",
+                "opt_timeout": {
+                    "description": "Timeout (Default: 60)",
+                    "data_type": "numeric",
+                    "default": 60,
                     "order": 1,
-                    "name": "env_os",
+                    "name": "opt_timeout",
                     "id": 2,
-                    "param_name": "env_os"
+                    "param_name": "opt_timeout"
+                },
+                "auto_confirm_uac": {
+                    "description": "Auto confirm UAC (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 2,
+                    "name": "auto_confirm_uac",
+                    "id": 3,
+                    "param_name": "auto_confirm_uac"
+                },
+                "env_bitness": {
+                    "description": "Bitness of the operation system (Default: 64)",
+                    "data_type": "numeric",
+                    "value_list": [
+                        32,
+                        64
+                    ],
+                    "default": 64,
+                    "order": 3,
+                    "name": "env_bitness",
+                    "id": 4,
+                    "param_name": "env_bitness"
                 },
                 "env_locale": {
                     "description": "Operation system's language (Default: en-US)",
                     "data_type": "string",
                     "default": "en-US",
-                    "order": 2,
+                    "order": 4,
                     "name": "env_locale",
-                    "id": 3,
+                    "id": 5,
                     "param_name": "env_locale"
                 },
-                "opt_network_connect": {
-                    "description": "Network connection state",
-                    "data_type": "boolean",
-                    "default": true,
-                    "order": 3,
-                    "name": "opt_network_connect",
-                    "id": 4,
-                    "param_name": "opt_network_connect"
-                },
-                "opt_network_fakenet": {
-                    "description": "FakeNet feature status",
-                    "data_type": "boolean",
-                    "default": false,
-                    "order": 4,
-                    "name": "opt_network_fakenet",
-                    "id": 5,
-                    "param_name": "opt_network_fakenet"
-                },
-                "opt_network_tor": {
-                    "description": "TOR using",
-                    "data_type": "boolean",
-                    "default": false,
-                    "order": 5,
-                    "name": "opt_network_tor",
-                    "id": 6,
-                    "param_name": "opt_network_tor"
-                },
-                "opt_network_geo": {
-                    "description": "Geo location option (Default: fastest)",
+                "env_type": {
+                    "description": "Type of the operation system (Default: complete)",
                     "data_type": "string",
                     "value_list": [
-                        "fastest",
-                        "AU",
-                        "BR",
-                        "DE",
-                        "CH",
-                        "FR",
-                        "KR",
-                        "US",
-                        "RU",
-                        "GB",
-                        "IT"
+                        "clean",
+                        "office",
+                        "complete"
                     ],
-                    "default": "fastest",
-                    "order": 6,
-                    "name": "opt_network_geo",
-                    "id": 7,
-                    "param_name": "opt_network_geo"
+                    "default": "complete",
+                    "order": 5,
+                    "name": "env_type",
+                    "id": 6,
+                    "param_name": "env_type"
                 },
-                "opt_network_mitm": {
-                    "description": "HTTPS MITM proxy option",
+                "env_version": {
+                    "description": "Version of the operation system (Default: 10)",
+                    "data_type": "string",
+                    "value_list": [
+                        "7",
+                        "10",
+                        "11"
+                    ],
+                    "default": "10",
+                    "order": 6,
+                    "name": "env_version",
+                    "id": 7,
+                    "param_name": "env_version"
+                },
+                "obj_force_elevation": {
+                    "description": "Force elevation (Default: False)",
                     "data_type": "boolean",
                     "default": false,
                     "order": 7,
-                    "name": "opt_network_mitm",
+                    "name": "obj_force_elevation",
                     "id": 8,
-                    "param_name": "opt_network_mitm"
-                },
-                "opt_network_residential_proxy": {
-                    "description": "Residential proxy using",
-                    "data_type": "boolean",
-                    "default": false,
-                    "order": 8,
-                    "name": "opt_network_residential_proxy",
-                    "id": 9,
-                    "param_name": "opt_network_residential_proxy"
-                },
-                "opt_network_residential_proxy_geo": {
-                    "description": "Residential proxy geo location option (Default: fastest)",
-                    "data_type": "string",
-                    "value_list": [
-                        "fastest",
-                        "AD",
-                        "AE",
-                        "AF",
-                        "AG",
-                        "AL",
-                        "AM",
-                        "AO",
-                        "AR",
-                        "AT",
-                        "AU",
-                        "AZ",
-                        "BA",
-                        "BB",
-                        "BD",
-                        "BE",
-                        "BF",
-                        "BG",
-                        "BH",
-                        "BI",
-                        "BJ",
-                        "BN",
-                        "BO",
-                        "BR",
-                        "BS",
-                        "BT",
-                        "BW",
-                        "BY",
-                        "BZ",
-                        "CA",
-                        "CD",
-                        "CF",
-                        "CG",
-                        "CH",
-                        "CI",
-                        "CL",
-                        "CM",
-                        "CN",
-                        "CO",
-                        "CR",
-                        "CU",
-                        "CV",
-                        "CW",
-                        "CY",
-                        "CZ",
-                        "DE",
-                        "DJ",
-                        "DK",
-                        "DM",
-                        "DO",
-                        "DZ",
-                        "EC",
-                        "EE",
-                        "EG",
-                        "ES",
-                        "ET",
-                        "FI",
-                        "FJ",
-                        "FR",
-                        "GA",
-                        "GB",
-                        "GD",
-                        "GE",
-                        "GF",
-                        "GH",
-                        "GM",
-                        "GN",
-                        "GP",
-                        "GQ",
-                        "GR",
-                        "GT",
-                        "GU",
-                        "GW",
-                        "GY",
-                        "HK",
-                        "HN",
-                        "HR",
-                        "HT",
-                        "HU",
-                        "ID",
-                        "IE",
-                        "IL",
-                        "IM",
-                        "IN",
-                        "IQ",
-                        "IR",
-                        "IS",
-                        "IT",
-                        "JE",
-                        "JM",
-                        "JO",
-                        "JP",
-                        "KE",
-                        "KG",
-                        "KH",
-                        "KR",
-                        "KW",
-                        "KY",
-                        "KZ",
-                        "LA",
-                        "LB",
-                        "LC",
-                        "LK",
-                        "LR",
-                        "LS",
-                        "LT",
-                        "LU",
-                        "LV",
-                        "LY",
-                        "MA",
-                        "MD",
-                        "ME",
-                        "MG",
-                        "MK",
-                        "ML",
-                        "MM",
-                        "MN",
-                        "MO",
-                        "MQ",
-                        "MR",
-                        "MT",
-                        "MU",
-                        "MW",
-                        "MX",
-                        "MY",
-                        "MZ",
-                        "NA",
-                        "NE",
-                        "NG",
-                        "NI",
-                        "NL",
-                        "NO",
-                        "NP",
-                        "NZ",
-                        "OM",
-                        "PA",
-                        "PE",
-                        "PF",
-                        "PG",
-                        "PH",
-                        "PK",
-                        "PL",
-                        "PR",
-                        "PS",
-                        "PT",
-                        "PY",
-                        "QA",
-                        "RE",
-                        "RO",
-                        "RS",
-                        "RU",
-                        "RW",
-                        "SA",
-                        "SC",
-                        "SD",
-                        "SE",
-                        "SG",
-                        "SI",
-                        "SK",
-                        "SL",
-                        "SN",
-                        "SO",
-                        "SR",
-                        "SS",
-                        "SV",
-                        "SX",
-                        "SY",
-                        "SZ",
-                        "TD",
-                        "TG",
-                        "TH",
-                        "TJ",
-                        "TN",
-                        "TR",
-                        "TT",
-                        "TW",
-                        "TZ",
-                        "UA",
-                        "UG",
-                        "US",
-                        "UY",
-                        "UZ",
-                        "VE",
-                        "VI",
-                        "VN",
-                        "YE",
-                        "YT",
-                        "ZA",
-                        "ZM",
-                        "ZW"
-                    ],
-                    "default": "fastest",
-                    "order": 9,
-                    "name": "opt_network_residential_proxy_geo",
-                    "id": 10,
-                    "param_name": "opt_network_residential_proxy_geo"
-                },
-                "opt_privacy_type": {
-                    "description": "Privacy settings (Default: bylink)",
-                    "data_type": "string",
-                    "value_list": [
-                        "bylink",
-                        "public",
-                        "owner",
-                        "byteam"
-                    ],
-                    "default": "bylink",
-                    "order": 10,
-                    "name": "opt_privacy_type",
-                    "id": 11,
-                    "param_name": "opt_privacy_type"
-                },
-                "opt_timeout": {
-                    "description": "Timeout option (seconds) (Default: 60) (Size range: 10-660)",
-                    "data_type": "numeric",
-                    "default": "60",
-                    "order": 11,
-                    "name": "opt_timeout",
-                    "id": 12,
-                    "param_name": "opt_timeout"
-                },
-                "opt_automated_interactivity": {
-                    "description": "Automated Interactivity (ML) option",
-                    "data_type": "boolean",
-                    "default": true,
-                    "order": 12,
-                    "name": "opt_automated_interactivity",
-                    "id": 13,
-                    "param_name": "opt_automated_interactivity"
+                    "param_name": "obj_force_elevation"
                 },
                 "obj_ext_startfolder": {
-                    "description": "Start object from (Default: temp)",
+                    "description": "Start folder (Default: desktop)",
                     "data_type": "string",
+                    "default": "desktop",
                     "value_list": [
                         "desktop",
                         "home",
@@ -1935,55 +2122,121 @@
                         "windows",
                         "root"
                     ],
-                    "default": "temp",
-                    "order": 13,
+                    "order": 8,
                     "name": "obj_ext_startfolder",
-                    "id": 14,
+                    "id": 9,
                     "param_name": "obj_ext_startfolder"
                 },
                 "obj_ext_cmd": {
-                    "description": "Optional command line (Size range: 2-256)",
+                    "description": "Command to execute (Default: <empty>)",
                     "data_type": "string",
-                    "order": 14,
+                    "default": "",
+                    "order": 9,
                     "name": "obj_ext_cmd",
-                    "id": 15,
+                    "id": 10,
                     "param_name": "obj_ext_cmd"
                 },
-                "obj_ext_elevateprompt": {
-                    "description": "Encounter UAC prompts",
+                "obj_ext_extension": {
+                    "description": "Extension to use (Default: True)",
                     "data_type": "boolean",
                     "default": true,
+                    "order": 10,
+                    "name": "obj_ext_extension",
+                    "id": 11,
+                    "param_name": "obj_ext_extension"
+                },
+                "opt_automated_interactivity": {
+                    "description": "Automated interactivity (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 11,
+                    "name": "opt_automated_interactivity",
+                    "id": 12,
+                    "param_name": "opt_automated_interactivity"
+                },
+                "opt_kernel_heavyevasion": {
+                    "description": "Kernel heavy evasion (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 12,
+                    "name": "opt_kernel_heavyevasion",
+                    "id": 13,
+                    "param_name": "opt_kernel_heavyevasion"
+                },
+                "opt_network_connect": {
+                    "description": "Network connection state (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 13,
+                    "name": "opt_network_connect",
+                    "id": 14,
+                    "param_name": "opt_network_connect"
+                },
+                "opt_network_fakenet": {
+                    "description": "FakeNet feature status (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 14,
+                    "name": "opt_network_fakenet",
+                    "id": 15,
+                    "param_name": "opt_network_fakenet"
+                },
+                "opt_network_geo": {
+                    "description": "Geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
                     "order": 15,
-                    "name": "obj_ext_elevateprompt",
+                    "name": "opt_network_geo",
                     "id": 16,
-                    "param_name": "obj_ext_elevateprompt"
+                    "param_name": "opt_network_geo"
                 },
-                "auto_confirm_uac": {
-                    "description": "Auto confirm Windows UAC requests. Not applicable for Linux , use run_as_root instead",
+                "opt_network_mitm": {
+                    "description": "HTTPS MITM proxy option (Default: False)",
                     "data_type": "boolean",
-                    "default": true,
+                    "default": false,
                     "order": 16,
-                    "name": "auto_confirm_uac",
+                    "name": "opt_network_mitm",
                     "id": 17,
-                    "param_name": "auto_confirm_uac"
+                    "param_name": "opt_network_mitm"
                 },
-                "run_as_root": {
-                    "description": "Run file with superuser privileges. Not applicable for Windows, use auto_confirm_uac instead. Used only for file type",
+                "opt_network_residential_proxy": {
+                    "description": "Residential proxy using (Default: False)",
                     "data_type": "boolean",
                     "default": false,
                     "order": 17,
-                    "name": "run_as_root",
+                    "name": "opt_network_residential_proxy",
                     "id": 18,
-                    "param_name": "run_as_root"
+                    "param_name": "opt_network_residential_proxy"
                 },
-                "obj_ext_extension": {
-                    "description": "Change extension to valid",
-                    "data_type": "boolean",
-                    "default": true,
+                "opt_network_residential_proxy_geo": {
+                    "description": "Residential proxy geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
                     "order": 18,
-                    "name": "obj_ext_extension",
+                    "name": "opt_network_residential_proxy_geo",
                     "id": 19,
-                    "param_name": "obj_ext_extension"
+                    "param_name": "opt_network_residential_proxy_geo"
+                },
+                "opt_network_tor": {
+                    "description": "TOR using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 19,
+                    "name": "opt_network_tor",
+                    "id": 20,
+                    "param_name": "opt_network_tor"
+                },
+                "opt_privacy_type": {
+                    "description": "Privacy type (Default: bylink)",
+                    "data_type": "string",
+                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "default": "bylink",
+                    "order": 20,
+                    "name": "opt_privacy_type",
+                    "id": 21,
+                    "param_name": "opt_privacy_type"
                 }
             },
             "output": [
@@ -1997,103 +2250,19 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.parameter.os",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.env_locale",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_connect",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_fakenet",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_tor",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_geo",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_mitm",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_residential_proxy",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_privacy_type",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_timeout",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.parameter.opt_automated_interactivity",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_startfolder",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_cmd",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_elevateprompt",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.auto_confirm_uac",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.run_as_root",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.obj_ext_extension",
-                    "data_type": "boolean"
-                },
-                {
                     "data_path": "action_result.data.*.taskid",
                     "data_type": "string",
                     "contains": [
                         "anyrun task id"
                     ],
                     "column_name": "Submission ID",
-                    "column_order": 2,
-                    "example_values": [
-                        "0cf223f2-530e-4a50-b68f-563045268648"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.permanentUrl",
-                    "data_type": "string",
-                    "column_name": "Report URL",
-                    "column_order": 3,
-                    "example_values": [
-                        "https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648"
-                    ]
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "Status",
-                    "column_order": 1,
+                    "column_order": 2,
                     "example_values": [
                         "success",
                         "failed"
@@ -2116,6 +2285,447 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "detonate file linux",
+            "identifier": "detonate_file_linux",
+            "description": "Detonate a file from Vault",
+            "verbose": "This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "vault_id": {
+                    "description": "Vault ID of a file to detonate",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "vault id"
+                    ],
+                    "order": 0,
+                    "name": "vault_id",
+                    "id": 1,
+                    "param_name": "vault_id"
+                },
+                "opt_timeout": {
+                    "description": "Timeout (Default: 60)",
+                    "data_type": "numeric",
+                    "default": 60,
+                    "order": 1,
+                    "name": "opt_timeout",
+                    "id": 2,
+                    "param_name": "opt_timeout"
+                },
+                "env_locale": {
+                    "description": "Operation system's language (Default: en-US)",
+                    "data_type": "string",
+                    "default": "en-US",
+                    "order": 2,
+                    "name": "env_locale",
+                    "id": 3,
+                    "param_name": "env_locale"
+                },
+                "env_os": {
+                    "description": "Operation System (Default: ubuntu)",
+                    "data_type": "string",
+                    "value_list": [
+                        "ubuntu"
+                    ],
+                    "default": "ubuntu",
+                    "order": 3,
+                    "name": "env_os",
+                    "id": 4,
+                    "param_name": "env_os"
+                },
+                "obj_ext_startfolder": {
+                    "description": "Start folder (Default: temp)",
+                    "data_type": "string",
+                    "default": "temp",
+                    "value_list": [
+                        "desktop",
+                        "home",
+                        "downloads",
+                        "appdata",
+                        "temp",
+                        "windows",
+                        "root"
+                    ],
+                    "order": 4,
+                    "name": "obj_ext_startfolder",
+                    "id": 5,
+                    "param_name": "obj_ext_startfolder"
+                },
+                "obj_ext_cmd": {
+                    "description": "Command to execute (Default: <empty>)",
+                    "data_type": "string",
+                    "default": "",
+                    "order": 5,
+                    "name": "obj_ext_cmd",
+                    "id": 6,
+                    "param_name": "obj_ext_cmd"
+                },
+                "obj_ext_extension": {
+                    "description": "Extension to use (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 6,
+                    "name": "obj_ext_extension",
+                    "id": 7,
+                    "param_name": "obj_ext_extension"
+                },
+                "opt_automated_interactivity": {
+                    "description": "Automated interactivity (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 7,
+                    "name": "opt_automated_interactivity",
+                    "id": 8,
+                    "param_name": "opt_automated_interactivity"
+                },
+                "opt_kernel_heavyevasion": {
+                    "description": "Kernel heavy evasion (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 8,
+                    "name": "opt_kernel_heavyevasion",
+                    "id": 9,
+                    "param_name": "opt_kernel_heavyevasion"
+                },
+                "opt_network_connect": {
+                    "description": "Network connection state (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 9,
+                    "name": "opt_network_connect",
+                    "id": 10,
+                    "param_name": "opt_network_connect"
+                },
+                "opt_network_fakenet": {
+                    "description": "FakeNet feature status (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 10,
+                    "name": "opt_network_fakenet",
+                    "id": 11,
+                    "param_name": "opt_network_fakenet"
+                },
+                "opt_network_geo": {
+                    "description": "Geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 11,
+                    "name": "opt_network_geo",
+                    "id": 12,
+                    "param_name": "opt_network_geo"
+                },
+                "opt_network_mitm": {
+                    "description": "HTTPS MITM proxy option (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 12,
+                    "name": "opt_network_mitm",
+                    "id": 13,
+                    "param_name": "opt_network_mitm"
+                },
+                "opt_network_residential_proxy": {
+                    "description": "Residential proxy using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 13,
+                    "name": "opt_network_residential_proxy",
+                    "id": 14,
+                    "param_name": "opt_network_residential_proxy"
+                },
+                "opt_network_residential_proxy_geo": {
+                    "description": "Residential proxy geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 14,
+                    "name": "opt_network_residential_proxy_geo",
+                    "id": 15,
+                    "param_name": "opt_network_residential_proxy_geo"
+                },
+                "opt_network_tor": {
+                    "description": "TOR using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 15,
+                    "name": "opt_network_tor",
+                    "id": 16,
+                    "param_name": "opt_network_tor"
+                },
+                "opt_privacy_type": {
+                    "description": "Privacy type (Default: bylink)",
+                    "data_type": "string",
+                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "default": "bylink",
+                    "order": 16,
+                    "name": "opt_privacy_type",
+                    "id": 17,
+                    "param_name": "opt_privacy_type"
+                },
+                "run_as_root": {
+                    "description": "Run as root (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 17,
+                    "name": "run_as_root",
+                    "id": 18,
+                    "param_name": "run_as_root"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.vault_id",
+                    "data_type": "string",
+                    "contains": [
+                        "vault id"
+                    ],
+                    "column_name": "Vault ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.taskid",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "column_name": "Submission ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 2,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "detonate file android",
+            "identifier": "detonate_file_android",
+            "description": "Detonate a file from Vault",
+            "verbose": "This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "vault_id": {
+                    "description": "Vault ID of a file to detonate",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "vault id"
+                    ],
+                    "order": 0,
+                    "name": "vault_id",
+                    "id": 1,
+                    "param_name": "vault_id"
+                },
+                "opt_timeout": {
+                    "description": "Timeout (Default: 60)",
+                    "data_type": "numeric",
+                    "default": 60,
+                    "order": 1,
+                    "name": "opt_timeout",
+                    "id": 2,
+                    "param_name": "opt_timeout"
+                },
+                "env_locale": {
+                    "description": "Operation system's language (Default: en-US)",
+                    "data_type": "string",
+                    "default": "en-US",
+                    "order": 2,
+                    "name": "env_locale",
+                    "id": 3,
+                    "param_name": "env_locale"
+                },
+                "obj_ext_cmd": {
+                    "description": "Command to execute (Default: <empty>)",
+                    "data_type": "string",
+                    "default": "",
+                    "order": 3,
+                    "name": "obj_ext_cmd",
+                    "id": 4,
+                    "param_name": "obj_ext_cmd"
+                },
+                "opt_automated_interactivity": {
+                    "description": "Automated interactivity (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 4,
+                    "name": "opt_automated_interactivity",
+                    "id": 5,
+                    "param_name": "opt_automated_interactivity"
+                },
+                "opt_network_connect": {
+                    "description": "Network connection state (Default: True)",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 5,
+                    "name": "opt_network_connect",
+                    "id": 6,
+                    "param_name": "opt_network_connect"
+                },
+                "opt_network_fakenet": {
+                    "description": "FakeNet feature status (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 6,
+                    "name": "opt_network_fakenet",
+                    "id": 7,
+                    "param_name": "opt_network_fakenet"
+                },
+                "opt_network_geo": {
+                    "description": "Geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 7,
+                    "name": "opt_network_geo",
+                    "id": 8,
+                    "param_name": "opt_network_geo"
+                },
+                "opt_network_mitm": {
+                    "description": "HTTPS MITM proxy option (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 8,
+                    "name": "opt_network_mitm",
+                    "id": 9,
+                    "param_name": "opt_network_mitm"
+                },
+                "opt_network_residential_proxy": {
+                    "description": "Residential proxy using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 9,
+                    "name": "opt_network_residential_proxy",
+                    "id": 10,
+                    "param_name": "opt_network_residential_proxy"
+                },
+                "opt_network_residential_proxy_geo": {
+                    "description": "Residential proxy geo location option (Default: fastest)",
+                    "data_type": "string",
+                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "default": "fastest",
+                    "order": 10,
+                    "name": "opt_network_residential_proxy_geo",
+                    "id": 11,
+                    "param_name": "opt_network_residential_proxy_geo"
+                },
+                "opt_network_tor": {
+                    "description": "TOR using (Default: False)",
+                    "data_type": "boolean",
+                    "default": false,
+                    "order": 11,
+                    "name": "opt_network_tor",
+                    "id": 12,
+                    "param_name": "opt_network_tor"
+                },
+                "opt_privacy_type": {
+                    "description": "Privacy type (Default: bylink)",
+                    "data_type": "string",
+                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "default": "bylink",
+                    "order": 12,
+                    "name": "opt_privacy_type",
+                    "id": 13,
+                    "param_name": "opt_privacy_type"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.vault_id",
+                    "data_type": "string",
+                    "contains": [
+                        "vault id"
+                    ],
+                    "column_name": "Vault ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.taskid",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "column_name": "Submission ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 2,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -2876,7 +3486,130 @@
                 "type": "table"
             },
             "versions": "EQ(*)"
+        },
+        {
+            "action": "delete submission",
+            "identifier": "delete_submission",
+            "description": "Delete a submission",
+            "verbose": "This action requires a submission <b>TaskID</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "taskid": {
+                    "description": "ANY.RUN task UUID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "order": 0,
+                    "name": "TaskID",
+                    "id": 1,
+                    "param_name": "TaskID"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.taskid", 
+                    "column_order": 0, 
+                    "column_name": "Submission ID", 
+                    "data_type": "string", 
+                    "contains": ["anyrun task id"]
+                }, 
+                {
+                    "data_path": "action_result.data.info", 
+                    "column_order": 1, 
+                    "column_name": "Info", 
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "download pcap",
+            "identifier": "download_pcap",
+            "description": "Download a pcap file",
+            "verbose": "This action requires a task <b>TaskID</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "taskid": {
+                    "description": "ANY.RUN task UUID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "anyrun task id"
+                    ],
+                    "order": 0,
+                    "name": "TaskID",
+                    "id": 1,
+                    "param_name": "TaskID"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.taskid", 
+                    "column_order": 0, 
+                    "column_name": "Submission ID", 
+                    "data_type": "string", 
+                    "contains": ["anyrun task id"]
+                }, 
+                {
+                    "data_path": "action_result.data.vault_id", 
+                    "column_order": 1, 
+                    "column_name": "Vault ID", 
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.info", 
+                    "column_order": 2, 
+                    "column_name": "Info", 
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                }             
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
         }
+        
     ],
     "pip39_dependencies": {
         "wheel": [
@@ -2898,7 +3631,7 @@
             },
             {
                 "module": "anyrun_sdk",
-                "input_file": "wheels/py3/anyrun_sdk-1.5.3-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_sdk-1.6.4-py3-none-any.whl"
             },
             {
                 "module": "async_timeout",
@@ -2950,7 +3683,7 @@
             },
             {
                 "module": "anyrun_sdk",
-                "input_file": "wheels/py3/anyrun_sdk-1.5.3-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_sdk-1.6.4-py3-none-any.whl"
             },
             {
                 "module": "attrs",

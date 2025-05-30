@@ -123,6 +123,7 @@ class TestConnector(BaseTest):
         """
         in_json = json.loads(test_detonate_url)
         ret_val = self._execute_action(in_json)
+        # raise Exception(ret_val)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -159,3 +160,26 @@ class TestConnector(BaseTest):
             assert result.get("status") == "success"
 
         assert ret_val is not None
+
+    def test_download_pcap(self, test_download_pcap_fixture: str) -> None:
+        """
+        Test the download_pcap action
+        """
+        in_json = json.loads(test_download_pcap_fixture)
+        try:
+            ret_val = self._execute_action(in_json)
+            result_data = ret_val.get("result_data", [])
+            if not result_data:
+                raise Exception("No result data found", ret_val)
+
+            data = result_data[0].get("data", [])
+            if not data:
+                raise Exception("No data found", ret_val)
+
+            res = data[0]
+
+            assert res.get("vault_id") is not None, "Vault ID is not found"
+            assert res.get("taskid") is not None, "Task ID is not found"
+            assert res.get("info") is not None, "Info is not found"
+        except Exception as e:
+            raise Exception(e)
