@@ -33,7 +33,7 @@ This connector comes with some additional python 3 libraries, that it depends on
 	- aiofiles-24.1.0
 	- aiohappyeyeballs-2.6.1
 	- async-timeout-5.0.1
-	- anyrun-sdk-1.2.3
+	- anyrun-sdk-1.8.4
 ```
 
 ### Configuration variables
