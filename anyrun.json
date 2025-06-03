@@ -992,41 +992,45 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.taskid", 
-                    "column_order": 0, 
-                    "column_name": "Submission ID", 
-                    "data_type": "string", 
-                    "contains": ["anyrun task id"]
-                }, 
+                    "data_path": "action_result.parameter.taskid",
+                    "column_order": 0,
+                    "column_name": "Submission ID",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ]
+                },
                 {
-                    "data_path": "action_result.data.type", 
-                    "column_order": 1, 
-                    "column_name": "Type", 
-                    "data_type": "string", 
-                    "example_values": ["bundle"] 
-                }, 
+                    "data_path": "action_result.data.type",
+                    "column_order": 1,
+                    "column_name": "Type",
+                    "data_type": "string",
+                    "example_values": [
+                        "bundle"
+                    ]
+                },
                 {
-                    "data_path": "action_result.data.id", 
-                    "column_order": 2, 
-                    "column_name": "ID", 
-                    "data_type": "string" 
-                }, 
+                    "data_path": "action_result.data.id",
+                    "column_order": 2,
+                    "column_name": "ID",
+                    "data_type": "string"
+                },
                 {
-                    "data_path": "action_result.data.objects.*.id", 
-                    "column_order": 3, 
-                    "column_name": "Object ID", 
-                    "data_type": "string" 
-                }, 
+                    "data_path": "action_result.data.objects.*.id",
+                    "column_order": 3,
+                    "column_name": "Object ID",
+                    "data_type": "string"
+                },
                 {
-                    "data_path": "action_result.data.objects.*.name", 
-                    "column_order": 4, 
-                    "column_name": "Object Name", 
-                    "data_type": "string" 
-                }, 
+                    "data_path": "action_result.data.objects.*.name",
+                    "column_order": 4,
+                    "column_name": "Object Name",
+                    "data_type": "string"
+                },
                 {
-                    "data_path": "action_result.data.objects.*.type", 
-                    "column_order": 5, 
-                    "column_name": "Object Type", 
+                    "data_path": "action_result.data.objects.*.type",
+                    "column_order": 5,
+                    "column_name": "Object Type",
                     "data_type": "string"
                 },
                 {
@@ -1044,8 +1048,15 @@
                 {
                     "data_path": "action_result.message",
                     "data_type": "string"
-                }   
-
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                }
             ],
             "render": {
                 "type": "table"
@@ -1076,88 +1087,90 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.taskid", 
-                    "column_order": 0, 
-                    "column_name": "Submission ID", 
-                    "data_type": "string", 
-                    "contains": ["anyrun task id"]
-                }, 
+                    "data_path": "action_result.parameter.taskid",
+                    "column_order": 0,
+                    "column_name": "Submission ID",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ]
+                },
                 {
-                    "data_path": "action_result.data.Event.uuid", 
-                    "column_order": 1, 
-                    "column_name": "Event UUID", 
+                    "data_path": "action_result.data.Event.uuid",
+                    "column_order": 1,
+                    "column_name": "Event UUID",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.Event.distribution", 
-                    "column_order": 2, 
-                    "column_name": "Distribution", 
+                    "data_path": "action_result.data.Event.distribution",
+                    "column_order": 2,
+                    "column_name": "Distribution",
                     "data_type": "numeric"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.analysis", 
-                    "column_order": 3, 
-                    "column_name": "Analysis", 
+                    "data_path": "action_result.data.Event.analysis",
+                    "column_order": 3,
+                    "column_name": "Analysis",
                     "data_type": "numeric"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.threat_level_id", 
-                    "column_order": 4, 
-                    "column_name": "Threat Level ID", 
+                    "data_path": "action_result.data.Event.threat_level_id",
+                    "column_order": 4,
+                    "column_name": "Threat Level ID",
                     "data_type": "numeric"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.info", 
-                    "column_order": 5, 
-                    "column_name": "Info", 
+                    "data_path": "action_result.data.Event.info",
+                    "column_order": 5,
+                    "column_name": "Info",
                     "data_type": "string"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.timestamp", 
-                    "column_order": 6, 
-                    "column_name": "Timestamp", 
+                    "data_path": "action_result.data.Event.timestamp",
+                    "column_order": 6,
+                    "column_name": "Timestamp",
                     "data_type": "string"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.date", 
-                    "column_order": 7, 
-                    "column_name": "Date", 
+                    "data_path": "action_result.data.Event.date",
+                    "column_order": 7,
+                    "column_name": "Date",
                     "data_type": "string"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.Attribute.*.category", 
-                    "column_order": 8, 
-                    "column_name": "Category", 
+                    "data_path": "action_result.data.Event.Attribute.*.category",
+                    "column_order": 8,
+                    "column_name": "Category",
                     "data_type": "string"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.Attribute.*.type", 
-                    "column_order": 9, 
-                    "column_name": "Type", 
+                    "data_path": "action_result.data.Event.Attribute.*.type",
+                    "column_order": 9,
+                    "column_name": "Type",
                     "data_type": "string"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.Attribute.*.value", 
-                    "column_order": 10, 
-                    "column_name": "Value", 
+                    "data_path": "action_result.data.Event.Attribute.*.value",
+                    "column_order": 10,
+                    "column_name": "Value",
                     "data_type": "string"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.Attribute.*.distribution", 
-                    "column_order": 11, 
-                    "column_name": "Distribution", 
+                    "data_path": "action_result.data.Event.Attribute.*.distribution",
+                    "column_order": 11,
+                    "column_name": "Distribution",
                     "data_type": "numeric"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.Orgc.uuid", 
-                    "column_order": 12, 
-                    "column_name": "Orgc UUID", 
+                    "data_path": "action_result.data.Event.Orgc.uuid",
+                    "column_order": 12,
+                    "column_name": "Orgc UUID",
                     "data_type": "string"
-                }, 
+                },
                 {
-                    "data_path": "action_result.data.Event.Orgc.name", 
-                    "column_order": 13, 
-                    "column_name": "Orgc Name", 
+                    "data_path": "action_result.data.Event.Orgc.name",
+                    "column_order": 13,
+                    "column_name": "Orgc Name",
                     "data_type": "string"
                 },
                 {
@@ -1175,7 +1188,15 @@
                 {
                     "data_path": "action_result.message",
                     "data_type": "string"
-                }   
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                }
             ],
             "render": {
                 "type": "table"
@@ -1206,16 +1227,18 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.taskid", 
-                    "column_order": 0, 
-                    "column_name": "Submission ID", 
-                    "data_type": "string", 
-                    "contains": ["anyrun task id"]
-                }, 
+                    "data_path": "action_result.parameter.taskid",
+                    "column_order": 0,
+                    "column_name": "Submission ID",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ]
+                },
                 {
-                    "data_path": "action_result.data.html", 
-                    "column_order": 1, 
-                    "column_name": "HTML", 
+                    "data_path": "action_result.data.html",
+                    "column_order": 1,
+                    "column_name": "HTML",
                     "data_type": "string"
                 },
                 {
@@ -1233,7 +1256,15 @@
                 {
                     "data_path": "action_result.message",
                     "data_type": "string"
-                }   
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                }
             ],
             "render": {
                 "type": "table"
@@ -1490,7 +1521,19 @@
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 12,
                     "name": "opt_network_geo",
@@ -1518,7 +1561,19 @@
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 15,
                     "name": "opt_network_residential_proxy_geo",
@@ -1537,7 +1592,12 @@
                 "opt_privacy_type": {
                     "description": "Privacy type (Default: bylink)",
                     "data_type": "string",
-                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "value_list": [
+                        "public",
+                        "bylink",
+                        "owner",
+                        "byteam"
+                    ],
                     "default": "bylink",
                     "order": 17,
                     "name": "opt_privacy_type",
@@ -1594,6 +1654,74 @@
                 },
                 {
                     "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_timeout",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.env_bitness",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.env_locale",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.env_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.env_version",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_browser",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_extension",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_automated_interactivity",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_kernel_heavyevasion",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_connect",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_fakenet",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_mitm",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_tor",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_privacy_type",
                     "data_type": "string"
                 }
             ],
@@ -1705,7 +1833,19 @@
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 9,
                     "name": "opt_network_geo",
@@ -1733,7 +1873,19 @@
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 12,
                     "name": "opt_network_residential_proxy_geo",
@@ -1752,7 +1904,12 @@
                 "opt_privacy_type": {
                     "description": "Privacy type (Default: bylink)",
                     "data_type": "string",
-                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "value_list": [
+                        "public",
+                        "bylink",
+                        "owner",
+                        "byteam"
+                    ],
                     "default": "bylink",
                     "order": 14,
                     "name": "opt_privacy_type",
@@ -1810,6 +1967,62 @@
                 {
                     "data_path": "action_result.summary",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_timeout",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.env_os",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_browser",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_extension",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_automated_interactivity",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_kernel_heavyevasion",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_connect",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_fakenet",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_mitm",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_tor",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_privacy_type",
+                    "data_type": "string"
                 }
             ],
             "render": {
@@ -1851,9 +2064,9 @@
                     "description": "Timeout (Default: 60)",
                     "data_type": "numeric",
                     "default": 60,
-                    "order": 3,
+                    "order": 2,
                     "name": "opt_timeout",
-                    "id": 4,
+                    "id": 3,
                     "param_name": "opt_timeout"
                 },
                 "obj_ext_browser": {
@@ -1864,93 +2077,122 @@
                         "Mozilla Firefox"
                     ],
                     "default": "Google Chrome",
-                    "order": 4,
+                    "order": 3,
                     "name": "obj_ext_browser",
-                    "id": 5,
+                    "id": 4,
                     "param_name": "obj_ext_browser"
                 },
                 "opt_automated_interactivity": {
                     "description": "Automated interactivity (Default: True)",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 5,
+                    "order": 4,
                     "name": "opt_automated_interactivity",
-                    "id": 6,
+                    "id": 5,
                     "param_name": "opt_automated_interactivity"
                 },
                 "opt_network_connect": {
                     "description": "Network connection state (Default: True)",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 6,
+                    "order": 5,
                     "name": "opt_network_connect",
-                    "id": 7,
+                    "id": 6,
                     "param_name": "opt_network_connect"
                 },
                 "opt_network_fakenet": {
                     "description": "FakeNet feature status (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 7,
+                    "order": 6,
                     "name": "opt_network_fakenet",
-                    "id": 8,
+                    "id": 7,
                     "param_name": "opt_network_fakenet"
                 },
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
-                    "order": 8,
+                    "order": 7,
                     "name": "opt_network_geo",
-                    "id": 9,
+                    "id": 8,
                     "param_name": "opt_network_geo"
                 },
                 "opt_network_mitm": {
                     "description": "HTTPS MITM proxy option (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 9,
+                    "order": 8,
                     "name": "opt_network_mitm",
-                    "id": 10,
+                    "id": 9,
                     "param_name": "opt_network_mitm"
                 },
                 "opt_network_residential_proxy": {
                     "description": "Residential proxy using (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 10,
+                    "order": 9,
                     "name": "opt_network_residential_proxy",
-                    "id": 11,
+                    "id": 10,
                     "param_name": "opt_network_residential_proxy"
                 },
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
-                    "order": 11,
+                    "order": 10,
                     "name": "opt_network_residential_proxy_geo",
-                    "id": 12,
+                    "id": 11,
                     "param_name": "opt_network_residential_proxy_geo"
                 },
                 "opt_network_tor": {
                     "description": "TOR using (Default: False)",
                     "data_type": "boolean",
                     "default": false,
-                    "order": 12,
+                    "order": 11,
                     "name": "opt_network_tor",
-                    "id": 13,
+                    "id": 12,
                     "param_name": "opt_network_tor"
                 },
                 "opt_privacy_type": {
                     "description": "Privacy type (Default: bylink)",
                     "data_type": "string",
-                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "value_list": [
+                        "public",
+                        "bylink",
+                        "owner",
+                        "byteam"
+                    ],
                     "default": "bylink",
-                    "order": 13,
+                    "order": 12,
                     "name": "opt_privacy_type",
-                    "id": 14,
+                    "id": 13,
                     "param_name": "opt_privacy_type"
                 }
             },
@@ -2003,6 +2245,54 @@
                 },
                 {
                     "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.env_locale",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_timeout",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_browser",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_automated_interactivity",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_connect",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_fakenet",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_mitm",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_tor",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_privacy_type",
                     "data_type": "string"
                 }
             ],
@@ -2184,7 +2474,19 @@
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 15,
                     "name": "opt_network_geo",
@@ -2212,7 +2514,19 @@
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 18,
                     "name": "opt_network_residential_proxy_geo",
@@ -2231,7 +2545,12 @@
                 "opt_privacy_type": {
                     "description": "Privacy type (Default: bylink)",
                     "data_type": "string",
-                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "value_list": [
+                        "public",
+                        "bylink",
+                        "owner",
+                        "byteam"
+                    ],
                     "default": "bylink",
                     "order": 20,
                     "name": "opt_privacy_type",
@@ -2288,6 +2607,86 @@
                 },
                 {
                     "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_timeout",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.auto_confirm_uac",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.env_bitness",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.env_locale",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.env_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.env_version",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_force_elevation",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_startfolder",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_cmd",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_extension",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_automated_interactivity",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_kernel_heavyevasion",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_connect",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_fakenet",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_mitm",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_tor",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_privacy_type",
                     "data_type": "string"
                 }
             ],
@@ -2422,7 +2821,19 @@
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 11,
                     "name": "opt_network_geo",
@@ -2450,7 +2861,19 @@
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 14,
                     "name": "opt_network_residential_proxy_geo",
@@ -2469,7 +2892,12 @@
                 "opt_privacy_type": {
                     "description": "Privacy type (Default: bylink)",
                     "data_type": "string",
-                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "value_list": [
+                        "public",
+                        "bylink",
+                        "owner",
+                        "byteam"
+                    ],
                     "default": "bylink",
                     "order": 16,
                     "name": "opt_privacy_type",
@@ -2536,6 +2964,74 @@
                 {
                     "data_path": "action_result.summary",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_timeout",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.env_locale",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.env_os",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_startfolder",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_cmd",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_extension",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_automated_interactivity",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_kernel_heavyevasion",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_connect",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_fakenet",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_mitm",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_tor",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_privacy_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.run_as_root",
+                    "data_type": "boolean"
                 }
             ],
             "render": {
@@ -2621,7 +3117,19 @@
                 "opt_network_geo": {
                     "description": "Geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 7,
                     "name": "opt_network_geo",
@@ -2649,7 +3157,19 @@
                 "opt_network_residential_proxy_geo": {
                     "description": "Residential proxy geo location option (Default: fastest)",
                     "data_type": "string",
-                    "value_list": ["fastest", "AU", "BR", "DE", "CH", "FR", "KR", "US", "RU", "GB", "IT"],
+                    "value_list": [
+                        "fastest",
+                        "AU",
+                        "BR",
+                        "DE",
+                        "CH",
+                        "FR",
+                        "KR",
+                        "US",
+                        "RU",
+                        "GB",
+                        "IT"
+                    ],
                     "default": "fastest",
                     "order": 10,
                     "name": "opt_network_residential_proxy_geo",
@@ -2668,7 +3188,12 @@
                 "opt_privacy_type": {
                     "description": "Privacy type (Default: bylink)",
                     "data_type": "string",
-                    "value_list": ["public", "bylink", "owner", "byteam"],
+                    "value_list": [
+                        "public",
+                        "bylink",
+                        "owner",
+                        "byteam"
+                    ],
                     "default": "bylink",
                     "order": 12,
                     "name": "opt_privacy_type",
@@ -2725,6 +3250,54 @@
                 },
                 {
                     "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_timeout",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.env_locale",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.obj_ext_cmd",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_automated_interactivity",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_connect",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_fakenet",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_mitm",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_residential_proxy_geo",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_network_tor",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.opt_privacy_type",
                     "data_type": "string"
                 }
             ],
@@ -3511,16 +4084,18 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.taskid", 
-                    "column_order": 0, 
-                    "column_name": "Submission ID", 
-                    "data_type": "string", 
-                    "contains": ["anyrun task id"]
-                }, 
+                    "data_path": "action_result.parameter.taskid",
+                    "column_order": 0,
+                    "column_name": "Submission ID",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ]
+                },
                 {
-                    "data_path": "action_result.data.info", 
-                    "column_order": 1, 
-                    "column_name": "Info", 
+                    "data_path": "action_result.data.info",
+                    "column_order": 1,
+                    "column_name": "Info",
                     "data_type": "string"
                 },
                 {
@@ -3538,6 +4113,14 @@
                 {
                     "data_path": "action_result.message",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
                 }
             ],
             "render": {
@@ -3569,22 +4152,24 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.taskid", 
-                    "column_order": 0, 
-                    "column_name": "Submission ID", 
-                    "data_type": "string", 
-                    "contains": ["anyrun task id"]
-                }, 
+                    "data_path": "action_result.parameter.taskid",
+                    "column_order": 0,
+                    "column_name": "Submission ID",
+                    "data_type": "string",
+                    "contains": [
+                        "anyrun task id"
+                    ]
+                },
                 {
-                    "data_path": "action_result.data.vault_id", 
-                    "column_order": 1, 
-                    "column_name": "Vault ID", 
+                    "data_path": "action_result.data.vault_id",
+                    "column_order": 1,
+                    "column_name": "Vault ID",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.info", 
-                    "column_order": 2, 
-                    "column_name": "Info", 
+                    "data_path": "action_result.info",
+                    "column_order": 2,
+                    "column_name": "Info",
                     "data_type": "string"
                 },
                 {
@@ -3602,14 +4187,21 @@
                 {
                     "data_path": "action_result.message",
                     "data_type": "string"
-                }             
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                }
             ],
             "render": {
                 "type": "table"
             },
             "versions": "EQ(*)"
         }
-        
     ],
     "pip39_dependencies": {
         "wheel": [
@@ -3631,7 +4223,7 @@
             },
             {
                 "module": "anyrun_sdk",
-                "input_file": "wheels/py3/anyrun_sdk-1.6.4-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_sdk-1.8.4-py3-none-any.whl"
             },
             {
                 "module": "async_timeout",
@@ -3683,7 +4275,7 @@
             },
             {
                 "module": "anyrun_sdk",
-                "input_file": "wheels/py3/anyrun_sdk-1.6.4-py3-none-any.whl"
+                "input_file": "wheels/py3/anyrun_sdk-1.8.4-py3-none-any.whl"
             },
             {
                 "module": "attrs",

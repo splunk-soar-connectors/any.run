@@ -5,7 +5,7 @@ description = "Phantom connector for ANY.RUN"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "anyrun-sdk==1.6.3",
+    "anyrun-sdk==1.8.4",
     "requests==2.32.3",
 ]
 

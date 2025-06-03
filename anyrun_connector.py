@@ -56,24 +56,17 @@ class AnyRunConnector(BaseConnector):
         error_code = ANYRUN_ERROR_CODE_MSG
         error_msg = ANYRUN_ERROR_MSG_UNAVAILABLE
 
-        try:
-            if exception.args:
-                if len(exception.args) > 1:
-                    error_code = exception.args[0]
-                    error_msg = exception.args[1]
-                elif len(exception.args) == 1:
-                    error_msg = exception.args[0]
-        except Exception:  # pylint: disable=broad-except
-            pass
+        if exception.args:
+            if len(exception.args) > 1:
+                error_code = exception.args[0]
+                error_msg = exception.args[1]
+            elif len(exception.args) == 1:
+                error_msg = exception.args[0]
 
-        try:
-            if error_code in ANYRUN_ERROR_CODE_MSG:
-                error_text = f"Error Message: {error_msg}"
-            else:
-                error_text = f"Error Code: {error_code}. Error Message: {error_msg}"
-        except Exception:  # pylint: disable=broad-except
-            self.debug_print("Error occurred while parsing error message")
-            error_text = ANYRUN_PARSE_ERROR_MSG
+        if error_code in ANYRUN_ERROR_CODE_MSG:
+            error_text = f"Error Message: {error_msg}"
+        else:
+            error_text = f"Error Code: {error_code}. Error Message: {error_msg}"
 
         return error_text
 
@@ -403,10 +396,13 @@ class AnyRunConnector(BaseConnector):
 
         try:
             file_path = vault_meta_info[0].get("path")
-            if not file_path:
+            file_name = vault_meta_info[0].get("name")
+            if not file_path or not file_name:
                 return action_result.set_status(phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id))
-        except:  # pylint: disable=bare-except
-            return action_result.set_status(phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id))
+        except Exception as exc:
+            return action_result.set_status(
+                phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id) + self._get_error_message_from_exception(exc)
+            )
 
         # Making an API call
         self.save_progress(f"Detonating file with vault ID: {vault_id}")
@@ -415,9 +411,9 @@ class AnyRunConnector(BaseConnector):
             try:
                 error_message = None
                 with sandbox:
-                    taskid = sandbox.run_file_analysis(file_path, **param)
+                    taskid = sandbox.run_file_analysis(filepath=file_path, filename=file_name, **param)
                     response = {"taskid": taskid, "info": "File detonated successfully."}
-            except Exception as exc:  # pylint: disable=broad-exception-caught
+            except Exception as exc:
                 if "Parallel task limit" in str(exc):
                     time.sleep(5)
                     continue
@@ -452,7 +448,7 @@ class AnyRunConnector(BaseConnector):
                 data["os"] = data["os"].split()[1]
             if data == {}:
                 data = {"query": "*"}
-        except (AttributeError, TypeError, ValueError) as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_TI_PARAMS_VALIDATION_ERROR.format(error_message)
             self.save_progress(error_message)
@@ -464,16 +460,9 @@ class AnyRunConnector(BaseConnector):
             error_message = None
             with self._anyrun_threat_intelligence as lookup:
                 response = lookup.get_intelligence(**data)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
 
-        self.save_progress(ANYRUN_SUCCESS_GET_INTELLIGENCE)
+            self.save_progress(ANYRUN_SUCCESS_GET_INTELLIGENCE)
 
-        # Processing server response
-        try:
             action_result.add_data({key: value for key, value in response.items() if value != []})
 
             processor = IntelligenceProcessor(response)
@@ -481,7 +470,8 @@ class AnyRunConnector(BaseConnector):
 
             action_result.update_summary(summary)
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, self._get_error_message_from_exception(exc))
+            error_message = self._get_error_message_from_exception(exc)
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -532,23 +522,15 @@ class AnyRunConnector(BaseConnector):
             error_message = None
             with self._windows_sandbox as sandbox:
                 sandbox.delete_task(taskid)
+
+            self.save_progress(ANYRUN_SUCCESS_DELETE_SUBMISSION.format(taskid))
+            action_result.add_data({"taskid": taskid, "info": "Submission deleted successfully."})
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DELETE_SUBMISSION.format(taskid))
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DELETE_SUBMISSION, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
-
-        self.save_progress(ANYRUN_SUCCESS_DELETE_SUBMISSION.format(taskid))
-
-        # Processing server response
-        try:
-            action_result.add_data({"taskid": taskid, "info": "Submission deleted successfully."})
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, self._get_error_message_from_exception(exc))
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
-
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DELETE_SUBMISSION.format(taskid))
 
     def _handle_get_analysis_verdict(self, param: dict) -> ActionResult:
         """
@@ -692,7 +674,7 @@ class AnyRunConnector(BaseConnector):
         return phantom.APP_SUCCESS
 
 
-def main():
+def main():  # pragma: no cover
     import argparse
 
     argparser = argparse.ArgumentParser()

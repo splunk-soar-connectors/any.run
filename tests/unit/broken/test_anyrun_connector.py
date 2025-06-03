@@ -13,11 +13,11 @@
 # limitations under the License.
 import json
 
-from tests.unit.base import BaseTest
+from tests.unit.base import BaseRunner
 from tests.unit.broken.fixtures import *  # pylint: disable=unused-wildcard-import, wildcard-import
 
 
-class TestBrokenConnector(BaseTest):
+class TestBrokenConnector:
     """
     Class for testing the AnyRunConnector
     """
@@ -27,7 +27,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken get_url_reputation action
         """
         in_json = json.loads(test_broken_get_url_reputation)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -40,7 +40,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken get_file_reputation action
         """
         in_json = json.loads(test_broken_get_file_reputation)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -53,7 +53,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken get_domain_reputation action
         """
         in_json = json.loads(test_broken_get_domain_reputation)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -66,7 +66,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken get_ip_reputation action
         """
         in_json = json.loads(test_broken_get_ip_reputation)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -79,7 +79,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken get_report action
         """
         in_json = json.loads(test_broken_get_report)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -92,7 +92,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken get_ioc action
         """
         in_json = json.loads(test_broken_get_ioc)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -105,7 +105,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken detonate_url action
         """
         in_json = json.loads(test_broken_detonate_url)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -118,7 +118,7 @@ class TestBrokenConnector(BaseTest):
         Test the broken detonate_url action with android os
         """
         in_json = json.loads(test_broken_detonate_url_with_android_os)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
@@ -131,7 +131,30 @@ class TestBrokenConnector(BaseTest):
         Test the broken detonate_file action
         """
         in_json = json.loads(test_broken_detonate_file)
-        ret_val = self._execute_action(in_json)
+        ret_val = BaseRunner()._execute_action(in_json)
+
+        res = ret_val.get("result_data", {})
+        for result in res:
+            assert result.get("status") == "failed"
+
+        assert ret_val is not None
+
+    def test_broken_get_intelligence(self, test_broken_get_intelligence: str) -> None:
+        in_json = json.loads(test_broken_get_intelligence)
+        ret_val = BaseRunner()._execute_action(in_json)
+
+        res = ret_val.get("result_data", {})
+        for result in res:
+            assert result.get("status") == "failed"
+
+        assert ret_val is not None
+
+    def test_broken_get_intelligence_wrong_query(self, test_broken_get_intelligence_wrong_query: str) -> None:
+        """
+        Test the broken get_intelligence action with wrong query
+        """
+        in_json = json.loads(test_broken_get_intelligence_wrong_query)
+        ret_val = BaseRunner()._execute_action(in_json)
 
         res = ret_val.get("result_data", {})
         for result in res:
