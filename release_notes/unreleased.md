@@ -7,4 +7,4 @@
 * Improved error handling and validation in the Configuration class
 * Optimized reputation lookups for better performance
 * Updated type annotations throughout the codebase for better code quality
-* Updated dependencies to the latest versions 
+* Updated dependencies to the latest versions * Update Python version for 3.13
