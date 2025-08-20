@@ -18,7 +18,9 @@
 
 
 import json
+import os
 import time
+from typing import Literal
 
 # Phantom App imports
 import phantom.app as phantom
@@ -26,19 +28,19 @@ import phantom.rules as phantom_rules
 import requests
 
 # Usage of the consts file is recommended
-from anyrun.connectors.sandbox.sandbox_connector import SandBoxConnector
-from anyrun.connectors.threat_intelligence.lookup_connector import LookupConnector
+from anyrun.connectors import LookupConnector, SandboxConnector
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
 from anyrun_consts import *
-from utils.configuration import Configuration
 from utils.get_iocs import extract_iocs
 from utils.intelligence_processor import IntelligenceProcessor
 from utils.reputation import Reputation
 
 
 class AnyRunConnector(BaseConnector):
+    _anyrun_sandbox: SandboxConnector
+
     def __init__(self):
         super().__init__()
         self._state = None
@@ -54,24 +56,17 @@ class AnyRunConnector(BaseConnector):
         error_code = ANYRUN_ERROR_CODE_MSG
         error_msg = ANYRUN_ERROR_MSG_UNAVAILABLE
 
-        try:
-            if exception.args:
-                if len(exception.args) > 1:
-                    error_code = exception.args[0]
-                    error_msg = exception.args[1]
-                elif len(exception.args) == 1:
-                    error_msg = exception.args[0]
-        except Exception:  # pylint: disable=broad-except
-            pass
+        if exception.args:
+            if len(exception.args) > 1:
+                error_code = exception.args[0]
+                error_msg = exception.args[1]
+            elif len(exception.args) == 1:
+                error_msg = exception.args[0]
 
-        try:
-            if error_code in ANYRUN_ERROR_CODE_MSG:
-                error_text = f"Error Message: {error_msg}"
-            else:
-                error_text = f"Error Code: {error_code}. Error Message: {error_msg}"
-        except Exception:  # pylint: disable=broad-except
-            self.debug_print("Error occurred while parsing error message")
-            error_text = ANYRUN_PARSE_ERROR_MSG
+        if error_code in ANYRUN_ERROR_CODE_MSG:
+            error_text = f"Error Message: {error_msg}"
+        else:
+            error_text = f"Error Code: {error_code}. Error Message: {error_msg}"
 
         return error_text
 
@@ -112,35 +107,50 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-    def _get_configuration(self, action_result: ActionResult, param: dict, is_file: bool = False) -> tuple[bool, Configuration]:
-        """
-        Get configuration from parameters
-
-        :param action_result: ActionResult object
-        :param param: Parameters
-        :return: Tuple of status and configuration
-        """
-        # convert to Configuration
-        try:
-            config = Configuration.get_config(param, is_file)
-            return phantom.APP_SUCCESS, config
-        except (AttributeError, TypeError, ValueError) as exc:
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_SANDBOX_PARAMS_VALIDATION_ERROR.format(error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message), None
-
     def _get_iocs(self, taskid: str) -> list[dict]:
-        """
-        Get IoCs from AnyRun sandbox
+        return extract_iocs(self._windows_sandbox, taskid, self.get_container_id())
 
-        :param taskid: Task ID
-        :return: List of IoCs
-        """
-        with self._anyrun_sandbox as sandbox:
-            report = sandbox.get_analysis_report(taskid, simplify=False)
+    def _get_reputation(
+        self, entity_type: Literal["url", "hash", "domainname", "ip"], param: dict, action_id: str, success_message: str
+    ) -> list[dict]:
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
 
-        return extract_iocs(report, self._api_key)
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        entity = param[entity_type]
+        search_in_public_tasks = param.get("search_in_public_tasks", False)
+
+        # Making an API call
+        self.save_progress(f"Requesting a list of reports for a {entity_type}: {entity}.")
+
+        try:
+            error_message = None
+            if entity_type == "url":
+                tasks = self._reputation.get_url_reputation(entity, search_in_public_tasks)
+            elif entity_type == "hash":
+                tasks = self._reputation.get_file_reputation(entity, search_in_public_tasks)
+            elif entity_type == "domainname":
+                tasks = self._reputation.get_domain_reputation(entity)
+            elif entity_type == "ip":
+                tasks = self._reputation.get_ip_reputation(entity)
+
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            error_message = self._get_error_message_from_exception(exc)
+            error_message = ANYRUN_REST_API_ERROR.format(action_id, error_message)
+            self.save_progress(error_message)
+            return action_result.set_status(phantom.APP_ERROR, error_message)
+
+        self.save_progress(success_message.format(entity))
+
+        # Processing server response
+        ret_val = self._process_reputation_response(action_result, tasks, action_id, is_url_file=entity_type in ["url", "hash"])
+
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+
+        action_result.set_status(phantom.APP_SUCCESS, success_message.format(entity))
+
+        return action_result.get_status()
 
     def _normalize_api_key(self) -> str:
         """
@@ -148,11 +158,8 @@ class AnyRunConnector(BaseConnector):
 
         :return: Normalized API key
         """
-        if "API-Key" in self._api_key or "Basic" in self._api_key:
+        if "API-Key" in self._api_key:
             return self._api_key
-
-        if self._api_key.endswith("=="):
-            return "Basic " + self._api_key
 
         return "API-Key " + self._api_key
 
@@ -172,7 +179,7 @@ class AnyRunConnector(BaseConnector):
 
         self.save_progress("Connecting to endpoint")
         try:
-            with self._anyrun_sandbox as sandbox:
+            with self._windows_sandbox as sandbox:
                 sandbox.get_user_limits()
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
@@ -182,145 +189,49 @@ class AnyRunConnector(BaseConnector):
         self.save_progress(ANYRUN_SUCCESS_TEST_CONNECTIVITY)
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_get_url_reputation(self, param: dict) -> ActionResult:
+    def _handle_get_url_reputation(self, param: dict) -> bool:
         """
         Handle get URL reputation
 
         :param param: Parameters
-        :return: ActionResult object
+        :return: bool
         """
-        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+        return self._get_reputation(
+            "url", param, action_id=ACTION_ID_ANYRUN_GET_URL_REPUTATION, success_message=ANYRUN_SUCCESS_GET_URL_REPUTATION
+        )
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
-        action_result = self.add_action_result(ActionResult(dict(param)))
-
-        url = param["url"]
-        search_in_public_tasks = param["search_in_public_tasks"]
-
-        # Making an API call
-        self.save_progress(f"Requesting a list of reports for a URL: {url}.")
-        try:
-            error_message = None
-            tasks = self._reputation.get_url_reputation(url, search_in_public_tasks)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_URL_REPUTATION, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
-
-        self.save_progress(ANYRUN_SUCCESS_GET_URL_REPUTATION.format(url))
-
-        # Processing server response
-        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_URL_REPUTATION)
-        if phantom.is_fail(ret_val):
-            return action_result.get_status()
-
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_URL_REPUTATION.format(url))
-
-    def _handle_get_file_reputation(self, param: dict) -> ActionResult:
+    def _handle_get_file_reputation(self, param: dict) -> bool:
         """
         Handle get file reputation
 
         :param param: Parameters
-        :return: ActionResult object
+        :return: bool
         """
-        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+        return self._get_reputation(
+            "hash", param, action_id=ACTION_ID_ANYRUN_GET_FILE_REPUTATION, success_message=ANYRUN_SUCCESS_GET_FILE_REPUTATION
+        )
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
-        action_result = self.add_action_result(ActionResult(dict(param)))
-
-        file_hash = param["hash"]
-        search_in_public_tasks = param["search_in_public_tasks"]
-
-        # Making an API call
-        self.save_progress(f"Requesting a list of reports for a submission with hash: {file_hash}.")
-        try:
-            error_message = None
-            tasks = self._reputation.get_file_reputation(file_hash, search_in_public_tasks)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_FILE_REPUTATION, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
-
-        self.save_progress(ANYRUN_SUCCESS_GET_FILE_REPUTATION.format(file_hash))
-
-        # Processing server response
-        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_FILE_REPUTATION)
-        if phantom.is_fail(ret_val):
-            return action_result.get_status()
-
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_FILE_REPUTATION.format(file_hash))
-
-    def _handle_get_domain_reputation(self, param: dict) -> ActionResult:
+    def _handle_get_domain_reputation(self, param: dict) -> bool:
         """
         Handle get domain reputation
 
         :param param: Parameters
-        :return: ActionResult object
+        :return: bool
         """
-        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+        return self._get_reputation(
+            "domainname", param, action_id=ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, success_message=ANYRUN_SUCCESS_GET_DOMAIN_REPUTATION
+        )
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
-        action_result = self.add_action_result(ActionResult(dict(param)))
-
-        domain = param["domainname"]
-
-        # Making an API call
-        self.save_progress(f"Requesting a list of reports for a submission related to domain: {domain}.")
-        try:
-            error_message = None
-            tasks = self._reputation.get_domain_reputation(domain)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
-
-        self.save_progress(ANYRUN_SUCCESS_GET_DOMAIN_REPUTATION.format(domain))
-
-        # Processing server response
-        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION, False)
-        if phantom.is_fail(ret_val):
-            return action_result.get_status()
-
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_DOMAIN_REPUTATION.format(domain))
-
-    def _handle_get_ip_reputation(self, param: dict) -> ActionResult:
+    def _handle_get_ip_reputation(self, param: dict) -> bool:
         """
         Handle get IP reputation
 
         :param param: Parameters
-        :return: ActionResult object
+        :return: bool
         """
-        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+        return self._get_reputation("ip", param, action_id=ACTION_ID_ANYRUN_GET_IP_REPUTATION, success_message=ANYRUN_SUCCESS_GET_IP_REPUTATION)
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
-        action_result = self.add_action_result(ActionResult(dict(param)))
-
-        ip = param["ip"]
-
-        # Making an API call
-        self.save_progress(f"Requesting a list of reports for a submission related to IP: {ip}.")
-        try:
-            error_message = None
-            tasks = self._reputation.get_ip_reputation(ip)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IP_REPUTATION, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
-
-        self.save_progress(ANYRUN_SUCCESS_GET_IP_REPUTATION.format(ip))
-
-        # Processing server response
-        ret_val = self._process_reputation_response(action_result, tasks, ACTION_ID_ANYRUN_GET_IP_REPUTATION, False)
-        if phantom.is_fail(ret_val):
-            return action_result.get_status()
-
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IP_REPUTATION.format(ip))
-
-    def _handle_get_report(self, param: dict) -> ActionResult:
+    def _handle_get_report(self, param: dict, report_format: str = "summary") -> ActionResult:
         """
         Handle get report
 
@@ -336,12 +247,13 @@ class AnyRunConnector(BaseConnector):
         taskid = param["taskid"]
         self.save_progress(f"Requesting report for submission: {taskid}")
         try:
-            error_message = None
-            with self._anyrun_sandbox as sandbox:
-                report = sandbox.get_analysis_report(taskid)
+            with self._windows_sandbox as sandbox:
+                for status in sandbox.get_task_status(taskid):
+                    self.debug_print(f"Waiting for task to complete {taskid}: {status}")
+
+                report = sandbox.get_analysis_report(taskid, report_format=report_format)
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, error_message)
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, self._get_error_message_from_exception(exc))
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -351,8 +263,7 @@ class AnyRunConnector(BaseConnector):
         try:
             action_result.add_data(report)
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, error_message)
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_REPORT, self._get_error_message_from_exception(exc))
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -375,10 +286,13 @@ class AnyRunConnector(BaseConnector):
         self.save_progress(f"Requesting IoC report for submission: {taskid}.")
         try:
             error_message = None
-            iocs = self._get_iocs(taskid)
+            with self._windows_sandbox as sandbox:
+                for status in sandbox.get_task_status(taskid):
+                    self.debug_print(f"Waiting for task to complete {taskid}: {status}")
+
+                iocs = self._get_iocs(taskid)
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, error_message)
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, self._get_error_message_from_exception(exc))
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -387,79 +301,59 @@ class AnyRunConnector(BaseConnector):
         # Processing server response
         try:
             action_result.add_data({"ioc": iocs})
+            ret_val = self.save_artifacts(iocs)
             action_result.update_summary(
                 {
                     "total_objects": len(iocs),
-                    "max_reputation": max(item["reputation"] for item in iocs),
                 }
             )
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, error_message)
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_IOC, self._get_error_message_from_exception(exc))
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IOC.format(taskid))
+        if not ret_val[0]:
+            return action_result.set_status(phantom.APP_ERROR, ret_val[1])
 
-    def _handle_detonate_url(self, param: dict) -> ActionResult:
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IOC.format(taskid) + str(ret_val[1]))
+
+    def _handle_detonate_url(self, param: dict, sandbox) -> ActionResult:
         """
         Handle detonate URL
 
         :param param: Parameters
         :return: ActionResult object
         """
-        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+        action_id = self.get_action_identifier()
+        self.save_progress(f"In action handler for: {action_id}")
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        obj_url = param.get("obj_url", None)
-        _ = param.pop("obj_type", None)
-
-        # Input validation
-        ret_val, data = self._get_configuration(action_result, param, is_file=False)
-        if phantom.is_fail(ret_val):
-            return action_result.get_status()
-
-        # Making an API call
-        self.save_progress(f"Detonating URL: {obj_url}")
+        self.save_progress(f"Detonating URL: {param['obj_url']}")
+        param.pop("context", None)
         response = None
         while response is None:
             try:
                 error_message = None
-                with self._anyrun_sandbox as sandbox:
-                    taskid = sandbox.run_url_analysis(**data)
-                    for status in sandbox.get_task_status(taskid):
-                        self.debug_print(f"Waiting for task to complete {taskid}: {status}")
+                with sandbox:
+                    taskid = sandbox.run_url_analysis(**param)
+                    response = {"taskid": taskid, "info": "URL detonated successfully."}
 
-                    response = sandbox.get_analysis_report(taskid, simplify=True)
-                    response = response if response is not None else {}
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 if "Parallel task limit" in str(exc):
                     time.sleep(5)
                     continue
 
-                error_message = self._get_error_message_from_exception(exc)
-                error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
-
-                self.save_progress(error_message)
+                error_message = ANYRUN_REST_API_ERROR.format(action_id, self._get_error_message_from_exception(exc))
                 return action_result.set_status(phantom.APP_ERROR, error_message)
 
-        self.save_progress(ANYRUN_SUCCESS_DETONATE_URL.format(obj_url))
+        self.save_progress(ANYRUN_SUCCESS_DETONATE_URL.format(param["obj_url"]))
 
-        # Processing server response
-        try:
-            response["permanentUrl"] = f"https://app.any.run/tasks/{taskid}"
-            action_result.add_data(response)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_URL, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
+        action_result.add_data(response)
 
-        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_URL.format(obj_url))
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_URL.format(param["obj_url"]))
 
-    def _handle_detonate_file(self, param: dict) -> ActionResult:
+    def _handle_detonate_file(self, param: dict, sandbox) -> ActionResult:
         """
         Handle detonate file
 
@@ -471,12 +365,8 @@ class AnyRunConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Input validation
-        ret_val, data = self._get_configuration(action_result, param, is_file=True)
-        if phantom.is_fail(ret_val):
-            return action_result.get_status()
-
         vault_id = param.pop("vault_id")
+        param.pop("context", None)
         try:
             success, message, vault_meta_info = phantom_rules.vault_info(vault_id=vault_id)
             vault_meta_info = list(vault_meta_info)
@@ -490,12 +380,11 @@ class AnyRunConnector(BaseConnector):
                     ),
                 )
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
             return action_result.set_status(
                 phantom.APP_ERROR,
                 "{}. {}".format(
                     ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("vault meta info", vault_id),
-                    error_message,
+                    self._get_error_message_from_exception(exc),
                 ),
             )
 
@@ -507,10 +396,13 @@ class AnyRunConnector(BaseConnector):
 
         try:
             file_path = vault_meta_info[0].get("path")
-            if not file_path:
+            file_name = vault_meta_info[0].get("name")
+            if not file_path or not file_name:
                 return action_result.set_status(phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id))
-        except:  # pylint: disable=bare-except
-            return action_result.set_status(phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id))
+        except Exception as exc:
+            return action_result.set_status(
+                phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id) + self._get_error_message_from_exception(exc)
+            )
 
         # Making an API call
         self.save_progress(f"Detonating file with vault ID: {vault_id}")
@@ -518,33 +410,22 @@ class AnyRunConnector(BaseConnector):
         while response is None:
             try:
                 error_message = None
-                with self._anyrun_sandbox as sandbox:
-                    taskid = sandbox.run_file_analysis(file_path, **data)
-                    for status in sandbox.get_task_status(taskid):
-                        self.debug_print(f"Waiting for task to complete {taskid}: {status}")
-
-                    response = sandbox.get_analysis_report(taskid, simplify=True)
-                    response = response if response is not None else {}
-            except Exception as exc:  # pylint: disable=broad-exception-caught
+                with sandbox:
+                    taskid = sandbox.run_file_analysis(filepath=file_path, filename=file_name, **param)
+                    response = {"taskid": taskid, "info": "File detonated successfully."}
+            except Exception as exc:
                 if "Parallel task limit" in str(exc):
                     time.sleep(5)
                     continue
-                error_message = self._get_error_message_from_exception(exc)
-                error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
+
+                error_message = ANYRUN_REST_API_ERROR.format(self.get_action_identifier(), self._get_error_message_from_exception(exc))
                 self.save_progress(error_message)
                 return action_result.set_status(phantom.APP_ERROR, error_message)
 
         self.save_progress(ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id))
 
         # Processing server response
-        try:
-            response["permanentUrl"] = f"https://app.any.run/tasks/{taskid}"
-            action_result.add_data(response)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_DETONATE_FILE, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
+        action_result.add_data(response)
 
         return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id))
 
@@ -567,7 +448,7 @@ class AnyRunConnector(BaseConnector):
                 data["os"] = data["os"].split()[1]
             if data == {}:
                 data = {"query": "*"}
-        except (AttributeError, TypeError, ValueError) as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
             error_message = ANYRUN_TI_PARAMS_VALIDATION_ERROR.format(error_message)
             self.save_progress(error_message)
@@ -579,16 +460,9 @@ class AnyRunConnector(BaseConnector):
             error_message = None
             with self._anyrun_threat_intelligence as lookup:
                 response = lookup.get_intelligence(**data)
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
-            self.save_progress(error_message)
-            return action_result.set_status(phantom.APP_ERROR, error_message)
 
-        self.save_progress(ANYRUN_SUCCESS_GET_INTELLIGENCE)
+            self.save_progress(ANYRUN_SUCCESS_GET_INTELLIGENCE)
 
-        # Processing server response
-        try:
             action_result.add_data({key: value for key, value in response.items() if value != []})
 
             processor = IntelligenceProcessor(response)
@@ -597,11 +471,100 @@ class AnyRunConnector(BaseConnector):
             action_result.update_summary(summary)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_message = self._get_error_message_from_exception(exc)
-            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_INTELLIGENCE, error_message)
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
         return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_INTELLIGENCE)
+
+    def _handle_download_pcap(self, param: dict) -> ActionResult:
+        """
+        Handle download PCAP
+        """
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        taskid = param["taskid"]
+
+        vault_path = phantom_rules.Vault.get_vault_tmp_dir()
+        with self._windows_sandbox as sandbox:
+            sandbox.download_pcap(taskid, filepath=vault_path)
+
+            if not os.path.exists(vault_path):
+                return action_result.set_status(phantom.APP_ERROR, "Failed to download PCAP file.")
+
+            files = os.listdir(vault_path)
+            for fl in files:
+                if fl.startswith(taskid):
+                    file = fl
+                    break
+
+            filepath = os.path.join(vault_path, file)
+
+            result, status, vault_id = phantom_rules.vault_add(container=self.get_container_id(), file_location=filepath, file_name=file)
+            if not result:
+                return action_result.set_status(phantom.APP_ERROR, status)
+
+            action_result.add_data({"taskid": taskid, "vault_id": vault_id, "info": "PCAP downloaded successfully."})
+
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DOWNLOAD_PCAP.format(taskid))
+
+    def _handle_delete_submission(self, param: dict) -> ActionResult:
+        """
+        Handle delete submission
+        """
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        taskid = param["taskid"]
+        try:
+            error_message = None
+            with self._windows_sandbox as sandbox:
+                sandbox.delete_task(taskid)
+
+            self.save_progress(ANYRUN_SUCCESS_DELETE_SUBMISSION.format(taskid))
+            action_result.add_data({"taskid": taskid, "info": "Submission deleted successfully."})
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DELETE_SUBMISSION.format(taskid))
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            error_message = self._get_error_message_from_exception(exc)
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_DELETE_SUBMISSION, error_message)
+            self.save_progress(error_message)
+            return action_result.set_status(phantom.APP_ERROR, error_message)
+
+    def _handle_get_analysis_verdict(self, param: dict) -> ActionResult:
+        """
+        Handle get analysis verdict
+        """
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        taskid = param["taskid"]
+        try:
+            error_message = None
+            with self._windows_sandbox as sandbox:
+                for status in sandbox.get_task_status(taskid):
+                    self.debug_print(f"Waiting for task to complete {taskid}: {status}")
+
+                verdict = sandbox.get_analysis_verdict(taskid)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            error_message = self._get_error_message_from_exception(exc)
+            error_message = ANYRUN_REST_API_ERROR.format(ACTION_ID_ANYRUN_GET_ANALYSIS_VERDICT, error_message)
+            self.save_progress(error_message)
+            return action_result.set_status(phantom.APP_ERROR, error_message)
+
+        self.save_progress(ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT.format(taskid))
+
+        # Processing server response
+        try:
+            action_result.add_data({"verdict": verdict})
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            error_message = ANYRUN_ADD_DATA_ERROR.format(ACTION_ID_ANYRUN_GET_ANALYSIS_VERDICT, self._get_error_message_from_exception(exc))
+            self.save_progress(error_message)
+            return action_result.set_status(phantom.APP_ERROR, error_message)
+
+        return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT.format(taskid))
 
     def handle_action(self, param: dict) -> ActionResult:
         """
@@ -627,16 +590,36 @@ class AnyRunConnector(BaseConnector):
             ret_val = self._handle_get_ip_reputation(param)
         elif action_id == ACTION_ID_ANYRUN_GET_REPORT:
             ret_val = self._handle_get_report(param)
+        elif action_id == ACTION_ID_ANYRUN_GET_REPORT_STIX:
+            ret_val = self._handle_get_report(param, report_format="stix")
+        elif action_id == ACTION_ID_ANYRUN_GET_REPORT_HTML:
+            ret_val = self._handle_get_report(param, report_format="html")
+        elif action_id == ACTION_ID_ANYRUN_GET_REPORT_MISP:
+            ret_val = self._handle_get_report(param, report_format="misp")
         elif action_id == ACTION_ID_ANYRUN_GET_IOC:
             ret_val = self._handle_get_ioc(param)
-        elif action_id == ACTION_ID_ANYRUN_DETONATE_URL:
-            ret_val = self._handle_detonate_url(param)
-        elif action_id == ACTION_ID_ANYRUN_DETONATE_FILE:
-            ret_val = self._handle_detonate_file(param)
+        elif action_id == ACTION_ID_ANYRUN_DETONATE_URL_ANDROID:
+            ret_val = self._handle_detonate_url(param, self._android_sandbox)
+        elif action_id == ACTION_ID_ANYRUN_DETONATE_URL_LINUX:
+            ret_val = self._handle_detonate_url(param, self._linux_sandbox)
+        elif action_id == ACTION_ID_ANYRUN_DETONATE_URL_WINDOWS:
+            ret_val = self._handle_detonate_url(param, self._windows_sandbox)
+        elif action_id == ACTION_ID_ANYRUN_DETONATE_FILE_ANDROID:
+            ret_val = self._handle_detonate_file(param, self._android_sandbox)
+        elif action_id == ACTION_ID_ANYRUN_DETONATE_FILE_LINUX:
+            ret_val = self._handle_detonate_file(param, self._linux_sandbox)
+        elif action_id == ACTION_ID_ANYRUN_DETONATE_FILE_WINDOWS:
+            ret_val = self._handle_detonate_file(param, self._windows_sandbox)
         elif action_id == ACTION_ID_ANYRUN_GET_INTELLIGENCE:
             ret_val = self._handle_get_intelligence(param)
         elif action_id == ACTION_ID_ANYRUN_TEST_CONNECTIVITY:
             ret_val = self._handle_test_connectivity(param)
+        elif action_id == ACTION_ID_ANYRUN_DELETE_SUBMISSION:
+            ret_val = self._handle_delete_submission(param)
+        elif action_id == ACTION_ID_ANYRUN_DOWNLOAD_PCAP:
+            ret_val = self._handle_download_pcap(param)
+        elif action_id == ACTION_ID_ANYRUN_GET_ANALYSIS_VERDICT:
+            ret_val = self._handle_get_analysis_verdict(param)
 
         return ret_val
 
@@ -664,19 +647,24 @@ class AnyRunConnector(BaseConnector):
 
         self._api_key = self._normalize_api_key()
 
-        self._anyrun_sandbox = SandBoxConnector(
-            api_key=self._api_key,
-            user_agent=f"Splunk-SOAR/{VERSION}",
-            timeout=self._timeout,
-        )
+        self._anyrun_sandbox = SandboxConnector()
+
+        generic_sandbox_parameters = {
+            "api_key": self._api_key,
+            "integration": USER_AGENT,
+            "timeout": self._timeout,
+        }
+        self._windows_sandbox = self._anyrun_sandbox.windows(**generic_sandbox_parameters)
+        self._android_sandbox = self._anyrun_sandbox.android(**generic_sandbox_parameters)
+        self._linux_sandbox = self._anyrun_sandbox.linux(**generic_sandbox_parameters)
 
         self._anyrun_threat_intelligence = LookupConnector(
             api_key=self._api_key,
-            user_agent=f"Splunk-SOAR/{VERSION}",
+            integration=USER_AGENT,
             timeout=self._timeout,
         )
 
-        self._reputation = Reputation(sandbox=self._anyrun_sandbox, lookup=self._anyrun_threat_intelligence)
+        self._reputation = Reputation(sandbox=self._windows_sandbox, lookup=self._anyrun_threat_intelligence)
 
         return phantom.APP_SUCCESS
 
@@ -686,7 +674,7 @@ class AnyRunConnector(BaseConnector):
         return phantom.APP_SUCCESS
 
 
-def main():
+def main():  # pragma: no cover
     import argparse
 
     argparser = argparse.ArgumentParser()

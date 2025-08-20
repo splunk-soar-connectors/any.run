@@ -13,7 +13,7 @@
 # limitations under the License.
 import re
 
-from anyrun.connectors.sandbox.sandbox_connector import SandBoxConnector
+from anyrun.connectors.sandbox.operation_systems import WindowsConnector
 from anyrun.connectors.threat_intelligence.lookup_connector import LookupConnector
 
 
@@ -22,7 +22,7 @@ class Reputation:
     Get the reputation of a file, URL, domain, or IP address
     """
 
-    def __init__(self, sandbox: SandBoxConnector = None, lookup: LookupConnector = None) -> None:
+    def __init__(self, sandbox: WindowsConnector = None, lookup: LookupConnector = None) -> None:
         self.sandbox = sandbox
         self.lookup = lookup
 

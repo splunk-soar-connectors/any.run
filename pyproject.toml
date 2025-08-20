@@ -1,3 +1,14 @@
+[project]
+name = "phantom_any.run"
+version = "1.4.1"
+description = "Phantom connector for ANY.RUN"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "anyrun-sdk==1.8.4",
+    "requests==2.32.3",
+]
+
 # Ruff linting
 [tool.ruff]
 line-length = 145
@@ -76,4 +87,15 @@ ignore-patterns = [
     ".html",
     "*.md",
     "*.svg"
+]
+
+[tool.uv.sources]
+pytest-splunk-soar-connectors = { git = "https://github.com/splunk/pytest-splunk-soar-connectors" }
+
+[dependency-groups]
+dev = [
+    "dotenv>=0.9.9",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "pytest-splunk-soar-connectors",
 ]

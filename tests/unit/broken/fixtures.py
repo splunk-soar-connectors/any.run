@@ -27,6 +27,7 @@ __all__ = [
     "test_broken_get_domain_reputation",
     "test_broken_get_file_reputation",
     "test_broken_get_intelligence",
+    "test_broken_get_intelligence_wrong_query",
     "test_broken_get_ioc",
     "test_broken_get_ip_reputation",
     "test_broken_get_report",
@@ -42,9 +43,8 @@ def test_broken_get_url_reputation() -> str:
     return json.dumps(
         {
             "action": "get_url_reputation",
-            "parameters": [{"search_in_public_tasks": False}],
-            "asset_id": "anyrun_instance_01",
             "identifier": "get_url_reputation",
+            "parameters": [{"search_in_public_tasks": False}],
         }
     )
 
@@ -57,9 +57,8 @@ def test_broken_get_file_reputation() -> str:
     return json.dumps(
         {
             "action": "get_file_reputation",
-            "parameters": [{"search_in_public_tasks": False}],
-            "asset_id": "anyrun_instance_01",
             "identifier": "get_file_reputation",
+            "parameters": [{"search_in_public_tasks": False}],
         }
     )
 
@@ -72,9 +71,8 @@ def test_broken_get_domain_reputation() -> str:
     return json.dumps(
         {
             "action": "get_domain_reputation",
-            "parameters": [{"search_in_public_tasks": False}],
-            "asset_id": "anyrun_instance_01",
             "identifier": "get_domain_reputation",
+            "parameters": [{"search_in_public_tasks": False}],
         }
     )
 
@@ -87,9 +85,8 @@ def test_broken_get_ip_reputation() -> str:
     return json.dumps(
         {
             "action": "get_ip_reputation",
-            "parameters": [{"search_in_public_tasks": False}],
-            "asset_id": "anyrun_instance_01",
             "identifier": "get_ip_reputation",
+            "parameters": [{"search_in_public_tasks": False}],
         }
     )
 
@@ -102,9 +99,8 @@ def test_broken_get_report() -> str:
     return json.dumps(
         {
             "action": "get_report",
-            "parameters": [],
-            "asset_id": "anyrun_instance_01",
             "identifier": "get_report",
+            "parameters": [],
         }
     )
 
@@ -117,9 +113,8 @@ def test_broken_get_ioc() -> str:
     return json.dumps(
         {
             "action": "get_ioc",
-            "parameters": [],
-            "asset_id": "anyrun_instance_01",
             "identifier": "get_ioc",
+            "parameters": [],
         }
     )
 
@@ -132,9 +127,8 @@ def test_broken_detonate_url() -> str:
     return json.dumps(
         {
             "action": "detonate_url",
-            "parameters": [],
-            "asset_id": "anyrun_instance_01",
             "identifier": "detonate_url",
+            "parameters": [],
         }
     )
 
@@ -146,7 +140,8 @@ def test_broken_detonate_url_with_android_os() -> str:
     """
     return json.dumps(
         {
-            "action": "detonate_url",
+            "action": "detonate_url_android",
+            "identifier": "detonate_url_android",
             "parameters": [
                 {
                     "obj_url": "https://example.com",
@@ -158,8 +153,6 @@ def test_broken_detonate_url_with_android_os() -> str:
                     "env_type": "clean",
                 }
             ],
-            "asset_id": "anyrun_instance_01",
-            "identifier": "detonate_url",
         }
     )
 
@@ -171,10 +164,9 @@ def test_broken_detonate_file() -> str:
     """
     return json.dumps(
         {
-            "action": "detonate_file",
-            "parameters": [],
-            "asset_id": "anyrun_instance_01",
-            "identifier": "detonate_file",
+            "action": "detonate_file_windows",
+            "identifier": "detonate_file_windows",
+            "parameters": [{"vault_id": "dummy"}],
         }
     )
 
@@ -187,8 +179,21 @@ def test_broken_get_intelligence() -> str:
     return json.dumps(
         {
             "action": "get_intelligence",
-            "parameters": [{"os": "android"}],
-            "asset_id": "anyrun_instance_01",
             "identifier": "get_intelligence",
+            "parameters": [{"os": 22}],
+        }
+    )
+
+
+@pytest.fixture
+def test_broken_get_intelligence_wrong_query() -> str:
+    """
+    Broken test of the get_intelligence action with wrong query
+    """
+    return json.dumps(
+        {
+            "action": "get_intelligence",
+            "identifier": "get_intelligence",
+            "parameters": [{"query": "wrong(//syntax*"}],
         }
     )

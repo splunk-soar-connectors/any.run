@@ -1,7 +1,7 @@
 # ANY.RUN
 
 Publisher: ANYRUN FZCO \
-Connector Version: 1.4.0 \
+Connector Version: 1.4.1 \
 Product Vendor: ANYRUN FZCO \
 Product Name: ANY.RUN \
 Minimum Product Version: 6.3.0
@@ -33,7 +33,7 @@ This connector comes with some additional python 3 libraries, that it depends on
 	- aiofiles-24.1.0
 	- aiohappyeyeballs-2.6.1
 	- async-timeout-5.0.1
-	- anyrun-sdk-1.2.3
+	- anyrun-sdk-1.8.4
 ```
 
 ### Configuration variables
@@ -48,15 +48,25 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 ### Supported Actions
 
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
+[get analysis verdict](#action-get-analysis-verdict) - Get the verdict of a specific analysis \
 [url reputation](#action-url-reputation) - Get reports of a specific URL analysis \
 [file reputation](#action-file-reputation) - Get reports of a specific file analysis by that file's hash \
 [domain reputation](#action-domain-reputation) - Get reports of analyses, that involve specific domain \
 [ip reputation](#action-ip-reputation) - Get reports of analyses, that involve specific IP \
 [get report](#action-get-report) - Get report for a submission \
+[get report stix](#action-get-report-stix) - Get report for a submission in STIX format \
+[get report misp](#action-get-report-misp) - Get report for a submission in MISP format \
+[get report html](#action-get-report-html) - Get report for a submission in HTML format \
 [get iocs](#action-get-iocs) - Get list of IoCs for a submission \
-[detonate url](#action-detonate-url) - Detonate a URL \
-[detonate file](#action-detonate-file) - Detonate a file from Vault \
-[get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup
+[detonate url windows](#action-detonate-url-windows) - Detonate a URL \
+[detonate url linux](#action-detonate-url-linux) - Detonate a URL on Linux \
+[detonate url android](#action-detonate-url-android) - Detonate a URL on Android \
+[detonate file windows](#action-detonate-file-windows) - Detonate a file from Vault \
+[detonate file linux](#action-detonate-file-linux) - Detonate a file from Vault \
+[detonate file android](#action-detonate-file-android) - Detonate a file from Vault \
+[get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup \
+[delete submission](#action-delete-submission) - Delete a submission \
+[download pcap](#action-download-pcap) - Download a pcap file
 
 ## action: 'test connectivity'
 
@@ -72,6 +82,33 @@ No parameters are required for this action
 #### Action Output
 
 No Output
+
+## action: 'get analysis verdict'
+
+Get the verdict of a specific analysis
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a submission <b>TaskID</b>.
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**taskid** | required | ANY.RUN task UUID | string | `anyrun task id` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.taskid | string | `anyrun task id` | |
+action_result.data.verdict | string | | No threats detected Suspicious activity Malicious activity |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
 
 ## action: 'url reputation'
 
@@ -110,6 +147,7 @@ action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
 
 ## action: 'file reputation'
 
@@ -145,6 +183,7 @@ action_result.data.\*.tasks.\*.mainObject.hashes.md5 | string | `hash` `md5` | |
 action_result.data.\*.tasks.\*.mainObject.hashes.sha1 | string | `hash` `sha1` | |
 action_result.data.\*.tasks.\*.mainObject.hashes.sha256 | string | `hash` `sha256` | |
 action_result.status | string | | success failed |
+action_result.summary | string | | |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
@@ -184,6 +223,7 @@ action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
 
 ## action: 'ip reputation'
 
@@ -220,6 +260,7 @@ action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
 
 ## action: 'get report'
 
@@ -260,6 +301,104 @@ action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+
+## action: 'get report stix'
+
+Get report for a submission in STIX format
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a submission <b>TaskID</b>.
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**taskid** | required | ANY.RUN task UUID | string | `anyrun task id` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.taskid | string | `anyrun task id` | |
+action_result.data.type | string | | bundle |
+action_result.data.id | string | | |
+action_result.data.objects.\*.id | string | | |
+action_result.data.objects.\*.name | string | | |
+action_result.data.objects.\*.type | string | | |
+action_result.summary | string | | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects_successful | numeric | | |
+summary.total_objects | numeric | | |
+
+## action: 'get report misp'
+
+Get report for a submission in MISP format
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a submission <b>TaskID</b>.
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**taskid** | required | ANY.RUN task UUID | string | `anyrun task id` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.taskid | string | `anyrun task id` | |
+action_result.data.Event.uuid | string | | |
+action_result.data.Event.distribution | numeric | | |
+action_result.data.Event.analysis | numeric | | |
+action_result.data.Event.threat_level_id | numeric | | |
+action_result.data.Event.info | string | | |
+action_result.data.Event.timestamp | string | | |
+action_result.data.Event.date | string | | |
+action_result.data.Event.Attribute.\*.category | string | | |
+action_result.data.Event.Attribute.\*.type | string | | |
+action_result.data.Event.Attribute.\*.value | string | | |
+action_result.data.Event.Attribute.\*.distribution | numeric | | |
+action_result.data.Event.Orgc.uuid | string | | |
+action_result.data.Event.Orgc.name | string | | |
+action_result.summary | string | | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects_successful | numeric | | |
+summary.total_objects | numeric | | |
+
+## action: 'get report html'
+
+Get report for a submission in HTML format
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a submission <b>TaskID</b>.
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**taskid** | required | ANY.RUN task UUID | string | `anyrun task id` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.taskid | string | `anyrun task id` | |
+action_result.data.html | string | | |
+action_result.summary | string | | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects_successful | numeric | | |
+summary.total_objects | numeric | | |
 
 ## action: 'get iocs'
 
@@ -289,8 +428,9 @@ action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
 
-## action: 'detonate url'
+## action: 'detonate url windows'
 
 Detonate a URL
 
@@ -304,119 +444,337 @@ This action requires a <b>URL</b> for ANY.RUN service to analyse. All other para
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **obj_url** | required | URL to detonate (Size range: 5-512) | string | `url` |
-**obj_type** | optional | Type of new task (Default: url) | string | |
-**os** | optional | Operation System (Default: Windows10x64_complete) | string | |
+**opt_timeout** | optional | Timeout (Default: 60) | numeric | |
+**env_bitness** | optional | Bitness of the operation system (Default: 64) | numeric | |
 **env_locale** | optional | Operation system's language (Default: en-US) | string | |
-**opt_network_connect** | optional | Network connection state | boolean | |
-**opt_network_fakenet** | optional | FakeNet feature status | boolean | |
-**opt_network_tor** | optional | TOR using | boolean | |
+**env_type** | optional | Type of the operation system (Default: complete) | string | |
+**env_version** | optional | Version of the operation system (Default: 10) | string | |
+**obj_ext_browser** | optional | Browser to use (Default: Microsoft Edge) | string | |
+**obj_ext_extension** | optional | Extension to use (Default: True) | boolean | |
+**opt_automated_interactivity** | optional | Automated interactivity (Default: True) | boolean | |
+**opt_kernel_heavyevasion** | optional | Kernel heavy evasion (Default: False) | boolean | |
+**opt_network_connect** | optional | Network connection state (Default: True) | boolean | |
+**opt_network_fakenet** | optional | FakeNet feature status (Default: False) | boolean | |
 **opt_network_geo** | optional | Geo location option (Default: fastest) | string | |
-**opt_network_mitm** | optional | HTTPS MITM proxy option | boolean | |
-**opt_network_residential_proxy** | optional | Residential proxy using | boolean | |
+**opt_network_mitm** | optional | HTTPS MITM proxy option (Default: False) | boolean | |
+**opt_network_residential_proxy** | optional | Residential proxy using (Default: False) | boolean | |
 **opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
-**opt_privacy_type** | optional | Privacy settings (Default: bylink) | string | |
-**opt_timeout** | optional | Timeout option (seconds) (Default: 60) (Size range: 10-1200) | numeric | |
-**opt_automated_interactivity** | optional | Automated Interactivity (ML) option | boolean | |
-**obj_ext_startfolder** | optional | Start object from (Default: temp) | string | |
-**obj_ext_cmd** | optional | Optional command line (Size range: 2-256) | string | |
-**obj_ext_browser** | optional | Browser name (Default: Google Chrome) | string | |
-**obj_ext_useragent** | optional | User agent (Size range: 2-256) | string | |
-**obj_ext_extension** | optional | Change extension to valid | boolean | |
-**opt_privacy_hidesource** | optional | Option for hiding of source URL | boolean | |
+**opt_network_tor** | optional | TOR using (Default: False) | boolean | |
+**opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
 
 #### Action Output
 
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.obj_url | string | `url` | |
-action_result.parameter.obj_type | string | | url download |
-action_result.parameter.os | string | | |
-action_result.parameter.env_locale | string | | |
-action_result.parameter.opt_network_connect | boolean | | |
-action_result.parameter.opt_network_fakenet | boolean | | |
-action_result.parameter.opt_network_tor | boolean | | |
-action_result.parameter.opt_network_geo | string | | |
-action_result.parameter.opt_network_mitm | boolean | | |
-action_result.parameter.opt_network_residential_proxy | boolean | | |
-action_result.parameter.opt_network_residential_proxy_geo | string | | |
-action_result.parameter.opt_privacy_type | string | | |
-action_result.parameter.opt_timeout | numeric | | |
-action_result.parameter.opt_automated_interactivity | boolean | | |
-action_result.parameter.obj_ext_startfolder | string | | |
-action_result.parameter.obj_ext_cmd | string | | |
-action_result.parameter.obj_ext_browser | string | | |
-action_result.parameter.obj_ext_useragent | string | | |
-action_result.parameter.obj_ext_extension | boolean | | |
-action_result.parameter.opt_privacy_hidesource | boolean | | |
-action_result.data.\*.taskid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.permanentUrl | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.\*.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.parameter.opt_timeout | numeric | | |
+action_result.parameter.env_bitness | numeric | | |
+action_result.parameter.env_locale | string | | |
+action_result.parameter.env_type | string | | |
+action_result.parameter.env_version | string | | |
+action_result.parameter.obj_ext_browser | string | | |
+action_result.parameter.obj_ext_extension | boolean | | |
+action_result.parameter.opt_automated_interactivity | boolean | | |
+action_result.parameter.opt_kernel_heavyevasion | boolean | | |
+action_result.parameter.opt_network_connect | boolean | | |
+action_result.parameter.opt_network_fakenet | boolean | | |
+action_result.parameter.opt_network_geo | string | | |
+action_result.parameter.opt_network_mitm | boolean | | |
+action_result.parameter.opt_network_residential_proxy | boolean | | |
+action_result.parameter.opt_network_residential_proxy_geo | string | | |
+action_result.parameter.opt_network_tor | boolean | | |
+action_result.parameter.opt_privacy_type | string | | |
 
-## action: 'detonate file'
+## action: 'detonate url linux'
+
+Detonate a URL on Linux
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**obj_url** | required | URL to detonate (Size range: 5-512) | string | `url` |
+**opt_timeout** | optional | Timeout (Default: 60) | numeric | |
+**env_os** | optional | Operation System (Default: ubuntu) | string | |
+**obj_ext_browser** | optional | Browser to use (Default: Google Chrome) | string | |
+**obj_ext_extension** | optional | Extension to use (Default: True) | boolean | |
+**opt_automated_interactivity** | optional | Automated interactivity (Default: True) | boolean | |
+**opt_kernel_heavyevasion** | optional | Kernel heavy evasion (Default: False) | boolean | |
+**opt_network_connect** | optional | Network connection state (Default: True) | boolean | |
+**opt_network_fakenet** | optional | FakeNet feature status (Default: False) | boolean | |
+**opt_network_geo** | optional | Geo location option (Default: fastest) | string | |
+**opt_network_mitm** | optional | HTTPS MITM proxy option (Default: False) | boolean | |
+**opt_network_residential_proxy** | optional | Residential proxy using (Default: False) | boolean | |
+**opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
+**opt_network_tor** | optional | TOR using (Default: False) | boolean | |
+**opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.obj_url | string | `url` | |
+action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.parameter.opt_timeout | numeric | | |
+action_result.parameter.env_os | string | | |
+action_result.parameter.obj_ext_browser | string | | |
+action_result.parameter.obj_ext_extension | boolean | | |
+action_result.parameter.opt_automated_interactivity | boolean | | |
+action_result.parameter.opt_kernel_heavyevasion | boolean | | |
+action_result.parameter.opt_network_connect | boolean | | |
+action_result.parameter.opt_network_fakenet | boolean | | |
+action_result.parameter.opt_network_geo | string | | |
+action_result.parameter.opt_network_mitm | boolean | | |
+action_result.parameter.opt_network_residential_proxy | boolean | | |
+action_result.parameter.opt_network_residential_proxy_geo | string | | |
+action_result.parameter.opt_network_tor | boolean | | |
+action_result.parameter.opt_privacy_type | string | | |
+
+## action: 'detonate url android'
+
+Detonate a URL on Android
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**obj_url** | required | URL to detonate (Size range: 5-512) | string | `url` |
+**env_locale** | optional | Operation system's language (Default: en-US) | string | |
+**opt_timeout** | optional | Timeout (Default: 60) | numeric | |
+**obj_ext_browser** | optional | Browser to use (Default: Google Chrome) | string | |
+**opt_automated_interactivity** | optional | Automated interactivity (Default: True) | boolean | |
+**opt_network_connect** | optional | Network connection state (Default: True) | boolean | |
+**opt_network_fakenet** | optional | FakeNet feature status (Default: False) | boolean | |
+**opt_network_geo** | optional | Geo location option (Default: fastest) | string | |
+**opt_network_mitm** | optional | HTTPS MITM proxy option (Default: False) | boolean | |
+**opt_network_residential_proxy** | optional | Residential proxy using (Default: False) | boolean | |
+**opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
+**opt_network_tor** | optional | TOR using (Default: False) | boolean | |
+**opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.obj_url | string | `url` | |
+action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.parameter.env_locale | string | | |
+action_result.parameter.opt_timeout | numeric | | |
+action_result.parameter.obj_ext_browser | string | | |
+action_result.parameter.opt_automated_interactivity | boolean | | |
+action_result.parameter.opt_network_connect | boolean | | |
+action_result.parameter.opt_network_fakenet | boolean | | |
+action_result.parameter.opt_network_geo | string | | |
+action_result.parameter.opt_network_mitm | boolean | | |
+action_result.parameter.opt_network_residential_proxy | boolean | | |
+action_result.parameter.opt_network_residential_proxy_geo | string | | |
+action_result.parameter.opt_network_tor | boolean | | |
+action_result.parameter.opt_privacy_type | string | | |
+
+## action: 'detonate file windows'
 
 Detonate a file from Vault
 
 Type: **investigate** \
 Read only: **True**
 
-This action requires a <b>vauld ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
+This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
 
 #### Action Parameters
 
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **vault_id** | required | Vault ID of a file to detonate | string | `vault id` |
-**os** | optional | Operation System (Default: Windows10x64_complete) | string | |
+**opt_timeout** | optional | Timeout (Default: 60) | numeric | |
+**auto_confirm_uac** | optional | Auto confirm UAC (Default: True) | boolean | |
+**env_bitness** | optional | Bitness of the operation system (Default: 64) | numeric | |
 **env_locale** | optional | Operation system's language (Default: en-US) | string | |
-**opt_network_connect** | optional | Network connection state | boolean | |
-**opt_network_fakenet** | optional | FakeNet feature status | boolean | |
-**opt_network_tor** | optional | TOR using | boolean | |
+**env_type** | optional | Type of the operation system (Default: complete) | string | |
+**env_version** | optional | Version of the operation system (Default: 10) | string | |
+**obj_force_elevation** | optional | Force elevation (Default: False) | boolean | |
+**obj_ext_startfolder** | optional | Start folder (Default: desktop) | string | |
+**obj_ext_cmd** | optional | Command to execute (Default: <empty>) | string | |
+**obj_ext_extension** | optional | Extension to use (Default: True) | boolean | |
+**opt_automated_interactivity** | optional | Automated interactivity (Default: True) | boolean | |
+**opt_kernel_heavyevasion** | optional | Kernel heavy evasion (Default: False) | boolean | |
+**opt_network_connect** | optional | Network connection state (Default: True) | boolean | |
+**opt_network_fakenet** | optional | FakeNet feature status (Default: False) | boolean | |
 **opt_network_geo** | optional | Geo location option (Default: fastest) | string | |
-**opt_network_mitm** | optional | HTTPS MITM proxy option | boolean | |
-**opt_network_residential_proxy** | optional | Residential proxy using | boolean | |
+**opt_network_mitm** | optional | HTTPS MITM proxy option (Default: False) | boolean | |
+**opt_network_residential_proxy** | optional | Residential proxy using (Default: False) | boolean | |
 **opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
-**opt_privacy_type** | optional | Privacy settings (Default: bylink) | string | |
-**opt_timeout** | optional | Timeout option (seconds) (Default: 60) (Size range: 10-660) | numeric | |
-**opt_automated_interactivity** | optional | Automated Interactivity (ML) option | boolean | |
-**obj_ext_startfolder** | optional | Start object from (Default: temp) | string | |
-**obj_ext_cmd** | optional | Optional command line (Size range: 2-256) | string | |
-**obj_ext_elevateprompt** | optional | Encounter UAC prompts | boolean | |
-**auto_confirm_uac** | optional | Auto confirm Windows UAC requests. Not applicable for Linux , use run_as_root instead | boolean | |
-**run_as_root** | optional | Run file with superuser privileges. Not applicable for Windows, use auto_confirm_uac instead. Used only for file type | boolean | |
-**obj_ext_extension** | optional | Change extension to valid | boolean | |
+**opt_network_tor** | optional | TOR using (Default: False) | boolean | |
+**opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
 
 #### Action Output
 
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.vault_id | string | `vault id` | |
-action_result.parameter.os | string | | |
-action_result.parameter.env_locale | string | | |
-action_result.parameter.opt_network_connect | boolean | | |
-action_result.parameter.opt_network_fakenet | boolean | | |
-action_result.parameter.opt_network_tor | boolean | | |
-action_result.parameter.opt_network_geo | string | | |
-action_result.parameter.opt_network_mitm | boolean | | |
-action_result.parameter.opt_network_residential_proxy | boolean | | |
-action_result.parameter.opt_network_residential_proxy_geo | string | | |
-action_result.parameter.opt_privacy_type | string | | |
-action_result.parameter.opt_timeout | numeric | | |
-action_result.parameter.opt_automated_interactivity | boolean | | |
-action_result.parameter.obj_ext_startfolder | string | | |
-action_result.parameter.obj_ext_cmd | string | | |
-action_result.parameter.obj_ext_elevateprompt | boolean | | |
-action_result.parameter.auto_confirm_uac | boolean | | |
-action_result.parameter.run_as_root | boolean | | |
-action_result.parameter.obj_ext_extension | boolean | | |
-action_result.data.\*.taskid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.permanentUrl | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.\*.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.parameter.opt_timeout | numeric | | |
+action_result.parameter.auto_confirm_uac | boolean | | |
+action_result.parameter.env_bitness | numeric | | |
+action_result.parameter.env_locale | string | | |
+action_result.parameter.env_type | string | | |
+action_result.parameter.env_version | string | | |
+action_result.parameter.obj_force_elevation | boolean | | |
+action_result.parameter.obj_ext_startfolder | string | | |
+action_result.parameter.obj_ext_cmd | string | | |
+action_result.parameter.obj_ext_extension | boolean | | |
+action_result.parameter.opt_automated_interactivity | boolean | | |
+action_result.parameter.opt_kernel_heavyevasion | boolean | | |
+action_result.parameter.opt_network_connect | boolean | | |
+action_result.parameter.opt_network_fakenet | boolean | | |
+action_result.parameter.opt_network_geo | string | | |
+action_result.parameter.opt_network_mitm | boolean | | |
+action_result.parameter.opt_network_residential_proxy | boolean | | |
+action_result.parameter.opt_network_residential_proxy_geo | string | | |
+action_result.parameter.opt_network_tor | boolean | | |
+action_result.parameter.opt_privacy_type | string | | |
+
+## action: 'detonate file linux'
+
+Detonate a file from Vault
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**vault_id** | required | Vault ID of a file to detonate | string | `vault id` |
+**opt_timeout** | optional | Timeout (Default: 60) | numeric | |
+**env_locale** | optional | Operation system's language (Default: en-US) | string | |
+**env_os** | optional | Operation System (Default: ubuntu) | string | |
+**obj_ext_startfolder** | optional | Start folder (Default: temp) | string | |
+**obj_ext_cmd** | optional | Command to execute (Default: <empty>) | string | |
+**obj_ext_extension** | optional | Extension to use (Default: True) | boolean | |
+**opt_automated_interactivity** | optional | Automated interactivity (Default: True) | boolean | |
+**opt_kernel_heavyevasion** | optional | Kernel heavy evasion (Default: False) | boolean | |
+**opt_network_connect** | optional | Network connection state (Default: True) | boolean | |
+**opt_network_fakenet** | optional | FakeNet feature status (Default: False) | boolean | |
+**opt_network_geo** | optional | Geo location option (Default: fastest) | string | |
+**opt_network_mitm** | optional | HTTPS MITM proxy option (Default: False) | boolean | |
+**opt_network_residential_proxy** | optional | Residential proxy using (Default: False) | boolean | |
+**opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
+**opt_network_tor** | optional | TOR using (Default: False) | boolean | |
+**opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
+**run_as_root** | optional | Run as root (Default: False) | boolean | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.vault_id | string | `vault id` | |
+action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.parameter.opt_timeout | numeric | | |
+action_result.parameter.env_locale | string | | |
+action_result.parameter.env_os | string | | |
+action_result.parameter.obj_ext_startfolder | string | | |
+action_result.parameter.obj_ext_cmd | string | | |
+action_result.parameter.obj_ext_extension | boolean | | |
+action_result.parameter.opt_automated_interactivity | boolean | | |
+action_result.parameter.opt_kernel_heavyevasion | boolean | | |
+action_result.parameter.opt_network_connect | boolean | | |
+action_result.parameter.opt_network_fakenet | boolean | | |
+action_result.parameter.opt_network_geo | string | | |
+action_result.parameter.opt_network_mitm | boolean | | |
+action_result.parameter.opt_network_residential_proxy | boolean | | |
+action_result.parameter.opt_network_residential_proxy_geo | string | | |
+action_result.parameter.opt_network_tor | boolean | | |
+action_result.parameter.opt_privacy_type | string | | |
+action_result.parameter.run_as_root | boolean | | |
+
+## action: 'detonate file android'
+
+Detonate a file from Vault
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**vault_id** | required | Vault ID of a file to detonate | string | `vault id` |
+**opt_timeout** | optional | Timeout (Default: 60) | numeric | |
+**env_locale** | optional | Operation system's language (Default: en-US) | string | |
+**obj_ext_cmd** | optional | Command to execute (Default: <empty>) | string | |
+**opt_automated_interactivity** | optional | Automated interactivity (Default: True) | boolean | |
+**opt_network_connect** | optional | Network connection state (Default: True) | boolean | |
+**opt_network_fakenet** | optional | FakeNet feature status (Default: False) | boolean | |
+**opt_network_geo** | optional | Geo location option (Default: fastest) | string | |
+**opt_network_mitm** | optional | HTTPS MITM proxy option (Default: False) | boolean | |
+**opt_network_residential_proxy** | optional | Residential proxy using (Default: False) | boolean | |
+**opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
+**opt_network_tor** | optional | TOR using (Default: False) | boolean | |
+**opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.vault_id | string | `vault id` | |
+action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.parameter.opt_timeout | numeric | | |
+action_result.parameter.env_locale | string | | |
+action_result.parameter.obj_ext_cmd | string | | |
+action_result.parameter.opt_automated_interactivity | boolean | | |
+action_result.parameter.opt_network_connect | boolean | | |
+action_result.parameter.opt_network_fakenet | boolean | | |
+action_result.parameter.opt_network_geo | string | | |
+action_result.parameter.opt_network_mitm | boolean | | |
+action_result.parameter.opt_network_residential_proxy | boolean | | |
+action_result.parameter.opt_network_residential_proxy_geo | string | | |
+action_result.parameter.opt_network_tor | boolean | | |
+action_result.parameter.opt_privacy_type | string | | |
 
 ## action: 'get intelligence'
 
@@ -532,6 +890,61 @@ action_result.parameter.file_extension | string | | |
 action_result.parameter.sync_object_name | string | | |
 action_result.parameter.sync_object_type | string | | |
 action_result.parameter.sync_object_operation | string | | |
+
+## action: 'delete submission'
+
+Delete a submission
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a submission <b>TaskID</b>.
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**taskid** | required | ANY.RUN task UUID | string | `anyrun task id` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.taskid | string | `anyrun task id` | |
+action_result.data.info | string | | |
+action_result.summary | string | | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects_successful | numeric | | |
+summary.total_objects | numeric | | |
+
+## action: 'download pcap'
+
+Download a pcap file
+
+Type: **investigate** \
+Read only: **True**
+
+This action requires a task <b>TaskID</b>.
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**taskid** | required | ANY.RUN task UUID | string | `anyrun task id` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.taskid | string | `anyrun task id` | |
+action_result.data.vault_id | string | | |
+action_result.info | string | | |
+action_result.summary | string | | |
+action_result.status | string | | success failed |
+action_result.message | string | | |
+summary.total_objects_successful | numeric | | |
+summary.total_objects | numeric | | |
 
 ______________________________________________________________________
 
