@@ -10,6 +10,7 @@ This connector is intended for customers with a 'Hunter' or 'Enterprise' subscri
 ## Dependencies
 
 This connector comes with some additional python 3 libraries, that it depends on, including:
-* anyrun-sdk==1.12.11  
-* requests==2.32.4
-* splunk-soar-sdk>=2.3.7
+
+- anyrun-sdk==1.12.11
+- requests==2.32.4
+- splunk-soar-sdk>=2.3.7

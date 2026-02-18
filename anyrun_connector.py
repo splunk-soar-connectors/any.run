@@ -1,6 +1,6 @@
 # File: anyrun_connector.py
 #
-# Copyright (c) ANYRUN FZCO, 2025
+# Copyright (c) ANYRUN FZCO, 2025-2026
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ from anyrun import RunTimeException
 
 # Usage of the consts file is recommended
 from anyrun.connectors import LookupConnector, SandboxConnector
-from anyrun.connectors.sandbox.operation_systems import LinuxConnector, WindowsConnector, AndroidConnector
+from anyrun.connectors.sandbox.operation_systems import AndroidConnector, LinuxConnector, WindowsConnector
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
@@ -46,7 +46,6 @@ class AnyRunConnector(BaseConnector):
         self._server = None
         self._api_key = None
         self._timeout = None
-
 
     def _handle_get_history(self, param: dict) -> list[dict]:
         """
@@ -80,11 +79,11 @@ class AnyRunConnector(BaseConnector):
 
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY.format(entity_value))
 
-        except RunTimeException as error: # pylint: disable=broad-exception-caught
+        except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -116,8 +115,8 @@ class AnyRunConnector(BaseConnector):
             with self._lookup as lookup:
                 response = lookup.get_intelligence(**query_params, lookup_depth=lookup_depth)
 
-            if response.get('relatedFiles'):
-                file_info = response.get('relatedFiles')[0]
+            if response.get("relatedFiles"):
+                file_info = response.get("relatedFiles")[0]
                 ext = file_info.get("fileExtension")
                 path = file_info.get("fileName")
                 name = path.split("\\")[-1]
@@ -145,19 +144,13 @@ class AnyRunConnector(BaseConnector):
             if response.get("industries"):
                 action_data["industries"] = ", ".join(
                     [
-                        f'{industry.get("industryName")}({industry.get("confidence")}%)'
-                        for industry in sorted(
-                            response.get("industries"),
-                            key=lambda x: x.get("confidence", 0),
-                            reverse=True
-                        )
+                        f"{industry.get('industryName')}({industry.get('confidence')}%)"
+                        for industry in sorted(response.get("industries"), key=lambda x: x.get("confidence", 0), reverse=True)
                     ]
                 )
 
             if response.get("sourceTasks"):
-                action_data["last_analyses"] = ", ".join(
-                    [task.get("related") for task in response.get("sourceTasks")[:5]]
-                )
+                action_data["last_analyses"] = ", ".join([task.get("related") for task in response.get("sourceTasks")[:5]])
 
             action_data["last_modified"] = response.get("summary", {}).get("lastSeen")
             action_data["verdict"] = VERDICT_RESOLVER.get(response.get("summary", {}).get("threatLevel", 0), "No info")
@@ -178,7 +171,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -208,10 +201,9 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
-
 
     def _handle_get_report(self, param: dict, report_format: str = "summary") -> ActionResult:
         """
@@ -246,7 +238,6 @@ class AnyRunConnector(BaseConnector):
 
             object_type = analysis_object.get("type")
 
-
             action_result.add_data(
                 {
                     "object_value": analysis_object.get("url") if object_type == "url" else analysis_object.get("filename"),
@@ -256,18 +247,18 @@ class AnyRunConnector(BaseConnector):
                     "analysis_url": f"https://app.any.run/tasks/{analysis_id}",
                     "vault_id": vault_id,
                     "report_name": report_name,
-                    "summary": report
+                    "summary": report,
                 }
             )
 
             self.save_progress(ANYRUN_SUCCESS_GET_REPORT.format(analysis_id))
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_REPORT.format(analysis_id))
 
-        except RunTimeException as error: # pylint: disable=broad-exception-caught
+        except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -301,7 +292,7 @@ class AnyRunConnector(BaseConnector):
 
             if not converted_iocs:
                 return action_result.set_status(phantom.APP_ERROR, "IOCs not found")
-            
+
             self.save_progress(ANYRUN_SUCCESS_GET_IOC.format(analysis_id))
 
             if converted_iocs:
@@ -319,7 +310,7 @@ class AnyRunConnector(BaseConnector):
                     ioc.get("name", "No info"),
                     ioc.get("ioc"),
                     {1: "Suspicious", 2: "Malicious"}.get(ioc.get("reputation"), 2),
-                    ioc.get("discoveringEntryId")
+                    ioc.get("discoveringEntryId"),
                 ]
                 for ioc in iocs
             ]
@@ -342,19 +333,15 @@ class AnyRunConnector(BaseConnector):
 
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IOC.format(analysis_id))
 
-        except RunTimeException as error: # pylint: disable=broad-exception-caught
+        except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-    def _handle_detonate_url(
-        self,
-        param: dict,
-        sandbox: Union[LinuxConnector, WindowsConnector, AndroidConnector]
-    ) -> ActionResult:
+    def _handle_detonate_url(self, param: dict, sandbox: Union[LinuxConnector, WindowsConnector, AndroidConnector]) -> ActionResult:
         """
         Handle detonate URL
 
@@ -385,11 +372,11 @@ class AnyRunConnector(BaseConnector):
 
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_URL.format(param["obj_url"]))
 
-        except RunTimeException as error: # pylint: disable=broad-exception-caught
+        except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -448,17 +435,17 @@ class AnyRunConnector(BaseConnector):
                     "analysis_id": analysis_id,
                     "filename": filename,
                     "status": "success",
-                    "analysis_url": f"https://app.any.run/tasks/{analysis_id}"
+                    "analysis_url": f"https://app.any.run/tasks/{analysis_id}",
                 }
             )
 
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id))
 
-        except RunTimeException as error: # pylint: disable=broad-exception-caught
+        except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -491,18 +478,11 @@ class AnyRunConnector(BaseConnector):
 
             lookup_url = (
                 "https://intelligence.any.run/analysis/lookup#{%22query%22:%22"
-                + query.replace('"', '%5C%22').replace(' ', '%20')
+                + query.replace('"', "%5C%22").replace(" ", "%20")
                 + "%22,%22dateRange%22:180}"
             )
 
-            action_result.add_data(
-                {
-                    "lookup_url": lookup_url,
-                    "vault_id": vault_id,
-                    "report_name": filename,
-                    "verdict": verdict
-                }
-            )
+            action_result.add_data({"lookup_url": lookup_url, "vault_id": vault_id, "report_name": filename, "verdict": verdict})
 
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_INTELLIGENCE.format(query))
 
@@ -510,7 +490,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -531,20 +511,15 @@ class AnyRunConnector(BaseConnector):
 
             vault_id, report_name = save_file(self.get_container_id(), pcap, analysis_id, "pcap")
 
-            action_result.add_data(
-                {
-                    "vault_id": vault_id,
-                    "report_name": report_name
-                }
-            )
-    
+            action_result.add_data({"vault_id": vault_id, "report_name": report_name})
+
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DOWNLOAD_PCAP.format(analysis_id))
-        
+
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -556,16 +531,14 @@ class AnyRunConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
         analysis_id = param["analysis_id"]
-        
+
         try:
             with self._windows_sandbox as sandbox:
                 sandbox.delete_task(analysis_id)
 
             self.save_progress(ANYRUN_SUCCESS_DELETE_ANALYSIS.format(analysis_id))
 
-            action_result.add_data(
-                {"status": "Analysis deleted successfully."}
-            )
+            action_result.add_data({"status": "Analysis deleted successfully."})
 
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DELETE_ANALYSIS.format(analysis_id))
 
@@ -573,7 +546,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
@@ -585,22 +558,16 @@ class AnyRunConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
         analysis_id = param["analysis_id"]
-    
-        try:
 
+        try:
             with self._windows_sandbox as sandbox:
                 for status in sandbox.get_task_status(analysis_id):
                     self.debug_print(f"Waiting for analysis to complete: {status}")
-                
+
                 verdict = sandbox.get_analysis_verdict(analysis_id)
                 report = sandbox.get_analysis_report(analysis_id)
-                
-            analysis_object = (
-                report.get("data")
-                .get("analysis")
-                .get("content")
-                .get("mainObject")
-            )
+
+            analysis_object = report.get("data").get("analysis").get("content").get("mainObject")
 
             object_type = analysis_object.get("type")
 
@@ -609,18 +576,17 @@ class AnyRunConnector(BaseConnector):
                     "object_value": analysis_object.get("url") if object_type == "url" else analysis_object.get("filename"),
                     "object_type": object_type,
                     "verdict": verdict,
-                   
                 }
             )
 
             self.save_progress(ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT.format(analysis_id))
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT.format(analysis_id))
 
-        except RunTimeException as error: # pylint: disable=broad-exception-caught
+        except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
             return action_result.set_status(phantom.APP_ERROR, str(error))
         except Exception:
-            error_message = f'Unspecified Exception: {traceback.format_exc()}'
+            error_message = f"Unspecified Exception: {traceback.format_exc()}"
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 

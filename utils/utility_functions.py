@@ -1,4 +1,4 @@
-# Copyright (c) 2025 Splunk Inc.
+# Copyright (c) 2025-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 import csv
 import json
-from typing import Union
+import os
 from datetime import datetime
+from typing import Union
 
 import phantom.rules as phantom_rules
 
@@ -48,9 +48,7 @@ def convert_iocs_to_soar_format(raw_iocs: list[dict], analysis_id: str, containe
             "name": "ANY.RUN Sandbox IoC",
             "description": f"ANY.RUN Analysis {analysis_id}",
             "severity": severity,
-            "cef": {
-                ioc_type: ioc.get("ioc")
-            },
+            "cef": {ioc_type: ioc.get("ioc")},
             "source": "ANY.RUN",
             "container_id": container_id,
             "tags": ["anyrun"],
@@ -61,12 +59,7 @@ def convert_iocs_to_soar_format(raw_iocs: list[dict], analysis_id: str, containe
     return artifacts
 
 
-def save_file(
-    container_id: int,
-    file_content: Union[dict, str, bytes, list],
-    analysis_id: str,
-    file_format: str
-) -> tuple[str, str]:
+def save_file(container_id: int, file_content: Union[dict, str, bytes, list], analysis_id: str, file_format: str) -> tuple[str, str]:
     vault_path = phantom_rules.Vault.get_vault_tmp_dir()
 
     if file_format in ("summary", "stix", "misp"):
@@ -74,7 +67,7 @@ def save_file(
     elif file_format in ("html", "pcap", "csv"):
         extension = file_format
 
-    filename = f"ANYRUN_REPORT_{analysis_id}_{str(datetime.now().strftime(f'%Y-%m-%d_%H:%M:%S'))}.{extension}"
+    filename = f"ANYRUN_REPORT_{analysis_id}_{datetime.now().strftime(f'%Y-%m-%d_%H:%M:%S')!s}.{extension}"
     filepath = os.path.join(vault_path, filename)
 
     with open(filepath, "wb" if file_format == "pcap" else "w") as file:
