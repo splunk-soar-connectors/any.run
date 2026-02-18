@@ -1,39 +1,30 @@
 # ANY.RUN
 
-Publisher: ANYRUN FZCO \
-Connector Version: 1.4.1 \
-Product Vendor: ANYRUN FZCO \
-Product Name: ANY.RUN \
+Publisher: ANYRUN FZCO  
+Connector Version: 1.5.1  
+Product Vendor: ANYRUN FZCO  
+Product Name: ANY.RUN  
 Minimum Product Version: 6.3.0
 
 This app enables you to detonate files and URLs, and perform investigative actions, using the ANY.RUN interactive online malware sandbox service, thereby giving you automated analysis and advanced threat detection through an agentless sandbox
 
 ## Authentication
 
-This connector requires an API key to authenticate with the ANY.RUN services. You can generate the key at your [ANY.RUN Profile](https://app.any.run/profile).\
+This connector requires an API key to authenticate with the ANY.RUN services. You can generate the key at your [ANY.RUN Profile](https://app.any.run/profile).  
 Official API documentation can be found [here](https://any.run/api-documentation/).
 
 ## License requirements
 
-This connector is intended for customers with a 'Hunter' or 'Enterprise' subscription plans mainly, since some features provided by the connector are available with the mentioned plans only. Information about subscription plans and features available with them can be found [here](https://app.any.run/plans/).
-
+To use all the features of this application, the user must have the appropriate ANY.RUN licenses required to use [ANY.RUN Sandbox](https://any.run/features/?utm_source=splunksoar&utm_medium=splunksoar_description&utm_campaign=splunksoar&utm_content=linktosandboxlanding) and [ANY.RUN Threat Intelligence Lookup](https://any.run/threat-intelligence-lookup/?utm_source=splunksoar&utm_medium=splunksoar_description&utm_campaign=splunksoar&utm_content=linktolookuplanding). Information about subscription plans and features available with them can be found [here](https://app.any.run/plans/?utm_source=splunksoar&utm_medium=splunksoar_description&utm_campaign=splunksoar&utm_content=linktoplans).  
+Feel free to reach out to us for help with integration, a quote, or demo via the [contact us form](https://app.any.run/contact-us/?utm_source=splunksoar&utm_medium=splunksoar_description&utm_campaign=splunksoar&utm_content=linktocontactus). 
 ## Dependencies
 
 This connector comes with some additional python 3 libraries, that it depends on, including:
 
 ```
-	- aiosignal-1.3.2 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
-	- async_timeout-5.0.1 (Apache License 2.0, Copyright 2016-2020 aio-libs collaboration)
-	- attrs-25.1.0 (MIT License, Copyright (c) 2015 Hynek Schlawack and the attrs contributors)
-	- multidict-6.1.0 (Apache License 2.0, Copyright 2016 Andrew Svetlov and aio-libs contributors)
-	- propcache-0.2.1 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
-	- yarl-1.18.3 (Apache License 2.0, Copyright 2016-2021, Andrew Svetlov and aio-libs team)
-	- frozenlist-1.5.0 (Apache License 2.0, Copyright 2013-2019 Nikolay Kim and Andrew Svetlov)
-	- aiohttp-3.11.12 (Apache License 2.0, Copyright aio-libs contributors)
-	- aiofiles-24.1.0
-	- aiohappyeyeballs-2.6.1
-	- async-timeout-5.0.1
-	- anyrun-sdk-1.8.4
+- anyrun-sdk==1.12.11
+- requests==2.32.4
+- splunk-soar-sdk>=2.3.7
 ```
 
 ### Configuration variables
@@ -47,32 +38,32 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
-[get analysis verdict](#action-get-analysis-verdict) - Get the verdict of a specific analysis \
-[url reputation](#action-url-reputation) - Get reports of a specific URL analysis \
-[file reputation](#action-file-reputation) - Get reports of a specific file analysis by that file's hash \
-[domain reputation](#action-domain-reputation) - Get reports of analyses, that involve specific domain \
-[ip reputation](#action-ip-reputation) - Get reports of analyses, that involve specific IP \
-[get report](#action-get-report) - Get report for a submission \
-[get report stix](#action-get-report-stix) - Get report for a submission in STIX format \
-[get report misp](#action-get-report-misp) - Get report for a submission in MISP format \
-[get report html](#action-get-report-html) - Get report for a submission in HTML format \
-[get iocs](#action-get-iocs) - Get list of IoCs for a submission \
-[detonate url windows](#action-detonate-url-windows) - Detonate a URL \
-[detonate url linux](#action-detonate-url-linux) - Detonate a URL on Linux \
-[detonate url android](#action-detonate-url-android) - Detonate a URL on Android \
-[detonate file windows](#action-detonate-file-windows) - Detonate a file from Vault \
-[detonate file linux](#action-detonate-file-linux) - Detonate a file from Vault \
-[detonate file android](#action-detonate-file-android) - Detonate a file from Vault \
-[get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup \
-[delete submission](#action-delete-submission) - Delete a submission \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration   
+[get analysis verdict](#action-get-analysis-verdict) - Get the verdict of a specific analysis   
+[url reputation](#action-url-reputation) - Get reports of a specific URL analysis   
+[file reputation](#action-file-reputation) - Get reports of a specific file analysis by that file's hash   
+[domain reputation](#action-domain-reputation) - Get reports of analyses, that involve specific domain   
+[ip reputation](#action-ip-reputation) - Get reports of analyses, that involve specific IP   
+[get report](#action-get-report) - Get report for a submission   
+[get report stix](#action-get-report-stix) - Get report for a submission in STIX format   
+[get report misp](#action-get-report-misp) - Get report for a submission in MISP format   
+[get report html](#action-get-report-html) - Get report for a submission in HTML format   
+[get iocs](#action-get-iocs) - Get list of IoCs for a submission   
+[detonate url windows](#action-detonate-url-windows) - Detonate a URL   
+[detonate url linux](#action-detonate-url-linux) - Detonate a URL on Linux   
+[detonate url android](#action-detonate-url-android) - Detonate a URL on Android   
+[detonate file windows](#action-detonate-file-windows) - Detonate a file from Vault   
+[detonate file linux](#action-detonate-file-linux) - Detonate a file from Vault   
+[detonate file android](#action-detonate-file-android) - Detonate a file from Vault   
+[get intelligence](#action-get-intelligence) - Threat Intelligence IoC Lookup   
+[delete submission](#action-delete-submission) - Delete a submission   
 [download pcap](#action-download-pcap) - Download a pcap file
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test**   
 Read only: **True**
 
 #### Action Parameters
@@ -87,7 +78,7 @@ No Output
 
 Get the verdict of a specific analysis
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -114,7 +105,7 @@ action_result.summary | string | | |
 
 Get reports of a specific URL analysis
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requests a list of already completed reports of a URL analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.
@@ -132,17 +123,17 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.url | string | `url` | |
 action_result.parameter.search_in_public_tasks | boolean | | |
-action_result.data.\*.tasks.\*.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.mainObject.name | string | | |
-action_result.data.\*.tasks.\*.verdict | string | | No threats detected Suspicious activity Malicious activity |
-action_result.data.\*.tasks.\*.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.date | string | | 2024-01-01T00:00:00.000Z |
-action_result.data.\*.tasks.\*.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
-action_result.data.\*.tasks.\*.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
-action_result.data.\*.tasks.\*.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
-action_result.data.\*.tasks.\*.mainObject.hashes.md5 | string | `hash` `md5` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha1 | string | `hash` `sha1` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha256 | string | `hash` `sha256` | |
+action_result.data.  *.tasks.  *.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.mainObject.name | string | | |
+action_result.data.  *.tasks.  *.verdict | string | | No threats detected Suspicious activity Malicious activity |
+action_result.data.  *.tasks.  *.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.date | string | | 2024-01-01T00:00:00.000Z |
+action_result.data.  *.tasks.  *.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
+action_result.data.  *.tasks.  *.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
+action_result.data.  *.tasks.  *.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
+action_result.data.  *.tasks.  *.mainObject.hashes.md5 | string | `hash` `md5` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha1 | string | `hash` `sha1` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha256 | string | `hash` `sha256` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -153,7 +144,7 @@ action_result.summary | string | | |
 
 Get reports of a specific file analysis by that file's hash
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requests a list of already completed reports of a file analysis. Option <b>search_in_public_tasks</b> enables search in public submissions, which requires <b>ANY.RUN TI License</b> to work, and is disabled by default. By default, only 100 recent submissions from your own submission history are used for search.
@@ -171,17 +162,17 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.hash | string | `hash` `md5` `sha1` `sha256` | |
 action_result.parameter.search_in_public_tasks | boolean | | |
-action_result.data.\*.tasks.\*.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.mainObject.name | string | | |
-action_result.data.\*.tasks.\*.verdict | string | | No threats detected Suspicious activity Malicious activity |
-action_result.data.\*.tasks.\*.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.date | string | | 2024-01-01T00:00:00.000Z |
-action_result.data.\*.tasks.\*.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
-action_result.data.\*.tasks.\*.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
-action_result.data.\*.tasks.\*.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
-action_result.data.\*.tasks.\*.mainObject.hashes.md5 | string | `hash` `md5` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha1 | string | `hash` `sha1` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha256 | string | `hash` `sha256` | |
+action_result.data.  *.tasks.  *.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.mainObject.name | string | | |
+action_result.data.  *.tasks.  *.verdict | string | | No threats detected Suspicious activity Malicious activity |
+action_result.data.  *.tasks.  *.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.date | string | | 2024-01-01T00:00:00.000Z |
+action_result.data.  *.tasks.  *.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
+action_result.data.  *.tasks.  *.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
+action_result.data.  *.tasks.  *.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
+action_result.data.  *.tasks.  *.mainObject.hashes.md5 | string | `hash` `md5` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha1 | string | `hash` `sha1` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha256 | string | `hash` `sha256` | |
 action_result.status | string | | success failed |
 action_result.summary | string | | |
 action_result.message | string | | |
@@ -192,7 +183,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Get reports of analyses, that involve specific domain
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requests a list of already completed reports of analyses, where requested domain was involved. This action requires <b>ANY.RUN TI License</b>.
@@ -208,17 +199,17 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.domainname | string | `domain` | |
-action_result.data.\*.tasks.\*.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.mainObject.name | string | | |
-action_result.data.\*.tasks.\*.verdict | string | | No threats detected Suspicious activity Malicious activity |
-action_result.data.\*.tasks.\*.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.date | string | | 2024-01-01T00:00:00.000Z |
-action_result.data.\*.tasks.\*.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
-action_result.data.\*.tasks.\*.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
-action_result.data.\*.tasks.\*.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
-action_result.data.\*.tasks.\*.mainObject.hashes.md5 | string | `hash` `md5` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha1 | string | `hash` `sha1` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha256 | string | `hash` `sha256` | |
+action_result.data.  *.tasks.  *.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.mainObject.name | string | | |
+action_result.data.  *.tasks.  *.verdict | string | | No threats detected Suspicious activity Malicious activity |
+action_result.data.  *.tasks.  *.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.date | string | | 2024-01-01T00:00:00.000Z |
+action_result.data.  *.tasks.  *.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
+action_result.data.  *.tasks.  *.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
+action_result.data.  *.tasks.  *.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
+action_result.data.  *.tasks.  *.mainObject.hashes.md5 | string | `hash` `md5` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha1 | string | `hash` `sha1` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha256 | string | `hash` `sha256` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -229,7 +220,7 @@ action_result.summary | string | | |
 
 Get reports of analyses, that involve specific IP
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requests a list of already completed reports of analyses, where requested IP was involved. This action requires <b>ANY.RUN TI License</b>.
@@ -245,17 +236,17 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.ip | string | `ip` | |
-action_result.data.\*.tasks.\*.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.mainObject.name | string | | |
-action_result.data.\*.tasks.\*.verdict | string | | No threats detected Suspicious activity Malicious activity |
-action_result.data.\*.tasks.\*.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.tasks.\*.date | string | | 2024-01-01T00:00:00.000Z |
-action_result.data.\*.tasks.\*.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
-action_result.data.\*.tasks.\*.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
-action_result.data.\*.tasks.\*.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
-action_result.data.\*.tasks.\*.mainObject.hashes.md5 | string | `hash` `md5` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha1 | string | `hash` `sha1` | |
-action_result.data.\*.tasks.\*.mainObject.hashes.sha256 | string | `hash` `sha256` | |
+action_result.data.  *.tasks.  *.uuid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.mainObject.name | string | | |
+action_result.data.  *.tasks.  *.verdict | string | | No threats detected Suspicious activity Malicious activity |
+action_result.data.  *.tasks.  *.related | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.tasks.  *.date | string | | 2024-01-01T00:00:00.000Z |
+action_result.data.  *.tasks.  *.file | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/files/65c5ff68-b453-415c-abf9-0023ea44dd89 |
+action_result.data.  *.tasks.  *.misp | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/summary/misp |
+action_result.data.  *.tasks.  *.pcap | string | | https://content.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648/download/pcap |
+action_result.data.  *.tasks.  *.mainObject.hashes.md5 | string | `hash` `md5` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha1 | string | `hash` `sha1` | |
+action_result.data.  *.tasks.  *.mainObject.hashes.sha256 | string | `hash` `sha256` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -266,7 +257,7 @@ action_result.summary | string | | |
 
 Get report for a submission
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -282,21 +273,21 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.taskid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.analysis.permanentUrl | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.analysis.reports.ioc | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/ioc/json |
-action_result.data.\*.analysis.reports.graph | string | | https://content.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/graph |
-action_result.data.\*.analysis.scores.verdict.threatLevelText | string | | No threats detected Suspicious activity Malicious activity |
-action_result.data.\*.analysis.scores.verdict.threatLevel | numeric | | 0 1 2 |
-action_result.data.\*.analysis.scores.verdict.score | numeric | | 100 |
-action_result.data.\*.analysis.scores.specs.knownThreat | string | | false true |
-action_result.data.\*.analysis.content.mainObject.type | string | | file download url |
-action_result.data.\*.analysis.content.mainObject.url | string | | |
-action_result.data.\*.analysis.content.mainObject.filename | string | | |
-action_result.data.\*.analysis.content.mainObject.info.file | string | | |
-action_result.data.\*.analysis.content.mainObject.info.mime | string | | |
-action_result.data.\*.analysis.content.mainObject.hashes.sha256 | string | `hash` `sha256` | |
-action_result.data.\*.analysis.content.mainObject.hashes.sha1 | string | `hash` `sha1` | |
-action_result.data.\*.analysis.content.mainObject.hashes.md5 | string | `hash` `md5` | |
+action_result.data.  *.analysis.permanentUrl | string | | https://app.any.run/tasks/0cf223f2-530e-4a50-b68f-563045268648 |
+action_result.data.  *.analysis.reports.ioc | string | | https://api.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/ioc/json |
+action_result.data.  *.analysis.reports.graph | string | | https://content.any.run/report/0cf223f2-530e-4a50-b68f-563045268648/graph |
+action_result.data.  *.analysis.scores.verdict.threatLevelText | string | | No threats detected Suspicious activity Malicious activity |
+action_result.data.  *.analysis.scores.verdict.threatLevel | numeric | | 0 1 2 |
+action_result.data.  *.analysis.scores.verdict.score | numeric | | 100 |
+action_result.data.  *.analysis.scores.specs.knownThreat | string | | false true |
+action_result.data.  *.analysis.content.mainObject.type | string | | file download url |
+action_result.data.  *.analysis.content.mainObject.url | string | | |
+action_result.data.  *.analysis.content.mainObject.filename | string | | |
+action_result.data.  *.analysis.content.mainObject.info.file | string | | |
+action_result.data.  *.analysis.content.mainObject.info.mime | string | | |
+action_result.data.  *.analysis.content.mainObject.hashes.sha256 | string | `hash` `sha256` | |
+action_result.data.  *.analysis.content.mainObject.hashes.sha1 | string | `hash` `sha1` | |
+action_result.data.  *.analysis.content.mainObject.hashes.md5 | string | `hash` `md5` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -307,7 +298,7 @@ action_result.summary | string | | |
 
 Get report for a submission in STIX format
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -325,9 +316,9 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.parameter.taskid | string | `anyrun task id` | |
 action_result.data.type | string | | bundle |
 action_result.data.id | string | | |
-action_result.data.objects.\*.id | string | | |
-action_result.data.objects.\*.name | string | | |
-action_result.data.objects.\*.type | string | | |
+action_result.data.objects.  *.id | string | | |
+action_result.data.objects.  *.name | string | | |
+action_result.data.objects.  *.type | string | | |
 action_result.summary | string | | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
@@ -338,7 +329,7 @@ summary.total_objects | numeric | | |
 
 Get report for a submission in MISP format
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -361,10 +352,10 @@ action_result.data.Event.threat_level_id | numeric | | |
 action_result.data.Event.info | string | | |
 action_result.data.Event.timestamp | string | | |
 action_result.data.Event.date | string | | |
-action_result.data.Event.Attribute.\*.category | string | | |
-action_result.data.Event.Attribute.\*.type | string | | |
-action_result.data.Event.Attribute.\*.value | string | | |
-action_result.data.Event.Attribute.\*.distribution | numeric | | |
+action_result.data.Event.Attribute.  *.category | string | | |
+action_result.data.Event.Attribute.  *.type | string | | |
+action_result.data.Event.Attribute.  *.value | string | | |
+action_result.data.Event.Attribute.  *.distribution | numeric | | |
 action_result.data.Event.Orgc.uuid | string | | |
 action_result.data.Event.Orgc.name | string | | |
 action_result.summary | string | | |
@@ -377,7 +368,7 @@ summary.total_objects | numeric | | |
 
 Get report for a submission in HTML format
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -404,7 +395,7 @@ summary.total_objects | numeric | | |
 
 Get list of IoCs for a submission
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -420,10 +411,10 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.taskid | string | `anyrun task id` | 0cf223f2-530e-4a50-b68f-563045268648 |
-action_result.data.\*.ioc.\*.ioc | string | | |
-action_result.data.\*.ioc.\*.type | string | | md5 sha1 sha256 domain ip url |
-action_result.data.\*.ioc.\*.category | string | | |
-action_result.data.\*.ioc.\*.reputation | numeric | | 0 1 2 |
+action_result.data.  *.ioc.  *.ioc | string | | |
+action_result.data.  *.ioc.  *.type | string | | md5 sha1 sha256 domain ip url |
+action_result.data.  *.ioc.  *.category | string | | |
+action_result.data.  *.ioc.  *.reputation | numeric | | 0 1 2 |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -434,7 +425,7 @@ action_result.summary | string | | |
 
 Detonate a URL
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -467,7 +458,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.obj_url | string | `url` | |
-action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.data.  *.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -495,7 +486,7 @@ action_result.parameter.opt_privacy_type | string | | |
 
 Detonate a URL on Linux
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -525,7 +516,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.obj_url | string | `url` | |
-action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.data.  *.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -550,7 +541,7 @@ action_result.parameter.opt_privacy_type | string | | |
 
 Detonate a URL on Android
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a <b>URL</b> for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -578,7 +569,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.obj_url | string | `url` | |
-action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.data.  *.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -601,7 +592,7 @@ action_result.parameter.opt_privacy_type | string | | |
 
 Detonate a file from Vault
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -637,7 +628,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.vault_id | string | `vault id` | |
-action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.data.  *.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -668,7 +659,7 @@ action_result.parameter.opt_privacy_type | string | | |
 
 Detonate a file from Vault
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -701,7 +692,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.vault_id | string | `vault id` | |
-action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.data.  *.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -729,7 +720,7 @@ action_result.parameter.run_as_root | boolean | | |
 
 Detonate a file from Vault
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a <b>vault ID</b> of a file for ANY.RUN service to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -757,7 +748,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.vault_id | string | `vault id` | |
-action_result.data.\*.taskid | string | `anyrun task id` | |
+action_result.data.  *.taskid | string | `anyrun task id` | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -780,7 +771,7 @@ action_result.parameter.opt_privacy_type | string | | |
 
 Threat Intelligence IoC Lookup
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 Perform investigative actions by using the ANY.RUN Threat Intelligence Portal API method. This action requires <b>ANY.RUN TI License</b>. For more information about available parameters refer to official documentation (https://any.run/api-documentation/).
@@ -846,12 +837,12 @@ action_result.parameter.url | string | `url` | |
 action_result.parameter.ja3 | string | | |
 action_result.parameter.ja3s | string | | |
 action_result.parameter.jarm | string | | |
-action_result.data.\*.summary.threatLevel | string | | |
-action_result.data.\*.summary.detectedType | string | | |
-action_result.data.\*.summary.lastSeen | string | | |
-action_result.summary.\*.Type | string | | |
-action_result.summary.\*.Count | numeric | | |
-action_result.summary.\*.str | string | | |
+action_result.data.  *.summary.threatLevel | string | | |
+action_result.data.  *.summary.detectedType | string | | |
+action_result.data.  *.summary.lastSeen | string | | |
+action_result.summary.  *.Type | string | | |
+action_result.summary.  *.Count | numeric | | |
+action_result.summary.  *.str | string | | |
 action_result.status | string | | success failed |
 action_result.message | string | | |
 summary.total_objects | numeric | | 1 |
@@ -895,7 +886,7 @@ action_result.parameter.sync_object_operation | string | | |
 
 Delete a submission
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -922,7 +913,7 @@ summary.total_objects | numeric | | |
 
 Download a pcap file
 
-Type: **investigate** \
+Type: **investigate**   
 Read only: **True**
 
 This action requires a task <b>TaskID</b>.

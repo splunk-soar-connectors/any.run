@@ -1,12 +1,13 @@
 [project]
 name = "phantom_any.run"
-version = "1.4.1"
+version = "1.5.1"
 description = "Phantom connector for ANY.RUN"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "anyrun-sdk==1.8.4",
-    "requests==2.32.3",
+    "anyrun-sdk==1.12.11",
+    "requests==2.32.4",
+    "splunk-soar-sdk>=2.3.7",
 ]
 
 # Ruff linting
