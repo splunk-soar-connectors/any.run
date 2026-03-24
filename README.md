@@ -1,9 +1,9 @@
 # ANY.RUN
 
-Publisher: ANYRUN FZCO \
-Connector Version: 1.5.1 \
-Product Vendor: ANYRUN FZCO \
-Product Name: ANY.RUN \
+Publisher: ANYRUN FZCO <br>
+Connector Version: 1.5.1 <br>
+Product Vendor: ANYRUN FZCO <br>
+Product Name: ANY.RUN <br>
 Minimum Product Version: 6.3.0
 
 This app enables you to detonate files and URLs to ANY.RUN Sandbox for analysis, retrieve detailed reports, and obtain information about IoCs from the ANY.RUN Threat Intelligence Lookup database
@@ -36,30 +36,30 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
-[get analysis verdict](#action-get-analysis-verdict) - Get the verdict of a specific analysis \
-[search analysis history](#action-search-analysis-history) - Get reports of a specific URL or File hash analysis from your history \
-[get reputation](#action-get-reputation) - Check URL/IP/Domain/File reputation \
-[get report](#action-get-report) - Get detailed JSON report for analysis \
-[get report stix](#action-get-report-stix) - Get detailed STIX report for analysis \
-[get report misp](#action-get-report-misp) - Get detailed MISP report for analysis \
-[get report html](#action-get-report-html) - Get detailed HTML report for analysis \
-[get iocs](#action-get-iocs) - Get list of IoCs for analysis \
-[detonate url windows](#action-detonate-url-windows) - Detonate a URL for analysis using Windows VM \
-[detonate url linux](#action-detonate-url-linux) - Detonate a URL for analysis using Linux VM \
-[detonate url android](#action-detonate-url-android) - Detonate a URL for analysis using Android VM \
-[detonate file windows](#action-detonate-file-windows) - Detonate a file from Vault \
-[detonate file linux](#action-detonate-file-linux) - Detonate a file from Vault \
-[detonate file android](#action-detonate-file-android) - Detonate a file from Vault \
-[get intelligence](#action-get-intelligence) - Make a query to the ANY.RUN Threat Intelligence database using flexible searches for Indicators of Compromise (IOCs), Indicators of Attack(IOAs), and Indicators of Behavior (IOBs) to investigate and gather extensive and in-depth information on cyber threats \
-[delete analysis](#action-delete-analysis) - Delete an analysis \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
+[get analysis verdict](#action-get-analysis-verdict) - Get the verdict of a specific analysis <br>
+[search analysis history](#action-search-analysis-history) - Get reports of a specific URL or File hash analysis from your history <br>
+[get reputation](#action-get-reputation) - Check URL/IP/Domain/File reputation <br>
+[get report](#action-get-report) - Get detailed JSON report for analysis <br>
+[get report stix](#action-get-report-stix) - Get detailed STIX report for analysis <br>
+[get report misp](#action-get-report-misp) - Get detailed MISP report for analysis <br>
+[get report html](#action-get-report-html) - Get detailed HTML report for analysis <br>
+[get iocs](#action-get-iocs) - Get list of IoCs for analysis <br>
+[detonate url windows](#action-detonate-url-windows) - Detonate a URL for analysis using Windows VM <br>
+[detonate url linux](#action-detonate-url-linux) - Detonate a URL for analysis using Linux VM <br>
+[detonate url android](#action-detonate-url-android) - Detonate a URL for analysis using Android VM <br>
+[detonate file windows](#action-detonate-file-windows) - Detonate a file from Vault <br>
+[detonate file linux](#action-detonate-file-linux) - Detonate a file from Vault <br>
+[detonate file android](#action-detonate-file-android) - Detonate a file from Vault <br>
+[get intelligence](#action-get-intelligence) - Make a query to the ANY.RUN Threat Intelligence database using flexible searches for Indicators of Compromise (IOCs), Indicators of Attack(IOAs), and Indicators of Behavior (IOBs) to investigate and gather extensive and in-depth information on cyber threats <br>
+[delete analysis](#action-delete-analysis) - Delete an analysis <br>
 [download pcap](#action-download-pcap) - Download a pcap file
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -74,7 +74,7 @@ No Output
 
 Get the verdict of a specific analysis
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>AnalysisID</b>.
@@ -103,7 +103,7 @@ action_result.summary | string | | |
 
 Get reports of a specific URL or File hash analysis from your history
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requests a list of already completed reports of a URL or File hash analysis.
@@ -142,7 +142,7 @@ action_result.parameter.entity_value | string | `url` `hash` | |
 
 Check URL/IP/Domain/File reputation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requests information about URL/IP/Domain/File from the ANY.RUN TI Lookup database.
@@ -188,7 +188,7 @@ action_result.parameter.lookup_depth | numeric | | |
 
 Get detailed JSON report for analysis
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>AnalysisID</b>.
@@ -221,7 +221,7 @@ action_result.summary | string | | |
 
 Get detailed STIX report for analysis
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>AnalysisID</b>.
@@ -252,7 +252,7 @@ action_result.summary | string | | |
 
 Get detailed MISP report for analysis
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>TaskID</b>.
@@ -295,7 +295,7 @@ action_result.summary | string | | |
 
 Get detailed HTML report for analysis
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>AnalysisID</b>.
@@ -328,7 +328,7 @@ action_result.summary | string | | |
 
 Get list of IoCs for analysis
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>AnalysisID</b>.
@@ -360,7 +360,7 @@ action_result.parameter.analysis_id | string | `anyrun analysis id` | |
 
 Detonate a URL for analysis using Windows VM
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a <b>URL</b> to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -422,7 +422,7 @@ action_result.parameter.user_tags | string | | |
 
 Detonate a URL for analysis using Linux VM
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a <b>URL</b> to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -480,7 +480,7 @@ action_result.parameter.user_tags | string | | |
 
 Detonate a URL for analysis using Android VM
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a <b>URL</b> to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -534,7 +534,7 @@ action_result.parameter.user_tags | string | | |
 
 Detonate a file from Vault
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a <b>vault ID</b> of a file to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -603,7 +603,7 @@ action_result.parameter.user_tags | string | | |
 
 Detonate a file from Vault
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a <b>vault ID</b> of a file to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -666,7 +666,7 @@ action_result.parameter.user_tags | string | | |
 
 Detonate a file from Vault
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a <b>vault ID</b> of a file to analyse. All other parameters are optional - for more information about them refer to official documentation (https://any.run/api-documentation/).
@@ -721,7 +721,7 @@ action_result.parameter.user_tags | string | | |
 
 Make a query to the ANY.RUN Threat Intelligence database using flexible searches for Indicators of Compromise (IOCs), Indicators of Attack(IOAs), and Indicators of Behavior (IOBs) to investigate and gather extensive and in-depth information on cyber threats
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 Perform investigative actions by using the ANY.RUN Threat Intelligence Portal API method. This action requires <b>ANY.RUN TI License</b>. For more information about available parameters refer to official documentation (https://intelligence.any.run/TI_Lookup_Query_Guide_v6.pdf).
@@ -753,7 +753,7 @@ action_result.parameter.lookup_depth | numeric | | |
 
 Delete an analysis
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>AnalysisID</b>.
@@ -780,7 +780,7 @@ action_result.summary | string | | |
 
 Download a pcap file
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 This action requires a submission <b>AnalysisID</b>.
