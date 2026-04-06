@@ -3417,7 +3417,7 @@
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/py39/aiohttp-3.13.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py39/aiohttp-3.13.5-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "aiosignal",
@@ -3449,7 +3449,7 @@
             },
             {
                 "module": "build",
-                "input_file": "wheels/py3/build-1.4.0-py3-none-any.whl"
+                "input_file": "wheels/py3/build-1.4.2-py3-none-any.whl"
             },
             {
                 "module": "click",
@@ -3521,7 +3521,7 @@
             },
             {
                 "module": "pygments",
-                "input_file": "wheels/py3/pygments-2.19.2-py3-none-any.whl"
+                "input_file": "wheels/py3/pygments-2.20.0-py3-none-any.whl"
             },
             {
                 "module": "pyproject_hooks",
@@ -3553,7 +3553,7 @@
             },
             {
                 "module": "tomli",
-                "input_file": "wheels/py3/tomli-2.4.0-py3-none-any.whl"
+                "input_file": "wheels/py3/tomli-2.4.1-py3-none-any.whl"
             },
             {
                 "module": "tqdm",
@@ -3597,7 +3597,7 @@
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/py313/aiohttp-3.13.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py313/aiohttp-3.13.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "aiosignal",
@@ -3609,7 +3609,7 @@
             },
             {
                 "module": "anyio",
-                "input_file": "wheels/py3/anyio-4.12.1-py3-none-any.whl"
+                "input_file": "wheels/py3/anyio-4.13.0-py3-none-any.whl"
             },
             {
                 "module": "anyrun_sdk",
@@ -3625,7 +3625,7 @@
             },
             {
                 "module": "build",
-                "input_file": "wheels/py3/build-1.4.0-py3-none-any.whl"
+                "input_file": "wheels/py3/build-1.4.2-py3-none-any.whl"
             },
             {
                 "module": "click",
@@ -3689,7 +3689,7 @@
             },
             {
                 "module": "pygments",
-                "input_file": "wheels/py3/pygments-2.19.2-py3-none-any.whl"
+                "input_file": "wheels/py3/pygments-2.20.0-py3-none-any.whl"
             },
             {
                 "module": "pyproject_hooks",
