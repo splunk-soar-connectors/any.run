@@ -1,6 +1,6 @@
 # File: anyrun_consts.py
 #
-# Copyright (c) ANYRUN FZCO, 2025
+# Copyright (c) ANYRUN FZCO, 2025-2026
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,20 +13,17 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-VERSION = "1.4.1"
-USER_AGENT = f"Splunk_SOAR/{VERSION}"
+VERSION = f"Splunk_SOAR:1.5.1"
 # Action IDs
 ACTION_ID_ANYRUN_TEST_CONNECTIVITY = "test_connectivity"
 ACTION_ID_ANYRUN_GET_ANALYSIS_VERDICT = "get_analysis_verdict"
-ACTION_ID_ANYRUN_GET_URL_REPUTATION = "get_url_reputation"
-ACTION_ID_ANYRUN_GET_FILE_REPUTATION = "get_file_reputation"
-ACTION_ID_ANYRUN_GET_DOMAIN_REPUTATION = "get_domain_reputation"
-ACTION_ID_ANYRUN_GET_IP_REPUTATION = "get_ip_reputation"
+ACTION_ID_ANYRUN_GET_REPUTATION = "get_reputation"
 ACTION_ID_ANYRUN_GET_REPORT = "get_report"
 ACTION_ID_ANYRUN_GET_REPORT_STIX = "get_report_stix"
 ACTION_ID_ANYRUN_GET_REPORT_MISP = "get_report_misp"
 ACTION_ID_ANYRUN_GET_REPORT_HTML = "get_report_html"
 ACTION_ID_ANYRUN_GET_IOC = "get_ioc"
+ACTION_ID_ANYRUN_SEARCH_ANALYSIS_HISTORY = "search_analysis_history"
 # ACTION_ID_ANYRUN_DETONATE_URL = "detonate_url"
 ACTION_ID_ANYRUN_DETONATE_URL_ANDROID = "detonate_url_android"
 ACTION_ID_ANYRUN_DETONATE_URL_LINUX = "detonate_url_linux"
@@ -36,7 +33,7 @@ ACTION_ID_ANYRUN_DETONATE_FILE_ANDROID = "detonate_file_android"
 ACTION_ID_ANYRUN_DETONATE_FILE_LINUX = "detonate_file_linux"
 ACTION_ID_ANYRUN_DETONATE_FILE_WINDOWS = "detonate_file_windows"
 ACTION_ID_ANYRUN_GET_INTELLIGENCE = "get_intelligence"
-ACTION_ID_ANYRUN_DELETE_SUBMISSION = "delete_submission"
+ACTION_ID_ANYRUN_DELETE_ANALYSIS = "delete_analysis"
 ACTION_ID_ANYRUN_DOWNLOAD_PCAP = "download_pcap"
 # Error messages
 ANYRUN_ERROR_CODE_MSG = "Error code unavailable."
@@ -46,22 +43,25 @@ ANYRUN_UNABLE_TO_FETCH_FILE_ERROR = "Unable to retrieve the sample from the vaul
 ANYRUN_VAULT_MULTIPLE_FILES_ERROR = "Found multiple files for vault_id {}. Using the first one."
 ANYRUN_VAULT_NO_FILES_ERROR = "No sample found for vault_id {}."
 ANYRUN_SANDBOX_PARAMS_VALIDATION_ERROR = "Error in validating sandbox parameters. {}."
-ANYRUN_TI_PARAMS_VALIDATION_ERROR = "Error in validating Threat Intelligence parameters. {}."
 ANYRUN_REST_API_ERROR = "Error processing server response in action '{0}'. {1}."
 ANYRUN_ADD_DATA_ERROR = "Error constructing action result in action '{0}'. {1}."
-ANYRUN_DELETE_SUBMISSION_ERROR = "Error deleting submission: {}. {}."
+ANYRUN_DELETE_ANALYSIS_ERROR = "Error deleting analysis: {}. {}."
 # Action specific messages
 ANYRUN_ERROR_TEST_CONNECTIVITY = "Connectivity test failed. {}."
 ANYRUN_SUCCESS_TEST_CONNECTIVITY = "Connectivity test passed."
-ANYRUN_SUCCESS_GET_URL_REPUTATION = "Successfully retrieved list of reports for a URL '{0}'."
-ANYRUN_SUCCESS_GET_FILE_REPUTATION = "Successfully retrieved list of reports for a submissions with hash '{0}'."
-ANYRUN_SUCCESS_GET_DOMAIN_REPUTATION = "Successfully retrieved list of reports for a submissions related to domain '{0}'."
-ANYRUN_SUCCESS_GET_IP_REPUTATION = "Successfully retrieved list of reports for a submissions related to IP '{0}'."
-ANYRUN_SUCCESS_GET_REPORT = "Successfully retrieved report for submission: {}."
-ANYRUN_SUCCESS_GET_IOC = "Successfully retrieved IoC report for submission: {}."
+ANYRUN_SUCCESS_GET_REPUTATION = "Successfully retrieved reputation via Threat Intelligence Lookup for '{0}'."
+ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY = "Successfully retrieved list of reports for analysis from history '{0}'."
+ANYRUN_SUCCESS_GET_REPORT = "Successfully retrieved report for analysis: {}."
+ANYRUN_SUCCESS_GET_IOC = "Successfully retrieved IoC report for analysis: {}."
 ANYRUN_SUCCESS_DETONATE_URL = "Successfully detonated URL: {}."
 ANYRUN_SUCCESS_DETONATE_FILE = "Successfully detonated file with the vault ID : {}."
-ANYRUN_SUCCESS_GET_INTELLIGENCE = "Successfully retrieved threat information via Threat Intelligence lookup."
-ANYRUN_SUCCESS_DELETE_SUBMISSION = "Successfully deleted submission: {}."
-ANYRUN_SUCCESS_DOWNLOAD_PCAP = "Successfully downloaded PCAP file for task: {}."
-ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT = "Successfully retrieved analysis verdict for task: {}."
+ANYRUN_SUCCESS_GET_INTELLIGENCE = "Successfully retrieved threat information via Threat Intelligence Lookup for query '{0}'."
+ANYRUN_SUCCESS_DELETE_ANALYSIS = "Successfully deleted analysis: {}."
+ANYRUN_SUCCESS_DOWNLOAD_PCAP = "Successfully downloaded PCAP file for analysis: {}."
+ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT = "Successfully retrieved verdict for analysis: {}."
+
+VERDICT_RESOLVER = {
+    0: "No info",
+    1: "Suspicious",
+    2: "Malicious",
+}
