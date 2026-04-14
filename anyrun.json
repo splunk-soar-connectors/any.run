@@ -3449,7 +3449,7 @@
             },
             {
                 "module": "build",
-                "input_file": "wheels/py3/build-1.4.2-py3-none-any.whl"
+                "input_file": "wheels/py3/build-1.4.3-py3-none-any.whl"
             },
             {
                 "module": "click",
@@ -3533,7 +3533,7 @@
             },
             {
                 "module": "rich",
-                "input_file": "wheels/py3/rich-14.3.3-py3-none-any.whl"
+                "input_file": "wheels/py3/rich-15.0.0-py3-none-any.whl"
             },
             {
                 "module": "setuptools",
@@ -3581,7 +3581,7 @@
             },
             {
                 "module": "zipp",
-                "input_file": "wheels/py3/zipp-3.23.0-py3-none-any.whl"
+                "input_file": "wheels/py3/zipp-3.23.1-py3-none-any.whl"
             }
         ]
     },
@@ -3625,7 +3625,7 @@
             },
             {
                 "module": "build",
-                "input_file": "wheels/py3/build-1.4.2-py3-none-any.whl"
+                "input_file": "wheels/py3/build-1.4.3-py3-none-any.whl"
             },
             {
                 "module": "click",
@@ -3701,7 +3701,7 @@
             },
             {
                 "module": "rich",
-                "input_file": "wheels/py3/rich-14.3.3-py3-none-any.whl"
+                "input_file": "wheels/py3/rich-15.0.0-py3-none-any.whl"
             },
             {
                 "module": "setuptools",
@@ -3729,7 +3729,7 @@
             },
             {
                 "module": "types_toml",
-                "input_file": "wheels/py3/types_toml-0.10.8.20240310-py3-none-any.whl"
+                "input_file": "wheels/py3/types_toml-0.10.8.20260408-py3-none-any.whl"
             },
             {
                 "module": "typing_extensions",
