@@ -20,6 +20,12 @@ from typing import Union
 import phantom.rules as phantom_rules
 
 
+def _neutralize_csv_formula(value):
+    if isinstance(value, str) and value.startswith(("=", "+", "-", "@", "\t", "\r")):
+        return f"'{value}"
+    return value
+
+
 def convert_iocs_to_soar_format(raw_iocs: list[dict], analysis_id: str, container_id: int) -> list[dict]:
     """
     Get IoCs from AnyRun sandbox
@@ -72,8 +78,8 @@ def save_file(container_id: int, file_content: Union[dict, str, bytes, list], an
 
     with open(filepath, "wb" if file_format == "pcap" else "w") as file:
         if file_format == "csv":
-            file = csv.writer(file)
-            file.writerows(file_content)
+            writer = csv.writer(file)
+            writer.writerows([[_neutralize_csv_formula(value) for value in row] for row in file_content])
         else:
             file.write(json.dumps(file_content) if extension == "json" else file_content)
 
