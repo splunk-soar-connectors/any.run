@@ -46,6 +46,7 @@ class AnyRunConnector(BaseConnector):
         self._server = None
         self._api_key = None
         self._timeout = None
+        self._verify_server_cert = True
 
     def _handle_get_history(self, param: dict) -> list[dict]:
         """
@@ -664,6 +665,7 @@ class AnyRunConnector(BaseConnector):
 
         self._api_key = config.get("anyrun_api_key")
         self._timeout = config.get("anyrun_timeout")
+        self._verify_server_cert = config.get("verify_server_cert", True)
 
         self._anyrun_sandbox = SandboxConnector()
 
@@ -671,6 +673,7 @@ class AnyRunConnector(BaseConnector):
             "api_key": self._api_key,
             "integration": VERSION,
             "timeout": self._timeout,
+            "verify_ssl": self._verify_server_cert,
         }
 
         self._windows_sandbox = self._anyrun_sandbox.windows(**generic_sandbox_parameters)
@@ -681,6 +684,7 @@ class AnyRunConnector(BaseConnector):
             api_key=self._api_key,
             integration=VERSION,
             timeout=self._timeout,
+            verify_ssl=self._verify_server_cert,
         )
 
         return phantom.APP_SUCCESS

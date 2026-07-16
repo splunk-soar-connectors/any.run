@@ -36,6 +36,13 @@
             "required": true,
             "default": 300,
             "order": 1
+        },
+        "verify_server_cert": {
+            "description": "Verify the ANY.RUN server certificate",
+            "data_type": "boolean",
+            "required": false,
+            "default": true,
+            "order": 2
         }
     },
     "actions": [
