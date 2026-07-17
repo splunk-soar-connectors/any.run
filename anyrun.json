@@ -36,6 +36,13 @@
             "required": true,
             "default": 300,
             "order": 1
+        },
+        "verify_server_cert": {
+            "description": "Verify the ANY.RUN server certificate",
+            "data_type": "boolean",
+            "required": false,
+            "default": true,
+            "order": 2
         }
     },
     "actions": [
@@ -3449,7 +3456,7 @@
             },
             {
                 "module": "build",
-                "input_file": "wheels/py3/build-1.4.3-py3-none-any.whl"
+                "input_file": "wheels/py3/build-1.4.4-py3-none-any.whl"
             },
             {
                 "module": "click",
@@ -3509,7 +3516,7 @@
             },
             {
                 "module": "packaging",
-                "input_file": "wheels/py3/packaging-26.0-py3-none-any.whl"
+                "input_file": "wheels/py3/packaging-26.2-py3-none-any.whl"
             },
             {
                 "module": "propcache",
@@ -3557,7 +3564,7 @@
             },
             {
                 "module": "tqdm",
-                "input_file": "wheels/py3/tqdm-4.67.3-py3-none-any.whl"
+                "input_file": "wheels/py3/tqdm-4.68.4-py3-none-any.whl"
             },
             {
                 "module": "typer",
@@ -3569,7 +3576,7 @@
             },
             {
                 "module": "typing_extensions",
-                "input_file": "wheels/py3/typing_extensions-4.15.0-py3-none-any.whl"
+                "input_file": "wheels/py3/typing_extensions-4.16.0-py3-none-any.whl"
             },
             {
                 "module": "webencodings",
@@ -3593,11 +3600,11 @@
             },
             {
                 "module": "aiohappyeyeballs",
-                "input_file": "wheels/py3/aiohappyeyeballs-2.6.1-py3-none-any.whl"
+                "input_file": "wheels/py3/aiohappyeyeballs-2.7.1-py3-none-any.whl"
             },
             {
                 "module": "aiohttp",
-                "input_file": "wheels/py313/aiohttp-3.13.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py313/aiohttp-3.14.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "aiosignal",
@@ -3609,7 +3616,7 @@
             },
             {
                 "module": "anyio",
-                "input_file": "wheels/py3/anyio-4.13.0-py3-none-any.whl"
+                "input_file": "wheels/py3/anyio-4.14.2-py3-none-any.whl"
             },
             {
                 "module": "anyrun_sdk",
@@ -3621,11 +3628,11 @@
             },
             {
                 "module": "bleach",
-                "input_file": "wheels/py3/bleach-6.3.0-py3-none-any.whl"
+                "input_file": "wheels/py3/bleach-6.4.0-py3-none-any.whl"
             },
             {
                 "module": "build",
-                "input_file": "wheels/py3/build-1.4.3-py3-none-any.whl"
+                "input_file": "wheels/py3/build-1.5.0-py3-none-any.whl"
             },
             {
                 "module": "click",
@@ -3653,7 +3660,7 @@
             },
             {
                 "module": "humanize",
-                "input_file": "wheels/py3/humanize-4.15.0-py3-none-any.whl"
+                "input_file": "wheels/py3/humanize-4.16.0-py3-none-any.whl"
             },
             {
                 "module": "jinja2",
@@ -3661,7 +3668,7 @@
             },
             {
                 "module": "markdown_it_py",
-                "input_file": "wheels/py3/markdown_it_py-4.0.0-py3-none-any.whl"
+                "input_file": "wheels/py3/markdown_it_py-4.2.0-py3-none-any.whl"
             },
             {
                 "module": "markupsafe",
@@ -3677,11 +3684,11 @@
             },
             {
                 "module": "packaging",
-                "input_file": "wheels/py3/packaging-26.0-py3-none-any.whl"
+                "input_file": "wheels/py3/packaging-26.2-py3-none-any.whl"
             },
             {
                 "module": "propcache",
-                "input_file": "wheels/py313/propcache-0.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py313/propcache-0.5.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "pydantic",
@@ -3705,7 +3712,7 @@
             },
             {
                 "module": "setuptools",
-                "input_file": "wheels/py3/setuptools-82.0.1-py3-none-any.whl"
+                "input_file": "wheels/py3/setuptools-83.0.0-py3-none-any.whl"
             },
             {
                 "module": "shellingham",
@@ -3721,19 +3728,19 @@
             },
             {
                 "module": "tqdm",
-                "input_file": "wheels/py3/tqdm-4.67.3-py3-none-any.whl"
+                "input_file": "wheels/py3/tqdm-4.68.4-py3-none-any.whl"
             },
             {
                 "module": "typer",
-                "input_file": "wheels/py3/typer-0.23.1-py3-none-any.whl"
+                "input_file": "wheels/py3/typer-0.27.0-py3-none-any.whl"
             },
             {
                 "module": "types_toml",
-                "input_file": "wheels/py3/types_toml-0.10.8.20260408-py3-none-any.whl"
+                "input_file": "wheels/py3/types_toml-0.10.8.20260518-py3-none-any.whl"
             },
             {
                 "module": "typing_extensions",
-                "input_file": "wheels/py3/typing_extensions-4.15.0-py3-none-any.whl"
+                "input_file": "wheels/py3/typing_extensions-4.16.0-py3-none-any.whl"
             },
             {
                 "module": "webencodings",
@@ -3741,7 +3748,7 @@
             },
             {
                 "module": "yarl",
-                "input_file": "wheels/py313/yarl-1.23.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py313/yarl-1.24.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             }
         ]
     }

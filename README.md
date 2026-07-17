@@ -33,6 +33,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
 **anyrun_api_key** | required | password | API Key used for API authentication |
 **anyrun_timeout** | required | numeric | Number of seconds to wait for a request to timeout |
+**verify_server_cert** | optional | boolean | Verify the ANY.RUN server certificate |
 
 ### Supported Actions
 
