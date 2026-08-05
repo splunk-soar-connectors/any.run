@@ -3516,7 +3516,7 @@
             },
             {
                 "module": "packaging",
-                "input_file": "wheels/py3/packaging-26.2-py3-none-any.whl"
+                "input_file": "wheels/py3/packaging-26.3-py3-none-any.whl"
             },
             {
                 "module": "propcache",
@@ -3684,7 +3684,7 @@
             },
             {
                 "module": "packaging",
-                "input_file": "wheels/py3/packaging-26.2-py3-none-any.whl"
+                "input_file": "wheels/py3/packaging-26.3-py3-none-any.whl"
             },
             {
                 "module": "propcache",
@@ -3732,7 +3732,7 @@
             },
             {
                 "module": "typer",
-                "input_file": "wheels/py3/typer-0.27.0-py3-none-any.whl"
+                "input_file": "wheels/py3/typer-0.27.1-py3-none-any.whl"
             },
             {
                 "module": "types_toml",
