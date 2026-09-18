@@ -15,7 +15,6 @@ import csv
 import json
 import os
 from datetime import datetime
-from typing import Union
 
 import phantom.rules as phantom_rules
 
@@ -65,10 +64,15 @@ def convert_iocs_to_soar_format(raw_iocs: list[dict], analysis_id: str, containe
     return artifacts
 
 
-def save_file(container_id: int, file_content: Union[dict, str, bytes, list], analysis_id: str, file_format: str) -> tuple[str, str]:
+def save_file(
+    container_id: int,
+    file_content: dict | str | bytes | list,
+    analysis_id: str,
+    file_format: str,
+) -> tuple[str, str]:
     vault_path = phantom_rules.Vault.get_vault_tmp_dir()
 
-    if file_format in ("summary", "stix", "misp"):
+    if file_format in ("summary", "stix", "misp", "json"):
         extension = "json"
     elif file_format in ("html", "pcap", "csv"):
         extension = file_format

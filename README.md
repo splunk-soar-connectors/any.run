@@ -1,10 +1,10 @@
 # ANY.RUN
 
 Publisher: ANYRUN FZCO <br>
-Connector Version: 2.0.0 <br>
+Connector Version: 2.1.0 <br>
 Product Vendor: ANYRUN FZCO <br>
 Product Name: ANY.RUN <br>
-Minimum Product Version: 6.3.0
+Minimum Product Version: 7.0.0
 
 This app enables you to detonate files and URLs to ANY.RUN Sandbox for analysis, retrieve detailed reports, and obtain information about IoCs from the ANY.RUN Threat Intelligence Lookup database
 
@@ -21,9 +21,8 @@ This connector is intended for customers with a 'Hunter' or 'Enterprise' subscri
 
 This connector comes with some additional python 3 libraries, that it depends on, including:
 
-- anyrun-sdk==1.12.11
-- requests==2.32.4
-- splunk-soar-sdk>=2.3.7
+- anyrun-sdk==1.14.18
+- requests==2.34.2
 
 ### Configuration variables
 
@@ -34,6 +33,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **anyrun_api_key** | required | password | API Key used for API authentication |
 **anyrun_timeout** | required | numeric | Number of seconds to wait for a request to timeout |
 **verify_server_cert** | optional | boolean | Verify the ANY.RUN server certificate |
+**http_proxy** | optional | string | HTTP proxy connection string |
 
 ### Supported Actions
 
@@ -501,7 +501,6 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
 **opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
 **opt_timeout** | optional | Timeout (Default: 120) | numeric | |
-**obj_ext_extension** | optional | Specify whether to change the file extension to a valid one (Default: True) | boolean | |
 **user_tags** | optional | Append user tags to new analysis. Only characters a-z, A-Z, 0-9, hyphen (-), and comma (,)
 are allowed. Max tag length: 16 characters. Max unique tags per task: 8. | string | |
 
@@ -528,7 +527,6 @@ action_result.parameter.opt_network_residential_proxy | boolean | | |
 action_result.parameter.opt_network_residential_proxy_geo | string | | |
 action_result.parameter.opt_privacy_type | string | | |
 action_result.parameter.opt_timeout | numeric | | |
-action_result.parameter.obj_ext_extension | boolean | | |
 action_result.parameter.user_tags | string | | |
 
 ## action: 'detonate file windows'

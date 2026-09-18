@@ -11,16 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Optional
 
 import requests
 
 from anyrun_connector import AnyRunConnector
 
 
-def setup_connector(
-    username: Optional[str] = None, password: Optional[str] = None, session_id: Optional[str] = None
-) -> tuple[AnyRunConnector, str]:
+def setup_connector(username: str | None = None, password: str | None = None, session_id: str | None = None) -> tuple[AnyRunConnector, str]:
     """
     Setup the connector and return the connector and the session id
     """

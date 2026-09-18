@@ -13,7 +13,7 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-VERSION = f"Splunk_SOAR:1.5.1"
+VERSION = f"Splunk_SOAR:2.1.0"
 # Action IDs
 ACTION_ID_ANYRUN_TEST_CONNECTIVITY = "test_connectivity"
 ACTION_ID_ANYRUN_GET_ANALYSIS_VERDICT = "get_analysis_verdict"
@@ -59,6 +59,7 @@ ANYRUN_SUCCESS_GET_INTELLIGENCE = "Successfully retrieved threat information via
 ANYRUN_SUCCESS_DELETE_ANALYSIS = "Successfully deleted analysis: {}."
 ANYRUN_SUCCESS_DOWNLOAD_PCAP = "Successfully downloaded PCAP file for analysis: {}."
 ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT = "Successfully retrieved verdict for analysis: {}."
+ANYRUN_BROWSER_PARAM = "obj_ext_browser"
 
 VERDICT_RESOLVER = {
     0: "No info",

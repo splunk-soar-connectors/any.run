@@ -19,7 +19,6 @@
 
 import json
 import traceback
-from typing import Union
 
 # Phantom App imports
 import phantom.app as phantom
@@ -29,7 +28,11 @@ from anyrun import RunTimeException
 
 # Usage of the consts file is recommended
 from anyrun.connectors import LookupConnector, SandboxConnector
-from anyrun.connectors.sandbox.operation_systems import AndroidConnector, LinuxConnector, WindowsConnector
+from anyrun.connectors.sandbox.operation_systems import (
+    AndroidConnector,
+    LinuxConnector,
+    WindowsConnector,
+)
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
@@ -47,6 +50,7 @@ class AnyRunConnector(BaseConnector):
         self._api_key = None
         self._timeout = None
         self._verify_server_cert = True
+        self._http_proxy = None
 
     def _handle_get_history(self, param: dict) -> list[dict]:
         """
@@ -69,7 +73,7 @@ class AnyRunConnector(BaseConnector):
 
         try:
             with self._windows_sandbox as sandbox:
-                tasks = sandbox.get_analysis_history(True, 0, 100)
+                tasks = sandbox.get_analysis_history(False, 0, 100)
                 if entity_type == "hash":
                     tasks = [task for task in tasks if task.get("hashes", {}).get(hash_type) == entity_value]
                 else:
@@ -78,7 +82,10 @@ class AnyRunConnector(BaseConnector):
             action_result.add_data({"tasks": tasks})
             self.save_progress(ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY.format(entity_value))
 
-            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY.format(entity_value))
+            return action_result.set_status(
+                phantom.APP_SUCCESS,
+                ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY.format(entity_value),
+            )
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -103,6 +110,8 @@ class AnyRunConnector(BaseConnector):
         entity_type = param.get("entity_type")
         entity_value = param.get("entity_value")
         lookup_depth = param.get("lookup_depth")
+        if not isinstance(lookup_depth, int):
+            lookup_depth = int(lookup_depth)
 
         if entity_type == "hash":
             hash_type = {32: "md5", 40: "sha1", 64: "sha256"}.get(len(entity_value))
@@ -146,7 +155,11 @@ class AnyRunConnector(BaseConnector):
                 action_data["industries"] = ", ".join(
                     [
                         f"{industry.get('industryName')}({industry.get('confidence')}%)"
-                        for industry in sorted(response.get("industries"), key=lambda x: x.get("confidence", 0), reverse=True)
+                        for industry in sorted(
+                            response.get("industries"),
+                            key=lambda x: x.get("confidence", 0),
+                            reverse=True,
+                        )
                     ]
                 )
 
@@ -160,7 +173,9 @@ class AnyRunConnector(BaseConnector):
                 + entity_type
                 + ":%5C%22"
                 + entity_value
-                + "%5C%22%22,%22dateRange%22:180}"
+                + "%5C%22%22,%22dateRange%22:"
+                + str(lookup_depth)
+                + "}"
             )
 
             action_result.add_data(action_data)
@@ -206,7 +221,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-    def _handle_get_report(self, param: dict, report_format: str = "summary") -> ActionResult:
+    def _handle_get_report(self, param: dict, report_format: str = "json") -> ActionResult:
         """
         Handle get report
 
@@ -292,7 +307,7 @@ class AnyRunConnector(BaseConnector):
             converted_iocs = convert_iocs_to_soar_format(iocs, analysis_id, self.get_container_id())
 
             if not converted_iocs:
-                return action_result.set_status(phantom.APP_ERROR, "IOCs not found")
+                return action_result.set_status(phantom.APP_ERROR, "Malicious or Suspicious IOCs not found")
 
             self.save_progress(ANYRUN_SUCCESS_GET_IOC.format(analysis_id))
 
@@ -342,7 +357,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-    def _handle_detonate_url(self, param: dict, sandbox: Union[LinuxConnector, WindowsConnector, AndroidConnector]) -> ActionResult:
+    def _handle_detonate_url(self, param: dict, sandbox: LinuxConnector | WindowsConnector | AndroidConnector) -> ActionResult:
         """
         Handle detonate URL
 
@@ -419,7 +434,10 @@ class AnyRunConnector(BaseConnector):
             filename = vault_meta_info[0].get("name")
 
             if not file_path or not filename:
-                return action_result.set_status(phantom.APP_ERROR, ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id))
+                return action_result.set_status(
+                    phantom.APP_ERROR,
+                    ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("path", vault_id),
+                )
 
             # Making an API call
             self.save_progress(f"Detonating file with vault ID: {vault_id}")
@@ -464,6 +482,8 @@ class AnyRunConnector(BaseConnector):
 
         query = param.get("query")
         lookup_depth = param.get("lookup_depth")
+        if not isinstance(lookup_depth, int):
+            lookup_depth = int(lookup_depth)
 
         # Making an API call
         self.save_progress("Initiating Threat Intelligence lookup.")
@@ -480,10 +500,19 @@ class AnyRunConnector(BaseConnector):
             lookup_url = (
                 "https://intelligence.any.run/analysis/lookup#{%22query%22:%22"
                 + query.replace('"', "%5C%22").replace(" ", "%20")
-                + "%22,%22dateRange%22:180}"
+                + "%22,%22dateRange%22:"
+                + str(lookup_depth)
+                + "}"
             )
 
-            action_result.add_data({"lookup_url": lookup_url, "vault_id": vault_id, "report_name": filename, "verdict": verdict})
+            action_result.add_data(
+                {
+                    "lookup_url": lookup_url,
+                    "vault_id": vault_id,
+                    "report_name": filename,
+                    "verdict": verdict,
+                }
+            )
 
             return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_INTELLIGENCE.format(query))
 
@@ -581,7 +610,10 @@ class AnyRunConnector(BaseConnector):
             )
 
             self.save_progress(ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT.format(analysis_id))
-            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT.format(analysis_id))
+            return action_result.set_status(
+                phantom.APP_SUCCESS,
+                ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT.format(analysis_id),
+            )
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -620,6 +652,9 @@ class AnyRunConnector(BaseConnector):
         elif action_id == ACTION_ID_ANYRUN_GET_IOC:
             ret_val = self._handle_get_ioc(param)
         elif action_id == ACTION_ID_ANYRUN_DETONATE_URL_ANDROID:
+            if ANYRUN_BROWSER_PARAM in param:
+                param.pop(ANYRUN_BROWSER_PARAM)
+
             ret_val = self._handle_detonate_url(param, self._android_sandbox)
         elif action_id == ACTION_ID_ANYRUN_DETONATE_URL_LINUX:
             ret_val = self._handle_detonate_url(param, self._linux_sandbox)
@@ -666,26 +701,25 @@ class AnyRunConnector(BaseConnector):
         self._api_key = config.get("anyrun_api_key")
         self._timeout = config.get("anyrun_timeout")
         self._verify_server_cert = config.get("verify_server_cert", True)
+        self._http_proxy = config.get("http_proxy", None)
 
         self._anyrun_sandbox = SandboxConnector()
 
-        generic_sandbox_parameters = {
+        generic_anyrun_parameters = {
             "api_key": self._api_key,
             "integration": VERSION,
             "timeout": self._timeout,
             "verify_ssl": self._verify_server_cert,
         }
 
-        self._windows_sandbox = self._anyrun_sandbox.windows(**generic_sandbox_parameters)
-        self._android_sandbox = self._anyrun_sandbox.android(**generic_sandbox_parameters)
-        self._linux_sandbox = self._anyrun_sandbox.linux(**generic_sandbox_parameters)
+        if self._http_proxy:
+            generic_anyrun_parameters["proxy"] = self._http_proxy
 
-        self._lookup = LookupConnector(
-            api_key=self._api_key,
-            integration=VERSION,
-            timeout=self._timeout,
-            verify_ssl=self._verify_server_cert,
-        )
+        self._windows_sandbox = self._anyrun_sandbox.windows(**generic_anyrun_parameters)
+        self._android_sandbox = self._anyrun_sandbox.android(**generic_anyrun_parameters)
+        self._linux_sandbox = self._anyrun_sandbox.linux(**generic_anyrun_parameters)
+
+        self._lookup = LookupConnector(**generic_anyrun_parameters)
 
         return phantom.APP_SUCCESS
 
