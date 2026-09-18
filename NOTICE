@@ -4,7 +4,7 @@ Third Party Software Attributions:
 
 @@@@============================================================================
 
-Library: anyrun-sdk - 1.12.11
+Library: anyrun-sdk - 1.14.18
 Homepage: https://github.com/anyrun/anyrun-sdk
 License: Apache v2.0
 License Text:
@@ -213,7 +213,7 @@ License Text:
 
 @@@@============================================================================
 
-Library: splunk-soar-sdk - 2.3.7
+Library: splunk-soar-sdk - 4.2.1
 Homepage: https://github.com/phantomcyber/splunk-soar-sdk
 License: Apache-2.0
 License Text:

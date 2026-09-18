@@ -25,9 +25,7 @@ def _neutralize_csv_formula(value):
     return value
 
 
-def convert_iocs_to_soar_format(
-    raw_iocs: list[dict], analysis_id: str, container_id: int
-) -> list[dict]:
+def convert_iocs_to_soar_format(raw_iocs: list[dict], analysis_id: str, container_id: int) -> list[dict]:
     """
     Get IoCs from AnyRun sandbox
 
@@ -85,17 +83,10 @@ def save_file(
     with open(filepath, "wb" if file_format == "pcap" else "w") as file:
         if file_format == "csv":
             writer = csv.writer(file)
-            writer.writerows(
-                [
-                    [_neutralize_csv_formula(value) for value in row]
-                    for row in file_content
-                ]
-            )
+            writer.writerows([[_neutralize_csv_formula(value) for value in row] for row in file_content])
         else:
             file.write(json.dumps(file_content) if extension == "json" else file_content)
 
-    _, _, vault_id = phantom_rules.vault_add(
-        container=container_id, file_location=filepath, file_name=filename
-    )
+    _, _, vault_id = phantom_rules.vault_add(container=container_id, file_location=filepath, file_name=filename)
 
     return vault_id, filename

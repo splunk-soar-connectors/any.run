@@ -69,28 +69,18 @@ class AnyRunConnector(BaseConnector):
         if entity_type == "hash":
             hash_type = {32: "md5", 40: "sha1", 64: "sha256"}.get(len(entity_value))
             if not hash_type:
-                return action_result.set_status(
-                    phantom.APP_ERROR, "Unsupported hash type. Allowed: sha1, sha256, md5"
-                )
+                return action_result.set_status(phantom.APP_ERROR, "Unsupported hash type. Allowed: sha1, sha256, md5")
 
         try:
             with self._windows_sandbox as sandbox:
                 tasks = sandbox.get_analysis_history(False, 0, 100)
                 if entity_type == "hash":
-                    tasks = [
-                        task
-                        for task in tasks
-                        if task.get("hashes", {}).get(hash_type) == entity_value
-                    ]
+                    tasks = [task for task in tasks if task.get("hashes", {}).get(hash_type) == entity_value]
                 else:
-                    tasks = [
-                        task for task in tasks if entity_value in task.get("name", {})
-                    ]
+                    tasks = [task for task in tasks if entity_value in task.get("name", {})]
 
             action_result.add_data({"tasks": tasks})
-            self.save_progress(
-                ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY.format(entity_value)
-            )
+            self.save_progress(ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY.format(entity_value))
 
             return action_result.set_status(
                 phantom.APP_SUCCESS,
@@ -126,18 +116,14 @@ class AnyRunConnector(BaseConnector):
         if entity_type == "hash":
             hash_type = {32: "md5", 40: "sha1", 64: "sha256"}.get(len(entity_value))
             if not hash_type:
-                return action_result.set_status(
-                    phantom.APP_ERROR, "Unsupported hash type. Allowed: sha1, sha256, md5"
-                )
+                return action_result.set_status(phantom.APP_ERROR, "Unsupported hash type. Allowed: sha1, sha256, md5")
             query_params = {hash_type: entity_value}
         else:
             query_params = {entity_type: entity_value}
 
         try:
             with self._lookup as lookup:
-                response = lookup.get_intelligence(
-                    **query_params, lookup_depth=lookup_depth
-                )
+                response = lookup.get_intelligence(**query_params, lookup_depth=lookup_depth)
 
             if response.get("relatedFiles"):
                 file_info = response.get("relatedFiles")[0]
@@ -160,9 +146,7 @@ class AnyRunConnector(BaseConnector):
                 action_data["port"] = response.get("destinationPort")[0]
 
             if response.get("destinationIpAsn"):
-                action_data["asowner"] = (
-                    response.get("destinationIpAsn")[0].get("asn").upper()
-                )
+                action_data["asowner"] = response.get("destinationIpAsn")[0].get("asn").upper()
 
             if response.get("summary", {}).get("tags"):
                 action_data["tags"] = ", ".join(response.get("summary", {}).get("tags"))
@@ -180,14 +164,10 @@ class AnyRunConnector(BaseConnector):
                 )
 
             if response.get("sourceTasks"):
-                action_data["last_analyses"] = ", ".join(
-                    [task.get("related") for task in response.get("sourceTasks")[:5]]
-                )
+                action_data["last_analyses"] = ", ".join([task.get("related") for task in response.get("sourceTasks")[:5]])
 
             action_data["last_modified"] = response.get("summary", {}).get("lastSeen")
-            action_data["verdict"] = VERDICT_RESOLVER.get(
-                response.get("summary", {}).get("threatLevel", 0), "No info"
-            )
+            action_data["verdict"] = VERDICT_RESOLVER.get(response.get("summary", {}).get("threatLevel", 0), "No info")
             action_data["lookup_url"] = (
                 "https://intelligence.any.run/analysis/lookup#{%22query%22:%22"
                 + entity_type
@@ -201,9 +181,7 @@ class AnyRunConnector(BaseConnector):
             action_result.add_data(action_data)
 
             self.save_progress(ANYRUN_SUCCESS_GET_REPUTATION.format(entity_value))
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_REPUTATION.format(entity_value)
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_REPUTATION.format(entity_value))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -243,9 +221,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-    def _handle_get_report(
-        self, param: dict, report_format: str = "json"
-    ) -> ActionResult:
+    def _handle_get_report(self, param: dict, report_format: str = "json") -> ActionResult:
         """
         Handle get report
 
@@ -265,37 +241,25 @@ class AnyRunConnector(BaseConnector):
         try:
             with self._windows_sandbox as sandbox:
                 for status in sandbox.get_task_status(analysis_id):
-                    self.debug_print(
-                        f"Waiting for task to complete {analysis_id}: {status}"
-                    )
+                    self.debug_print(f"Waiting for task to complete {analysis_id}: {status}")
 
-                report = sandbox.get_analysis_report(
-                    analysis_id, report_format=report_format
-                )
+                report = sandbox.get_analysis_report(analysis_id, report_format=report_format)
                 summary = sandbox.get_analysis_report(analysis_id)
                 verdict = sandbox.get_analysis_verdict(analysis_id)
 
-            vault_id, report_name = save_file(
-                self.get_container_id(), report, analysis_id, report_format
-            )
+            vault_id, report_name = save_file(self.get_container_id(), report, analysis_id, report_format)
 
-            analysis_object = (
-                summary.get("data").get("analysis").get("content").get("mainObject")
-            )
+            analysis_object = summary.get("data").get("analysis").get("content").get("mainObject")
             tags = summary.get("data").get("analysis").get("tags")
 
             object_type = analysis_object.get("type")
 
             action_result.add_data(
                 {
-                    "object_value": analysis_object.get("url")
-                    if object_type == "url"
-                    else analysis_object.get("filename"),
+                    "object_value": analysis_object.get("url") if object_type == "url" else analysis_object.get("filename"),
                     "object_type": object_type,
                     "verdict": verdict,
-                    "tags": ", ".join(tag.get("tag") for tag in tags)
-                    if tags
-                    else "No info",
+                    "tags": ", ".join(tag.get("tag") for tag in tags) if tags else "No info",
                     "analysis_url": f"https://app.any.run/tasks/{analysis_id}",
                     "vault_id": vault_id,
                     "report_name": report_name,
@@ -304,9 +268,7 @@ class AnyRunConnector(BaseConnector):
             )
 
             self.save_progress(ANYRUN_SUCCESS_GET_REPORT.format(analysis_id))
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_REPORT.format(analysis_id)
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_REPORT.format(analysis_id))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -336,17 +298,13 @@ class AnyRunConnector(BaseConnector):
         try:
             with self._windows_sandbox as sandbox:
                 for status in sandbox.get_task_status(analysis_id):
-                    self.debug_print(
-                        f"Waiting for task to complete {analysis_id}: {status}"
-                    )
+                    self.debug_print(f"Waiting for task to complete {analysis_id}: {status}")
 
                 iocs = sandbox.get_analysis_report(analysis_id, report_format="ioc")
                 iocs = sorted(iocs, key=lambda x: x["reputation"], reverse=True)
                 iocs = [ioc for ioc in iocs if ioc.get("reputation") in (1, 2)]
 
-            converted_iocs = convert_iocs_to_soar_format(
-                iocs, analysis_id, self.get_container_id()
-            )
+            converted_iocs = convert_iocs_to_soar_format(iocs, analysis_id, self.get_container_id())
 
             if not converted_iocs:
                 return action_result.set_status(phantom.APP_ERROR, "Malicious or Suspicious IOCs not found")
@@ -372,12 +330,8 @@ class AnyRunConnector(BaseConnector):
                 ]
                 for ioc in iocs
             ]
-            iocs_csv.insert(
-                0, ["category", "type", "name", "ioc", "reputation", "discoveringEntryId"]
-            )
-            vault_id, report_name = save_file(
-                self.get_container_id(), iocs_csv, analysis_id, "csv"
-            )
+            iocs_csv.insert(0, ["category", "type", "name", "ioc", "reputation", "discoveringEntryId"])
+            vault_id, report_name = save_file(self.get_container_id(), iocs_csv, analysis_id, "csv")
 
             for ioc in iocs:
                 if ioc.get("reputation") == 1:
@@ -393,9 +347,7 @@ class AnyRunConnector(BaseConnector):
                 }
             )
 
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IOC.format(analysis_id)
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_IOC.format(analysis_id))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -405,9 +357,7 @@ class AnyRunConnector(BaseConnector):
             self.save_progress(error_message)
             return action_result.set_status(phantom.APP_ERROR, error_message)
 
-    def _handle_detonate_url(
-        self, param: dict, sandbox: LinuxConnector | WindowsConnector | AndroidConnector
-    ) -> ActionResult:
+    def _handle_detonate_url(self, param: dict, sandbox: LinuxConnector | WindowsConnector | AndroidConnector) -> ActionResult:
         """
         Handle detonate URL
 
@@ -436,9 +386,7 @@ class AnyRunConnector(BaseConnector):
                 }
             )
 
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_URL.format(param["obj_url"])
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_URL.format(param["obj_url"]))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -464,18 +412,14 @@ class AnyRunConnector(BaseConnector):
         param.pop("context", None)
 
         try:
-            success, message, vault_meta_info = phantom_rules.vault_info(
-                vault_id=vault_id
-            )
+            success, message, vault_meta_info = phantom_rules.vault_info(vault_id=vault_id)
             vault_meta_info = list(vault_meta_info)
             if not success or not vault_meta_info:
                 error_message = f"Error Details: {message}" if message else ""
                 return action_result.set_status(
                     phantom.APP_ERROR,
                     "{}. {}".format(
-                        ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format(
-                            "vault meta info", vault_id
-                        ),
+                        ANYRUN_UNABLE_TO_FETCH_FILE_ERROR.format("vault meta info", vault_id),
                         error_message,
                     ),
                 )
@@ -484,9 +428,7 @@ class AnyRunConnector(BaseConnector):
                 self.save_progress(ANYRUN_VAULT_MULTIPLE_FILES_ERROR.format(vault_id))
             else:
                 self.save_progress(ANYRUN_VAULT_NO_FILES_ERROR.format(vault_id))
-                return action_result.set_status(
-                    phantom.APP_ERROR, ANYRUN_VAULT_NO_FILES_ERROR.format(vault_id)
-                )
+                return action_result.set_status(phantom.APP_ERROR, ANYRUN_VAULT_NO_FILES_ERROR.format(vault_id))
 
             file_path = vault_meta_info[0].get("path")
             filename = vault_meta_info[0].get("name")
@@ -502,9 +444,7 @@ class AnyRunConnector(BaseConnector):
 
             with sandbox:
                 with open(file_path, "rb") as file:
-                    analysis_id = sandbox.run_file_analysis(
-                        file_content=file.read(), filename=filename, **param
-                    )
+                    analysis_id = sandbox.run_file_analysis(file_content=file.read(), filename=filename, **param)
 
             self.save_progress(ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id))
 
@@ -518,9 +458,7 @@ class AnyRunConnector(BaseConnector):
                 }
             )
 
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id)
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DETONATE_FILE.format(vault_id))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -555,13 +493,9 @@ class AnyRunConnector(BaseConnector):
 
             self.save_progress(ANYRUN_SUCCESS_GET_INTELLIGENCE.format(query))
 
-            vault_id, filename = save_file(
-                self.get_container_id(), report, "anyrun_ti_lookup", "summary"
-            )
+            vault_id, filename = save_file(self.get_container_id(), report, "anyrun_ti_lookup", "summary")
 
-            verdict = VERDICT_RESOLVER.get(
-                report.get("summary", {}).get("threatLevel"), "No info"
-            )
+            verdict = VERDICT_RESOLVER.get(report.get("summary", {}).get("threatLevel"), "No info")
 
             lookup_url = (
                 "https://intelligence.any.run/analysis/lookup#{%22query%22:%22"
@@ -580,9 +514,7 @@ class AnyRunConnector(BaseConnector):
                 }
             )
 
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_INTELLIGENCE.format(query)
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_GET_INTELLIGENCE.format(query))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -607,15 +539,11 @@ class AnyRunConnector(BaseConnector):
                     self.debug_print(f"Waiting for analysis to complete: {status}")
                 pcap = sandbox.download_pcap(analysis_id)
 
-            vault_id, report_name = save_file(
-                self.get_container_id(), pcap, analysis_id, "pcap"
-            )
+            vault_id, report_name = save_file(self.get_container_id(), pcap, analysis_id, "pcap")
 
             action_result.add_data({"vault_id": vault_id, "report_name": report_name})
 
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_DOWNLOAD_PCAP.format(analysis_id)
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DOWNLOAD_PCAP.format(analysis_id))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -642,9 +570,7 @@ class AnyRunConnector(BaseConnector):
 
             action_result.add_data({"status": "Analysis deleted successfully."})
 
-            return action_result.set_status(
-                phantom.APP_SUCCESS, ANYRUN_SUCCESS_DELETE_ANALYSIS.format(analysis_id)
-            )
+            return action_result.set_status(phantom.APP_SUCCESS, ANYRUN_SUCCESS_DELETE_ANALYSIS.format(analysis_id))
 
         except RunTimeException as error:  # pylint: disable=broad-exception-caught
             self.save_progress(str(error))
@@ -671,17 +597,13 @@ class AnyRunConnector(BaseConnector):
                 verdict = sandbox.get_analysis_verdict(analysis_id)
                 report = sandbox.get_analysis_report(analysis_id)
 
-            analysis_object = (
-                report.get("data").get("analysis").get("content").get("mainObject")
-            )
+            analysis_object = report.get("data").get("analysis").get("content").get("mainObject")
 
             object_type = analysis_object.get("type")
 
             action_result.add_data(
                 {
-                    "object_value": analysis_object.get("url")
-                    if object_type == "url"
-                    else analysis_object.get("filename"),
+                    "object_value": analysis_object.get("url") if object_type == "url" else analysis_object.get("filename"),
                     "object_type": object_type,
                     "verdict": verdict,
                 }

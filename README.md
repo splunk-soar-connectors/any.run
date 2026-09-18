@@ -21,9 +21,9 @@ This connector is intended for customers with a 'Hunter' or 'Enterprise' subscri
 
 This connector comes with some additional python 3 libraries, that it depends on, including:
 
-- anyrun-sdk==1.14.18
-- requests==2.34.2
-- splunk-soar-sdk>=4.2.1
+- anyrun-sdk==1.12.11
+- requests==2.32.4
+- splunk-soar-sdk>=2.3.7
 
 ### Configuration variables
 
@@ -34,7 +34,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **anyrun_api_key** | required | password | API Key used for API authentication |
 **anyrun_timeout** | required | numeric | Number of seconds to wait for a request to timeout |
 **verify_server_cert** | optional | boolean | Verify the ANY.RUN server certificate |
-**http_proxy** | optional | string | Connect to ANY.RUN using HTTP proxy |
+**http_proxy** | optional | string | HTTP proxy connection string |
 
 ### Supported Actions
 
@@ -154,7 +154,7 @@ This action requests information about URL/IP/Domain/File from the ANY.RUN TI Lo
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **entity_type** | required | Entity type to search in database | string | |
-**entity_value** | required | URL (Size range: 2-256) or Hash (sha256, sha1, md5) or Domain or IP | string | `url` `hash` `domain_name` `destination_ip` |
+**entity_value** | required | URL (Size range: 2-256) or Hash (sha256, sha1, md5) or Domain or IP | string | `url` `hash` `domain` `ip` |
 **lookup_depth** | optional | Specify the number of days from the current date for which you want to lookup | numeric | |
 
 #### Action Output
@@ -502,7 +502,6 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **opt_network_residential_proxy_geo** | optional | Residential proxy geo location option (Default: fastest) | string | |
 **opt_privacy_type** | optional | Privacy type (Default: bylink) | string | |
 **opt_timeout** | optional | Timeout (Default: 120) | numeric | |
-**obj_ext_extension** | optional | Specify whether to change the file extension to a valid one (Default: True) | boolean | |
 **user_tags** | optional | Append user tags to new analysis. Only characters a-z, A-Z, 0-9, hyphen (-), and comma (,)
 are allowed. Max tag length: 16 characters. Max unique tags per task: 8. | string | |
 
@@ -529,7 +528,6 @@ action_result.parameter.opt_network_residential_proxy | boolean | | |
 action_result.parameter.opt_network_residential_proxy_geo | string | | |
 action_result.parameter.opt_privacy_type | string | | |
 action_result.parameter.opt_timeout | numeric | | |
-action_result.parameter.obj_ext_extension | boolean | | |
 action_result.parameter.user_tags | string | | |
 
 ## action: 'detonate file windows'
