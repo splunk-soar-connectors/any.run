@@ -1,3 +1,2 @@
 anyrun-sdk==1.14.18
 requests==2.34.2
-splunk-soar-sdk==4.2.1

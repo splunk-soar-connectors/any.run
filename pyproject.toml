@@ -7,7 +7,6 @@ requires-python = ">=3.13"
 dependencies = [
     "anyrun-sdk==1.14.18",
     "requests==2.34.2",
-    "splunk-soar-sdk>=4.2.1",
 ]
 
 # Ruff linting

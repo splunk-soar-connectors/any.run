@@ -1,3 +1,3 @@
 **Unreleased**
 
-* Removed superseded packaged dependencies from the ANY.RUN connector.
+* Removed an unused Splunk SOAR SDK dependency and superseded packaged dependencies from the ANY.RUN connector.
