@@ -13,7 +13,7 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-VERSION = f"Splunk_SOAR:1.5.1"
+VERSION = f"Splunk_SOAR:2.1.0"
 # Action IDs
 ACTION_ID_ANYRUN_TEST_CONNECTIVITY = "test_connectivity"
 ACTION_ID_ANYRUN_GET_ANALYSIS_VERDICT = "get_analysis_verdict"
@@ -39,8 +39,12 @@ ACTION_ID_ANYRUN_DOWNLOAD_PCAP = "download_pcap"
 ANYRUN_ERROR_CODE_MSG = "Error code unavailable."
 ANYRUN_ERROR_MSG_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or action parameters."
 ANYRUN_PARSE_ERROR_MSG = "Unable to parse the error message. Please check the asset configuration and|or action parameters."
-ANYRUN_UNABLE_TO_FETCH_FILE_ERROR = "Unable to retrieve the sample from the vault. Key: {}. Vault ID: {}."
-ANYRUN_VAULT_MULTIPLE_FILES_ERROR = "Found multiple files for vault_id {}. Using the first one."
+ANYRUN_UNABLE_TO_FETCH_FILE_ERROR = (
+    "Unable to retrieve the sample from the vault. Key: {}. Vault ID: {}."
+)
+ANYRUN_VAULT_MULTIPLE_FILES_ERROR = (
+    "Found multiple files for vault_id {}. Using the first one."
+)
 ANYRUN_VAULT_NO_FILES_ERROR = "No sample found for vault_id {}."
 ANYRUN_SANDBOX_PARAMS_VALIDATION_ERROR = "Error in validating sandbox parameters. {}."
 ANYRUN_REST_API_ERROR = "Error processing server response in action '{0}'. {1}."
@@ -49,8 +53,12 @@ ANYRUN_DELETE_ANALYSIS_ERROR = "Error deleting analysis: {}. {}."
 # Action specific messages
 ANYRUN_ERROR_TEST_CONNECTIVITY = "Connectivity test failed. {}."
 ANYRUN_SUCCESS_TEST_CONNECTIVITY = "Connectivity test passed."
-ANYRUN_SUCCESS_GET_REPUTATION = "Successfully retrieved reputation via Threat Intelligence Lookup for '{0}'."
-ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY = "Successfully retrieved list of reports for analysis from history '{0}'."
+ANYRUN_SUCCESS_GET_REPUTATION = (
+    "Successfully retrieved reputation via Threat Intelligence Lookup for '{0}'."
+)
+ANYRUN_SUCCESS_SEARCH_ANALYSIS_HISTORY = (
+    "Successfully retrieved list of reports for analysis from history '{0}'."
+)
 ANYRUN_SUCCESS_GET_REPORT = "Successfully retrieved report for analysis: {}."
 ANYRUN_SUCCESS_GET_IOC = "Successfully retrieved IoC report for analysis: {}."
 ANYRUN_SUCCESS_DETONATE_URL = "Successfully detonated URL: {}."
@@ -59,6 +67,7 @@ ANYRUN_SUCCESS_GET_INTELLIGENCE = "Successfully retrieved threat information via
 ANYRUN_SUCCESS_DELETE_ANALYSIS = "Successfully deleted analysis: {}."
 ANYRUN_SUCCESS_DOWNLOAD_PCAP = "Successfully downloaded PCAP file for analysis: {}."
 ANYRUN_SUCCESS_GET_ANALYSIS_VERDICT = "Successfully retrieved verdict for analysis: {}."
+ANYRUN_BROWSER_PARAM = "obj_ext_browser"
 
 VERDICT_RESOLVER = {
     0: "No info",

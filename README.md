@@ -1,10 +1,10 @@
 # ANY.RUN
 
 Publisher: ANYRUN FZCO <br>
-Connector Version: 2.0.0 <br>
+Connector Version: 2.1.0 <br>
 Product Vendor: ANYRUN FZCO <br>
 Product Name: ANY.RUN <br>
-Minimum Product Version: 6.3.0
+Minimum Product Version: 7.0.0
 
 This app enables you to detonate files and URLs to ANY.RUN Sandbox for analysis, retrieve detailed reports, and obtain information about IoCs from the ANY.RUN Threat Intelligence Lookup database
 
@@ -21,9 +21,9 @@ This connector is intended for customers with a 'Hunter' or 'Enterprise' subscri
 
 This connector comes with some additional python 3 libraries, that it depends on, including:
 
-- anyrun-sdk==1.12.11
-- requests==2.32.4
-- splunk-soar-sdk>=2.3.7
+- anyrun-sdk==1.14.18
+- requests==2.34.2
+- splunk-soar-sdk>=4.2.1
 
 ### Configuration variables
 
@@ -34,6 +34,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **anyrun_api_key** | required | password | API Key used for API authentication |
 **anyrun_timeout** | required | numeric | Number of seconds to wait for a request to timeout |
 **verify_server_cert** | optional | boolean | Verify the ANY.RUN server certificate |
+**http_proxy** | optional | string | Connect to ANY.RUN using HTTP proxy |
 
 ### Supported Actions
 
@@ -153,7 +154,7 @@ This action requests information about URL/IP/Domain/File from the ANY.RUN TI Lo
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **entity_type** | required | Entity type to search in database | string | |
-**entity_value** | required | URL (Size range: 2-256) or Hash (sha256, sha1, md5) or Domain or IP | string | `url` `hash` `domain` `ip` |
+**entity_value** | required | URL (Size range: 2-256) or Hash (sha256, sha1, md5) or Domain or IP | string | `url` `hash` `domain_name` `destination_ip` |
 **lookup_depth** | optional | Specify the number of days from the current date for which you want to lookup | numeric | |
 
 #### Action Output

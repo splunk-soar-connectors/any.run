@@ -15,7 +15,6 @@ import csv
 import json
 import os
 from datetime import datetime
-from typing import Union
 
 import phantom.rules as phantom_rules
 
@@ -26,7 +25,9 @@ def _neutralize_csv_formula(value):
     return value
 
 
-def convert_iocs_to_soar_format(raw_iocs: list[dict], analysis_id: str, container_id: int) -> list[dict]:
+def convert_iocs_to_soar_format(
+    raw_iocs: list[dict], analysis_id: str, container_id: int
+) -> list[dict]:
     """
     Get IoCs from AnyRun sandbox
 
@@ -65,10 +66,15 @@ def convert_iocs_to_soar_format(raw_iocs: list[dict], analysis_id: str, containe
     return artifacts
 
 
-def save_file(container_id: int, file_content: Union[dict, str, bytes, list], analysis_id: str, file_format: str) -> tuple[str, str]:
+def save_file(
+    container_id: int,
+    file_content: dict | str | bytes | list,
+    analysis_id: str,
+    file_format: str,
+) -> tuple[str, str]:
     vault_path = phantom_rules.Vault.get_vault_tmp_dir()
 
-    if file_format in ("summary", "stix", "misp"):
+    if file_format in ("summary", "stix", "misp", "json"):
         extension = "json"
     elif file_format in ("html", "pcap", "csv"):
         extension = file_format
@@ -79,10 +85,17 @@ def save_file(container_id: int, file_content: Union[dict, str, bytes, list], an
     with open(filepath, "wb" if file_format == "pcap" else "w") as file:
         if file_format == "csv":
             writer = csv.writer(file)
-            writer.writerows([[_neutralize_csv_formula(value) for value in row] for row in file_content])
+            writer.writerows(
+                [
+                    [_neutralize_csv_formula(value) for value in row]
+                    for row in file_content
+                ]
+            )
         else:
             file.write(json.dumps(file_content) if extension == "json" else file_content)
 
-    _, _, vault_id = phantom_rules.vault_add(container=container_id, file_location=filepath, file_name=filename)
+    _, _, vault_id = phantom_rules.vault_add(
+        container=container_id, file_location=filepath, file_name=filename
+    )
 
     return vault_id, filename
